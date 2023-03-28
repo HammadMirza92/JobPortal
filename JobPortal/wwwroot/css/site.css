@@ -13,9 +13,12 @@
     bottom: 45px;
     z-index: 99;
 }
-
-a{
-   text-decoration:none;
+.idtForm{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+a {
+    text-decoration: none;
 }
 /*** Spinner ***/
 #spinner {
