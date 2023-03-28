@@ -14,7 +14,9 @@
     z-index: 99;
 }
 
-
+a{
+   text-decoration:none;
+}
 /*** Spinner ***/
 #spinner {
     opacity: 0;
@@ -375,9 +377,9 @@
     border-top: 1px solid rgba(256, 256, 256, .1);
 }
 
-    .footer .copyright a {
-        color: var(--light);
-    }
+.footer .copyright a {
+    color: var(--light);
+}
 
 .footer .footer-menu a {
     margin-right: 15px;
@@ -385,8 +387,8 @@
     border-right: 1px solid rgba(255, 255, 255, .1);
 }
 
-    .footer .footer-menu a:last-child {
-        margin-right: 0;
-        padding-right: 0;
-        border-right: none;
-    }
+.footer .footer-menu a:last-child {
+    margin-right: 0;
+    padding-right: 0;
+    border-right: none;
+}

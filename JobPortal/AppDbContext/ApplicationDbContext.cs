@@ -10,5 +10,6 @@ namespace JobPortal.AppDbContext
             
         }
         public DbSet<Job> Jobs { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }
