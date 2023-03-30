@@ -1,0 +1,193 @@
+﻿@model IEnumerable<Job>
+
+@{
+    ViewData["Title"] = "Jobs";
+
+}
+<!-- Jobs Start -->
+<div class="container py-5">
+    <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Filter Jobs</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="formContainer">
+                <form asp-controller="Job" asp-action="Filter">
+                    <div asp-validation-summary="ModelOnly"></div>
+
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input name="Title" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Job Status</label>
+                        <select name="Status" asp-items="@Html.GetEnumSelectList<JobStatus>()" class="form-select"></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Type</label>
+                        <select name="Type" asp-items="@Html.GetEnumSelectList<JobType>()" class="form-select"></select>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Start Budget</label>
+                        <input type="number" name="StartBudget" class="form-control" />
+
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">End Budget</label>
+                        <input type="number" name="EndBudget" class="form-control" />
+
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Vacancy</label>
+                        <input type="number" name="Vacancy" class="form-control" />
+
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <input name="Location" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Start Date</label>
+                        <input type="datetime-local" name="StartDate" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">EndDate</label>
+                        <input type="datetime-local" name="EndDate" class="form-control" />
+                    </div>
+                    <div class="form-group">
+
+                        <input class="btn-global" type="submit" />
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-8">
+
+
+            <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
+               @* <ul class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5">
+                    <li class="nav-item">
+                        <a class="d-flex align-items-center text-start mx-3 ms-0 pb-3 active" data-bs-toggle="pill" href="#tab-1">
+                            <h6 class="mt-n1 mb-0">Featured</h6>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="d-flex align-items-center text-start mx-3 pb-3" data-bs-toggle="pill" href="#tab-2">
+                            <h6 class="mt-n1 mb-0">Full Time</h6>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill" href="#tab-3">
+                            <h6 class="mt-n1 mb-0">Part Time</h6>
+                        </a>
+                    </li>
+                </ul>*@
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane fade show p-0 active">
+                        @foreach (var item in Model)
+                        {
+                            if (item.EndDate > DateTime.Now && item.Status == JobStatus.Open)
+                            {
+                                <div class="job-item p-4 mb-4">
+                                    <div class="row g-4">
+
+                                        <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                            <img class="flex-shrink-0 img-fluid border rounded" src="@item.Icon" alt="" style="width: 80px; height: 80px;">
+                                            <div class="text-start ps-4">
+                                                <h5 class="mb-3">@item.Title</h5>
+                                                <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>@item.Location</span>
+                                                <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>@item.Type</span>
+                                                <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>$@item.StartBudget - $@item.EndBudget</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                            <div class="d-flex mb-3">
+
+                                                <a class="btn btn-primary" asp-controller="Applications" asp-action="create" asp-route-Id="@item.Id">Apply Now</a>
+                                                <a class="btn btn-success detailBtn" asp-action="Details" asp-route-Id="@item.Id">View Detail</a>
+                                            </div>
+                                            <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date Line: @item.EndDate.ToShortDateString()</small>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            }
+
+                        }
+
+
+                        <a class="btn btn-primary py-3 px-5" href="">Browse More Jobs</a>
+                    </div>
+                @*    <div id="tab-2" class="tab-pane fade show p-0">
+                        @foreach (var item in Model)
+                        {
+                            if (item.Type == JobType.FullTime && item.EndDate > DateTime.Now && item.Status == JobStatus.Open)
+                            {
+                                <div class="job-item p-4 mb-4">
+                                    <div class="row g-4">
+                                        <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                            <img class="flex-shrink-0 img-fluid border rounded" src="@item.Icon" alt="" style="width: 80px; height: 80px;">
+                                            <div class="text-start ps-4">
+                                                <h5 class="mb-3">@item.Title</h5>
+                                                <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>@item.Location</span>
+                                                <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>@item.Type</span>
+                                                <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>$@item.StartBudget - $@item.EndBudget</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                            <div class="d-flex mb-3">
+
+                                                <a class="btn btn-primary" asp-controller="Applications" asp-action="create" asp-route-Id="@item.Id">Apply Now</a>
+                                                <a class="btn btn-success detailBtn" asp-action="Details" asp-route-Id="@item.Id">View Detail</a>
+                                            </div>
+                                            <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date Line: @item.EndDate.ToLongDateString()</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+
+                        <a class="btn btn-primary py-3 px-5" href="">Browse More Jobs</a>
+                    </div>
+                    <div id="tab-3" class="tab-pane fade show p-0">
+                        @foreach (var item in Model)
+                        {
+                            if (item.Type == JobType.PartTime && item.EndDate > DateTime.Now && item.Status == JobStatus.Open)
+                            {
+                                <div class="job-item p-4 mb-4">
+                                    <div class="row g-4">
+                                        <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                            <img class="flex-shrink-0 img-fluid border rounded" src="@item.Icon" alt="" style="width: 80px; height: 80px;">
+                                            <div class="text-start ps-4">
+                                                <h5 class="mb-3">@item.Title</h5>
+                                                <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>@item.Location</span>
+                                                <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>@item.Type</span>
+                                                <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>$@item.StartBudget - $@item.EndBudget</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                            <div class="d-flex mb-3">
+
+                                                <a class="btn btn-primary" asp-controller="Applications" asp-action="create" asp-route-Id="@item.Id">Apply Now</a>
+                                                <a class="btn btn-success detailBtn" asp-action="Details" asp-route-Id="@item.Id">View Detail</a>
+                                            </div>
+                                            <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date Line: @item.EndDate.ToLongDateString()</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+                        <a class="btn btn-primary py-3 px-5" href="">Browse More Jobs</a>
+                    </div>*@
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Jobs End -->

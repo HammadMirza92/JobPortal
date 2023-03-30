@@ -1,0 +1,93 @@
+﻿@model JobPortal.Models.Job
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div>
+    <h2>Add New Job</h2>
+</div>
+
+<hr />
+
+<div class="container" style="margin-top:20px;margin-bottom:20px;">
+    <form asp-controller="Job" asp-action="Create">
+        <div asp-validation-summary="ModelOnly"></div>
+         <div class="form-group">
+            <label asp-for="Icon" class="form-label"></label>
+            <input asp-for="Icon" class="form-control" />
+            <span asp-validation-for="Icon" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="form-label"></label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Responsibility" class="form-label"></label>
+            <input asp-for="Responsibility" class="form-control" />
+            <span asp-validation-for="Responsibility" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Qualifications" class="form-label"></label>
+            <input asp-for="Qualifications" class="form-control" />
+            <span asp-validation-for="Qualifications" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Status" class="form-label"></label>
+            
+             <select asp-for="Status" asp-items="@Html.GetEnumSelectList<JobStatus>()" class="form-select"></select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Type" class="form-label"></label>
+              <select asp-for="Type" asp-items="@Html.GetEnumSelectList<JobType>()" class="form-select"></select>
+            <span asp-validation-for="Type" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CompanyDetail" class="form-label"></label>
+            <input asp-for="CompanyDetail" class="form-control" />
+            <span asp-validation-for="CompanyDetail" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="StartBudget" class="form-label"></label>
+            <input asp-for="StartBudget" class="form-control" />
+            <span asp-validation-for="StartBudget" class="text-danger"></span>
+        </div>
+          <div class="form-group">
+            <label asp-for="EndBudget" class="form-label"></label>
+            <input asp-for="EndBudget" class="form-control" />
+            <span asp-validation-for="EndBudget" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Vacancy" class="form-label"></label>
+            <input asp-for="Vacancy" class="form-control" />
+            <span asp-validation-for="Vacancy" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Location" class="form-label"></label>
+            <input asp-for="Location" class="form-control" />
+            <span asp-validation-for="Location" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="StartDate" class="form-label"></label>
+            <input asp-for="StartDate" class="form-control" />
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EndDate" class="form-label"></label>
+            <input asp-for="EndDate" class="form-control" />
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+
+            <input class="btn-global" type="submit" />
+
+        </div>
+    </form>
+</div>
