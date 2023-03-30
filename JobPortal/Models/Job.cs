@@ -27,6 +27,7 @@ namespace JobPortal.Models
         [Required]
         [DisplayName("Company Detail")]
         public string CompanyDetail { get; set; } 
+
         [Required]
         [DisplayName("Start Budget")]
         public double StartBudget { get; set; }
