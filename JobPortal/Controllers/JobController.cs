@@ -1,6 +1,7 @@
 ﻿using JobPortal.Enums;
 using JobPortal.Models;
 using JobPortal.Services.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,13 +28,13 @@ namespace JobPortal.Controllers
             var job = await _jobRepository.GetById(id);
             return View(job);
         }
-
+        
         // GET: JobController/Create
         public ActionResult Create()
         {
             return View();
         }
-
+        
         // POST: JobController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -44,7 +45,7 @@ namespace JobPortal.Controllers
             return RedirectToAction(nameof(Index));
             
         }
-
+        [Authorize("Admin")]
         // GET: JobController/Edit/5
         public ActionResult Edit(int id)
         {
@@ -71,7 +72,7 @@ namespace JobPortal.Controllers
         {
             return View();
         }
-
+        [Authorize("Admin")]
         // POST: JobController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -86,6 +87,7 @@ namespace JobPortal.Controllers
                 return View();
             }
         }
+
         public async Task<IActionResult> Filter(string Title, JobStatus Status, JobType Type, double StartBudget, double EndBudget, int Vacancy, string Location, DateTime StartDate, DateTime EndDate)
         {
             var result = await _jobRepository.FilterJob(Title, Status, Type, StartBudget, EndBudget, Vacancy, Location, StartDate, EndDate);

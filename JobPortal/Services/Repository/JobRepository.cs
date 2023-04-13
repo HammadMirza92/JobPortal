@@ -16,7 +16,6 @@ namespace JobPortal.Services.Repository
         }
         public async Task<IEnumerable<Job>> FilterJob(string Title, JobStatus Status, JobType Type, double StartBudget, double EndBudget, int Vacancy, string Location, DateTime StartDate, DateTime EndDate)
         {
-            var dt = DateTime.MinValue;
             var result = await _context.Jobs
                 .Where(x =>
                 (string.IsNullOrEmpty(Title) || x.Title.Contains(Title) )&&

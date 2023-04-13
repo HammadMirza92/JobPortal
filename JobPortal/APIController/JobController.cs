@@ -2,7 +2,6 @@
 using JobPortal.Services.IRepository;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace JobPortal.APIController
 {
@@ -15,25 +14,34 @@ namespace JobPortal.APIController
         {
             _jobRepository = jobRepository;
         }
-        // GET: api/<JobController>
+        // GET: api/Job
         [HttpGet]
-        public async Task<IEnumerable<Job>> Get()
+        public async Task<IActionResult> Get()
         {
             var jobs = await _jobRepository.GetAll();
-            return jobs;
+            if (!jobs.Any())
+            {
+                return BadRequest();
+            }
+            return Ok(jobs);
         }
 
         // GET api/<JobController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<Job> Get(int id)
         {
-            return "value";
+            var job = await _jobRepository.GetById(id);
+            return job;
         }
 
-        // POST api/<JobController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        // POST api/Job
+        [HttpPost("create")]
+        public async Task<Job> Create(Job job)
         {
+            var newJob = await _jobRepository.Add(job);
+
+            return newJob;
+
         }
 
         // PUT api/<JobController>/5

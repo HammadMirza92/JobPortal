@@ -1,8 +1,8 @@
 using JobPortal.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using JobPortal.Services.IRepository;
 using JobPortal.Services.Repository;
+using JobPortal.Services.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +21,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>().AddDefaultTokenProviders()
 
 builder.Services.AddScoped<IJobRepository, JobRepository>();
 
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("CorsPolicy", policy => policy.AllowAnyHeader().WithOrigins("http://localhost:4200"));
+});
 
 
 var app = builder.Build();
@@ -37,6 +41,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseCors("CorsPolicy");
 app.UseAuthentication();;
 
 app.UseAuthorization();
