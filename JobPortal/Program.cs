@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using JobPortal.Services.Repository;
 using JobPortal.Services.IRepository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDefaultIdentity<IdentityUser>().AddDefaultTokenProviders()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
 
 builder.Services.AddScoped<IJobRepository, JobRepository>();
 
@@ -42,8 +47,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseCors("CorsPolicy");
-app.UseAuthentication();;
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
