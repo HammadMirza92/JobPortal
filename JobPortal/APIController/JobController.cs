@@ -1,5 +1,6 @@
 ﻿using JobPortal.Models;
 using JobPortal.Services.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -7,6 +8,7 @@ namespace JobPortal.APIController
 {
     [Route("api/[controller]")]
     [ApiController]
+    /*[Authorize]*/
     public class JobController : ControllerBase
     {
         private readonly IJobRepository _jobRepository;
@@ -16,7 +18,8 @@ namespace JobPortal.APIController
         }
         // GET: api/Job
         [HttpGet]
-        public async Task<IActionResult> Get()
+        [ResponseCache(Duration = 120)]
+        public async Task<ActionResult<Job>> Get()
         {
             var jobs = await _jobRepository.GetAll();
             if (!jobs.Any())
@@ -25,8 +28,19 @@ namespace JobPortal.APIController
             }
             return Ok(jobs);
         }
+        [HttpGet("getFeatureJobs")]
+        [ResponseCache(Duration = 120)]
+        public async Task<ActionResult<Job>> GetFeatureJobs()
+        {
+            var featurejobs = await _jobRepository.GetFeatureJobs();
+            if (!featurejobs.Any())
+            {
+                return BadRequest();
+            }
+            return Ok(featurejobs);
+        }
 
-        // GET api/<JobController>/5
+        // GET api/Job/5
         [HttpGet("{id}")]
         public async Task<Job> Get(int id)
         {
@@ -36,6 +50,7 @@ namespace JobPortal.APIController
 
         // POST api/Job
         [HttpPost("create")]
+        [ResponseCache]
         public async Task<Job> Create(Job job)
         {
             var newJob = await _jobRepository.Add(job);
@@ -44,13 +59,13 @@ namespace JobPortal.APIController
 
         }
 
-        // PUT api/<JobController>/5
+        // PUT api/Job/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<JobController>/5
+        // DELETE api/Job/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

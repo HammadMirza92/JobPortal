@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230413103708_init")]
+    [Migration("20230428115631_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace JobPortal.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("JobPortal.Models.Category", b =>
+            modelBuilder.Entity("JobPortal.Models.AllJobsClasses", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,21 +32,57 @@ namespace JobPortal.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("JobClassId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Icon")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.HasIndex("JobClassId");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("AllJobsClasses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            JobClassId = 1,
+                            JobId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            JobClassId = 2,
+                            JobId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            JobClassId = 3,
+                            JobId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            JobClassId = 1,
+                            JobId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            JobClassId = 2,
+                            JobId = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            JobClassId = 3,
+                            JobId = 3
+                        });
                 });
 
             modelBuilder.Entity("JobPortal.Models.Job", b =>
@@ -57,9 +93,8 @@ namespace JobPortal.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("CompanyDetail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DeadLine")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -68,33 +103,37 @@ namespace JobPortal.Migrations
                     b.Property<double>("EndBudget")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Icon")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("JobExperience")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Qualifications")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("JobPosted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("JobShift")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JobStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Location")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Qualifications")
+                        .HasColumnType("int");
 
                     b.Property<string>("Responsibility")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SalaryType")
+                        .HasColumnType("int");
+
                     b.Property<double>("StartBudget")
                         .HasColumnType("float");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -114,56 +153,226 @@ namespace JobPortal.Migrations
                         new
                         {
                             Id = 1,
-                            CompanyDetail = "Ipsum dolor ipsum accusam stet et et diam dolores, sed rebum sadipscing elitr vero dolores. Lorem dolore elitr justo et no gubergren sadipscing, ipsum et takimata aliquyam et rebum est ipsum lorem diam. Et lorem magna eirmod est et et sanctus et, kasd clita labore.",
+                            DeadLine = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
                             EndBudget = 456.0,
-                            EndDate = new DateTime(2023, 5, 13, 15, 37, 7, 965, DateTimeKind.Local).AddTicks(6521),
                             Icon = "https://img.freepik.com/premium-vector/gradient-business-investment-logo-design_269830-887.jpg?w=2000",
-                            Location = "New York, USA",
-                            Qualifications = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
+                            JobExperience = 1,
+                            JobPosted = new DateTime(2023, 4, 28, 16, 56, 31, 21, DateTimeKind.Local).AddTicks(5064),
+                            JobShift = 0,
+                            JobStatus = 0,
+                            Location = 0,
+                            Qualifications = 0,
                             Responsibility = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
+                            SalaryType = 0,
                             StartBudget = 123.0,
-                            StartDate = new DateTime(2023, 3, 19, 15, 37, 7, 965, DateTimeKind.Local).AddTicks(6489),
-                            Status = 0,
                             Title = "Marketing Manager",
-                            Type = 0,
+                            Type = 1,
                             Vacancy = 20
                         },
                         new
                         {
                             Id = 2,
-                            CompanyDetail = "Ipsum dolor ipsum accusam stet et et diam dolores, sed rebum sadipscing elitr vero dolores. Lorem dolore elitr justo et no gubergren sadipscing, ipsum et takimata aliquyam et rebum est ipsum lorem diam. Et lorem magna eirmod est et et sanctus et, kasd clita labore.",
+                            DeadLine = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
-                            EndBudget = 557.0,
-                            EndDate = new DateTime(2023, 5, 23, 15, 37, 7, 965, DateTimeKind.Local).AddTicks(6573),
+                            EndBudget = 456.0,
                             Icon = "https://media.istockphoto.com/id/1304359165/vector/motion-data-speed-g-letter-logo-design.jpg?s=612x612&w=0&k=20&c=2A0yYWv8zHhztdShuGoVW87yJZqseV6AKJX0QL2cVuQ=",
-                            Location = "New York, USA",
-                            Qualifications = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
+                            JobExperience = 6,
+                            JobPosted = new DateTime(2023, 4, 28, 16, 56, 31, 21, DateTimeKind.Local).AddTicks(5122),
+                            JobShift = 0,
+                            JobStatus = 0,
+                            Location = 2,
+                            Qualifications = 0,
                             Responsibility = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
-                            StartBudget = 233.0,
-                            StartDate = new DateTime(2023, 4, 8, 15, 37, 7, 965, DateTimeKind.Local).AddTicks(6571),
-                            Status = 0,
+                            SalaryType = 0,
+                            StartBudget = 123.0,
                             Title = "Software Engineer",
-                            Type = 0,
-                            Vacancy = 12
+                            Type = 1,
+                            Vacancy = 5
                         },
                         new
                         {
                             Id = 3,
-                            CompanyDetail = "Ipsum dolor ipsum accusam stet et et diam dolores, sed rebum sadipscing elitr vero dolores. Lorem dolore elitr justo et no gubergren sadipscing, ipsum et takimata aliquyam et rebum est ipsum lorem diam. Et lorem magna eirmod est et et sanctus et, kasd clita labore.",
+                            DeadLine = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
-                            EndBudget = 557.0,
-                            EndDate = new DateTime(2023, 4, 28, 15, 37, 7, 965, DateTimeKind.Local).AddTicks(6589),
+                            EndBudget = 456.0,
                             Icon = "https://www.logodesign.net/images/abstract-logo.png",
-                            Location = "New York, USA",
-                            Qualifications = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
+                            JobExperience = 3,
+                            JobPosted = new DateTime(2023, 4, 28, 16, 56, 31, 21, DateTimeKind.Local).AddTicks(5139),
+                            JobShift = 2,
+                            JobStatus = 0,
+                            Location = 0,
+                            Qualifications = 1,
                             Responsibility = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
-                            StartBudget = 233.0,
-                            StartDate = new DateTime(2023, 3, 29, 15, 37, 7, 965, DateTimeKind.Local).AddTicks(6588),
-                            Status = 0,
+                            SalaryType = 0,
+                            StartBudget = 123.0,
                             Title = "Product Designer",
-                            Type = 1,
-                            Vacancy = 5
+                            Type = 5,
+                            Vacancy = 50
+                        });
+                });
+
+            modelBuilder.Entity("JobPortal.Models.JobClass", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("JobClasses")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JobClass");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            JobClasses = "Feature"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            JobClasses = "Urgent"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            JobClasses = "Private"
+                        });
+                });
+
+            modelBuilder.Entity("JobPortal.Models.JobSkills", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SkillId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.HasIndex("SkillId");
+
+                    b.ToTable("JobSkills");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            JobId = 1,
+                            SkillId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            JobId = 1,
+                            SkillId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            JobId = 1,
+                            SkillId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            JobId = 2,
+                            SkillId = 3
+                        },
+                        new
+                        {
+                            Id = 5,
+                            JobId = 2,
+                            SkillId = 6
+                        },
+                        new
+                        {
+                            Id = 6,
+                            JobId = 3,
+                            SkillId = 6
+                        });
+                });
+
+            modelBuilder.Entity("JobPortal.Models.Skills", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("JobSkill")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Skills");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            JobSkill = "Php"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            JobSkill = "JS"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            JobSkill = "Designing"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            JobSkill = "Application Development"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            JobSkill = "Arts"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            JobSkill = "Painting"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            JobSkill = "Development"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            JobSkill = "Modeling"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            JobSkill = "Architecture"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            JobSkill = "Management"
                         });
                 });
 
@@ -192,6 +401,29 @@ namespace JobPortal.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1d8bbcb9-6d72-4776-b97a-54dd330775ca",
+                            ConcurrencyStamp = "bde35de4-2c91-47ae-9e81-508013015c2b",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "7023e28f-c1dc-42cd-ad76-858802f45979",
+                            ConcurrencyStamp = "0e4dcda6-796d-48d0-9707-0b2b5834dfd0",
+                            Name = "user",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "2fe7daaa-bb2f-43a6-915b-083816e43b87",
+                            ConcurrencyStamp = "a6211d71-b269-46c2-bf21-62e30a470430",
+                            Name = "company",
+                            NormalizedName = "COMPANY"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -390,6 +622,44 @@ namespace JobPortal.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
+            modelBuilder.Entity("JobPortal.Models.AllJobsClasses", b =>
+                {
+                    b.HasOne("JobPortal.Models.JobClass", "JobClass")
+                        .WithMany("AllJobsClasses")
+                        .HasForeignKey("JobClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JobPortal.Models.Job", "Job")
+                        .WithMany("AllJobsClasses")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Job");
+
+                    b.Navigation("JobClass");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.JobSkills", b =>
+                {
+                    b.HasOne("JobPortal.Models.Job", "Job")
+                        .WithMany("JobSkills")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JobPortal.Models.Skills", "Skill")
+                        .WithMany("JobSkills")
+                        .HasForeignKey("SkillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Job");
+
+                    b.Navigation("Skill");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -439,6 +709,23 @@ namespace JobPortal.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("JobPortal.Models.Job", b =>
+                {
+                    b.Navigation("AllJobsClasses");
+
+                    b.Navigation("JobSkills");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.JobClass", b =>
+                {
+                    b.Navigation("AllJobsClasses");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.Skills", b =>
+                {
+                    b.Navigation("JobSkills");
                 });
 #pragma warning restore 612, 618
         }

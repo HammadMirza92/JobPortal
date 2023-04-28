@@ -88,7 +88,7 @@ namespace JobPortal.Controllers
             }
         }
 
-        public async Task<IActionResult> Filter(string Title, JobStatus Status, JobType Type, double StartBudget, double EndBudget, int Vacancy, string Location, DateTime StartDate, DateTime EndDate)
+        public async Task<IActionResult> Filter(string Title, JobStatus Status, JobType Type, double StartBudget, double EndBudget, int Vacancy, Location Location, DateTime StartDate, DateTime EndDate)
         {
             var result = await _jobRepository.FilterJob(Title, Status, Type, StartBudget, EndBudget, Vacancy, Location, StartDate, EndDate);
             return View(result);

@@ -52,18 +52,16 @@ namespace JobPortal.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Categories",
+                name: "JobClass",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    JobClasses = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.PrimaryKey("PK_JobClass", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,22 +72,37 @@ namespace JobPortal.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Icon = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Vacancy = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Responsibility = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Qualifications = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    Location = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
-                    CompanyDetail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Qualifications = table.Column<int>(type: "int", nullable: false),
+                    SalaryType = table.Column<int>(type: "int", nullable: false),
                     StartBudget = table.Column<double>(type: "float", nullable: false),
                     EndBudget = table.Column<double>(type: "float", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    JobExperience = table.Column<int>(type: "int", nullable: false),
+                    JobShift = table.Column<int>(type: "int", nullable: false),
+                    JobStatus = table.Column<int>(type: "int", nullable: false),
+                    DeadLine = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    JobPosted = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Vacancy = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Jobs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Skills",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    JobSkill = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Skills", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -198,20 +211,140 @@ namespace JobPortal.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AllJobsClasses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    JobId = table.Column<int>(type: "int", nullable: false),
+                    JobClassId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AllJobsClasses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AllJobsClasses_JobClass_JobClassId",
+                        column: x => x.JobClassId,
+                        principalTable: "JobClass",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AllJobsClasses_Jobs_JobId",
+                        column: x => x.JobId,
+                        principalTable: "Jobs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "JobSkills",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    JobId = table.Column<int>(type: "int", nullable: false),
+                    SkillId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobSkills", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JobSkills_Jobs_JobId",
+                        column: x => x.JobId,
+                        principalTable: "Jobs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JobSkills_Skills_SkillId",
+                        column: x => x.SkillId,
+                        principalTable: "Skills",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
-                table: "Jobs",
-                columns: new[] { "Id", "CompanyDetail", "Description", "EndBudget", "EndDate", "Icon", "Location", "Qualifications", "Responsibility", "StartBudget", "StartDate", "Status", "Title", "Type", "Vacancy" },
-                values: new object[] { 1, "Ipsum dolor ipsum accusam stet et et diam dolores, sed rebum sadipscing elitr vero dolores. Lorem dolore elitr justo et no gubergren sadipscing, ipsum et takimata aliquyam et rebum est ipsum lorem diam. Et lorem magna eirmod est et et sanctus et, kasd clita labore.", "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.", 456.0, new DateTime(2023, 5, 13, 15, 37, 7, 965, DateTimeKind.Local).AddTicks(6521), "https://img.freepik.com/premium-vector/gradient-business-investment-logo-design_269830-887.jpg?w=2000", "New York, USA", "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", 123.0, new DateTime(2023, 3, 19, 15, 37, 7, 965, DateTimeKind.Local).AddTicks(6489), 0, "Marketing Manager", 0, 20 });
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "1d8bbcb9-6d72-4776-b97a-54dd330775ca", "bde35de4-2c91-47ae-9e81-508013015c2b", "admin", "ADMIN" },
+                    { "2fe7daaa-bb2f-43a6-915b-083816e43b87", "a6211d71-b269-46c2-bf21-62e30a470430", "company", "COMPANY" },
+                    { "7023e28f-c1dc-42cd-ad76-858802f45979", "0e4dcda6-796d-48d0-9707-0b2b5834dfd0", "user", "USER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "JobClass",
+                columns: new[] { "Id", "JobClasses" },
+                values: new object[,]
+                {
+                    { 1, "Feature" },
+                    { 2, "Urgent" },
+                    { 3, "Private" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Jobs",
-                columns: new[] { "Id", "CompanyDetail", "Description", "EndBudget", "EndDate", "Icon", "Location", "Qualifications", "Responsibility", "StartBudget", "StartDate", "Status", "Title", "Type", "Vacancy" },
-                values: new object[] { 2, "Ipsum dolor ipsum accusam stet et et diam dolores, sed rebum sadipscing elitr vero dolores. Lorem dolore elitr justo et no gubergren sadipscing, ipsum et takimata aliquyam et rebum est ipsum lorem diam. Et lorem magna eirmod est et et sanctus et, kasd clita labore.", "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.", 557.0, new DateTime(2023, 5, 23, 15, 37, 7, 965, DateTimeKind.Local).AddTicks(6573), "https://media.istockphoto.com/id/1304359165/vector/motion-data-speed-g-letter-logo-design.jpg?s=612x612&w=0&k=20&c=2A0yYWv8zHhztdShuGoVW87yJZqseV6AKJX0QL2cVuQ=", "New York, USA", "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", 233.0, new DateTime(2023, 4, 8, 15, 37, 7, 965, DateTimeKind.Local).AddTicks(6571), 0, "Software Engineer", 0, 12 });
+                columns: new[] { "Id", "DeadLine", "Description", "EndBudget", "Icon", "JobExperience", "JobPosted", "JobShift", "JobStatus", "Location", "Qualifications", "Responsibility", "SalaryType", "StartBudget", "Title", "Type", "Vacancy" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.", 456.0, "https://img.freepik.com/premium-vector/gradient-business-investment-logo-design_269830-887.jpg?w=2000", 1, new DateTime(2023, 4, 28, 16, 56, 31, 21, DateTimeKind.Local).AddTicks(5064), 0, 0, 0, 0, "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", 0, 123.0, "Marketing Manager", 1, 20 },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.", 456.0, "https://media.istockphoto.com/id/1304359165/vector/motion-data-speed-g-letter-logo-design.jpg?s=612x612&w=0&k=20&c=2A0yYWv8zHhztdShuGoVW87yJZqseV6AKJX0QL2cVuQ=", 6, new DateTime(2023, 4, 28, 16, 56, 31, 21, DateTimeKind.Local).AddTicks(5122), 0, 0, 2, 0, "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", 0, 123.0, "Software Engineer", 1, 5 },
+                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.", 456.0, "https://www.logodesign.net/images/abstract-logo.png", 3, new DateTime(2023, 4, 28, 16, 56, 31, 21, DateTimeKind.Local).AddTicks(5139), 2, 0, 0, 1, "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", 0, 123.0, "Product Designer", 5, 50 }
+                });
 
             migrationBuilder.InsertData(
-                table: "Jobs",
-                columns: new[] { "Id", "CompanyDetail", "Description", "EndBudget", "EndDate", "Icon", "Location", "Qualifications", "Responsibility", "StartBudget", "StartDate", "Status", "Title", "Type", "Vacancy" },
-                values: new object[] { 3, "Ipsum dolor ipsum accusam stet et et diam dolores, sed rebum sadipscing elitr vero dolores. Lorem dolore elitr justo et no gubergren sadipscing, ipsum et takimata aliquyam et rebum est ipsum lorem diam. Et lorem magna eirmod est et et sanctus et, kasd clita labore.", "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.", 557.0, new DateTime(2023, 4, 28, 15, 37, 7, 965, DateTimeKind.Local).AddTicks(6589), "https://www.logodesign.net/images/abstract-logo.png", "New York, USA", "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", 233.0, new DateTime(2023, 3, 29, 15, 37, 7, 965, DateTimeKind.Local).AddTicks(6588), 0, "Product Designer", 1, 5 });
+                table: "Skills",
+                columns: new[] { "Id", "JobSkill" },
+                values: new object[,]
+                {
+                    { 1, "Php" },
+                    { 2, "JS" },
+                    { 3, "Designing" },
+                    { 4, "Application Development" },
+                    { 5, "Arts" },
+                    { 6, "Painting" },
+                    { 7, "Development" },
+                    { 8, "Modeling" },
+                    { 9, "Architecture" },
+                    { 10, "Management" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AllJobsClasses",
+                columns: new[] { "Id", "JobClassId", "JobId" },
+                values: new object[,]
+                {
+                    { 1, 1, 1 },
+                    { 2, 2, 1 },
+                    { 3, 3, 1 },
+                    { 4, 1, 2 },
+                    { 5, 2, 2 },
+                    { 6, 3, 3 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "JobSkills",
+                columns: new[] { "Id", "JobId", "SkillId" },
+                values: new object[,]
+                {
+                    { 1, 1, 1 },
+                    { 2, 1, 2 },
+                    { 3, 1, 3 },
+                    { 4, 2, 3 },
+                    { 5, 2, 6 },
+                    { 6, 3, 6 }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AllJobsClasses_JobClassId",
+                table: "AllJobsClasses",
+                column: "JobClassId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AllJobsClasses_JobId",
+                table: "AllJobsClasses",
+                column: "JobId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -251,10 +384,23 @@ namespace JobPortal.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobSkills_JobId",
+                table: "JobSkills",
+                column: "JobId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobSkills_SkillId",
+                table: "JobSkills",
+                column: "SkillId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AllJobsClasses");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -271,16 +417,22 @@ namespace JobPortal.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "JobSkills");
 
             migrationBuilder.DropTable(
-                name: "Jobs");
+                name: "JobClass");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Jobs");
+
+            migrationBuilder.DropTable(
+                name: "Skills");
         }
     }
 }
