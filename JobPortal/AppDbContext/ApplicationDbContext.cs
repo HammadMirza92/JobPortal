@@ -200,17 +200,17 @@ namespace JobPortal.AppDbContext
             modelBuilder.Entity<JobClass>().HasData(new JobClass
             {
                 Id = 1,
-               JobClasses = "Feature"
+               name = "Feature"
             });
             modelBuilder.Entity<JobClass>().HasData(new JobClass
             {
                 Id = 2,
-                JobClasses = "Urgent"
+                name = "Urgent"
             });
             modelBuilder.Entity<JobClass>().HasData(new JobClass
             {
                 Id = 3,
-                JobClasses = "Private"
+                name = "Private"
             });
 
             /* Job Classes Data*/

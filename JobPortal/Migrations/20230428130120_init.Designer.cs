@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230428115631_init")]
+    [Migration("20230428130120_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,7 +158,7 @@ namespace JobPortal.Migrations
                             EndBudget = 456.0,
                             Icon = "https://img.freepik.com/premium-vector/gradient-business-investment-logo-design_269830-887.jpg?w=2000",
                             JobExperience = 1,
-                            JobPosted = new DateTime(2023, 4, 28, 16, 56, 31, 21, DateTimeKind.Local).AddTicks(5064),
+                            JobPosted = new DateTime(2023, 4, 28, 18, 1, 19, 546, DateTimeKind.Local).AddTicks(379),
                             JobShift = 0,
                             JobStatus = 0,
                             Location = 0,
@@ -178,7 +178,7 @@ namespace JobPortal.Migrations
                             EndBudget = 456.0,
                             Icon = "https://media.istockphoto.com/id/1304359165/vector/motion-data-speed-g-letter-logo-design.jpg?s=612x612&w=0&k=20&c=2A0yYWv8zHhztdShuGoVW87yJZqseV6AKJX0QL2cVuQ=",
                             JobExperience = 6,
-                            JobPosted = new DateTime(2023, 4, 28, 16, 56, 31, 21, DateTimeKind.Local).AddTicks(5122),
+                            JobPosted = new DateTime(2023, 4, 28, 18, 1, 19, 546, DateTimeKind.Local).AddTicks(449),
                             JobShift = 0,
                             JobStatus = 0,
                             Location = 2,
@@ -198,7 +198,7 @@ namespace JobPortal.Migrations
                             EndBudget = 456.0,
                             Icon = "https://www.logodesign.net/images/abstract-logo.png",
                             JobExperience = 3,
-                            JobPosted = new DateTime(2023, 4, 28, 16, 56, 31, 21, DateTimeKind.Local).AddTicks(5139),
+                            JobPosted = new DateTime(2023, 4, 28, 18, 1, 19, 546, DateTimeKind.Local).AddTicks(469),
                             JobShift = 2,
                             JobStatus = 0,
                             Location = 0,
@@ -220,7 +220,7 @@ namespace JobPortal.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("JobClasses")
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -232,17 +232,17 @@ namespace JobPortal.Migrations
                         new
                         {
                             Id = 1,
-                            JobClasses = "Feature"
+                            name = "Feature"
                         },
                         new
                         {
                             Id = 2,
-                            JobClasses = "Urgent"
+                            name = "Urgent"
                         },
                         new
                         {
                             Id = 3,
-                            JobClasses = "Private"
+                            name = "Private"
                         });
                 });
 
@@ -406,21 +406,21 @@ namespace JobPortal.Migrations
                         new
                         {
                             Id = "1d8bbcb9-6d72-4776-b97a-54dd330775ca",
-                            ConcurrencyStamp = "bde35de4-2c91-47ae-9e81-508013015c2b",
+                            ConcurrencyStamp = "2aa0fd1b-3726-4953-a64e-3e825486384a",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "7023e28f-c1dc-42cd-ad76-858802f45979",
-                            ConcurrencyStamp = "0e4dcda6-796d-48d0-9707-0b2b5834dfd0",
+                            ConcurrencyStamp = "9899ce23-4c9f-415a-afe6-a22ab1f83178",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "2fe7daaa-bb2f-43a6-915b-083816e43b87",
-                            ConcurrencyStamp = "a6211d71-b269-46c2-bf21-62e30a470430",
+                            ConcurrencyStamp = "36c5a517-b9a8-45f5-9610-56d38d6bac64",
                             Name = "company",
                             NormalizedName = "COMPANY"
                         });
