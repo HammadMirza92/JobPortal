@@ -11,8 +11,8 @@ namespace JobPortal.Enums
     }
     public enum JobType
     {
-        Freelance = 0,
-        FullTime = 1,
+        FullTime = 0,
+        Freelance = 1,
         Contract = 2,
         Internship = 3,
         Temporary = 4,
@@ -46,7 +46,7 @@ namespace JobPortal.Enums
     }
     public enum JobSalary
     {
-        JobSalary = 0,
+        Monthly =0,
         Weekly = 1,
         Hourly = 2,
         Yearly = 3
@@ -69,10 +69,5 @@ namespace JobPortal.Enums
         Round = 3,
         
     }
-    /*public enum JobClass
-    {
-        Feature = 0,
-        Urgent = 1,
-        Private = 2,
-    }*/
+
 }

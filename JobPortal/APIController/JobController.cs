@@ -1,5 +1,6 @@
 ﻿using JobPortal.Models;
 using JobPortal.Services.IRepository;
+using JobPortal.Services.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,15 +13,23 @@ namespace JobPortal.APIController
     public class JobController : ControllerBase
     {
         private readonly IJobRepository _jobRepository;
-        public JobController(IJobRepository jobRepository)
+        private readonly IJobClassRepository _jobClassRepository;
+        private readonly IAllJobsClassesRepository _alljJobsClassesRepository;
+        public JobController(IJobRepository jobRepository, IJobClassRepository jobClassRepository, IAllJobsClassesRepository alljJobsClassesRepository)
         {
             _jobRepository = jobRepository;
+            _jobClassRepository = jobClassRepository;
+            _alljJobsClassesRepository = alljJobsClassesRepository;
+
         }
         // GET: api/Job
         [HttpGet]
         [ResponseCache(Duration = 120)]
         public async Task<ActionResult<Job>> Get()
         {
+           // await _alljJobsClassesRepository.GetAllJobs();
+
+
             var jobs = await _jobRepository.GetAll();
             if (!jobs.Any())
             {
@@ -29,15 +38,15 @@ namespace JobPortal.APIController
             return Ok(jobs);
         }
         [HttpGet("getFeatureJobs")]
-        [ResponseCache(Duration = 120)]
+        /*[ResponseCache(Duration = 120)]*/
         public async Task<ActionResult<Job>> GetFeatureJobs()
         {
-            var featurejobs = await _jobRepository.GetFeatureJobs();
-            if (!featurejobs.Any())
+            var featureJobs = await _jobRepository.GetFeatureJobs();
+            if (!featureJobs.Any())
             {
                 return BadRequest();
             }
-            return Ok(featurejobs);
+            return Ok(featureJobs);
         }
 
         // GET api/Job/5

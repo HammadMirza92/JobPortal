@@ -1,6 +1,7 @@
 ﻿using JobPortal.Enums;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobPortal.Models
 {
@@ -30,8 +31,7 @@ namespace JobPortal.Models
         [Required]
         [DisplayName("End Budget")]
         public double EndBudget { get; set; }
-        public ICollection<JobSkills> JobSkills { get; set; }
-        public ICollection<AllJobsClasses> AllJobsClasses { get; set; }
+        
         [Required]
         public JobExperience JobExperience { get; set; }
         [Required]
@@ -46,5 +46,11 @@ namespace JobPortal.Models
 
         [Required]
         public int Vacancy { get; set; }
+        public int EmployeerId { get; set; }
+        [ForeignKey(nameof(EmployeerId))]
+        public Employeer Employeer { get; set; }
+
+        public ICollection<JobSkills> JobSkills { get; set; }
+        public ICollection<AllJobsClasses> AllJobsClasses { get; set; }
     }
 }

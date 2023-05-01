@@ -2,7 +2,9 @@
 using JobPortal.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using static IdentityServer4.Models.IdentityResources;
 
 namespace JobPortal.AppDbContext
 {
@@ -18,6 +20,9 @@ namespace JobPortal.AppDbContext
         public DbSet<AllJobsClasses> AllJobsClasses { get; set; }
         public DbSet<JobClass> JobClass { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Candidate> Candidate { get; set; }
+        public DbSet<Employeer> Employeer { get; set; }
+        public DbSet<CandidateSkills> CandidateSkills { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,7 +44,8 @@ namespace JobPortal.AppDbContext
                 EndBudget = 456,
                 JobShift = JobShift.Morning,
                 JobStatus = JobStatus.Open,
-                Vacancy = 20
+                Vacancy = 20,
+                EmployeerId =1,
             });
             modelBuilder.Entity<Job>().HasData(new Job
             {
@@ -53,11 +59,12 @@ namespace JobPortal.AppDbContext
                 Qualifications = Qualification.Bachelor,
                 SalaryType = SalaryType.Monthly,
                 JobExperience = JobExperience.AboveFive,
-                StartBudget = 123,
-                EndBudget = 456,
+                StartBudget = 334,
+                EndBudget = 777,
                 JobShift = JobShift.Morning,
                 JobStatus = JobStatus.Open,
-                Vacancy = 5
+                Vacancy = 5,
+                EmployeerId = 1,
             });
             modelBuilder.Entity<Job>().HasData(new Job
             {
@@ -72,11 +79,12 @@ namespace JobPortal.AppDbContext
                 Qualifications = Qualification.Master,
                 SalaryType = SalaryType.Monthly,
                 JobExperience = JobExperience.Threeyear,
-                StartBudget = 123,
-                EndBudget = 456,
+                StartBudget = 190,
+                EndBudget = 340,
                 JobShift = JobShift.Night,
                 JobStatus = JobStatus.Open,
-                Vacancy = 50
+                Vacancy = 50,
+                EmployeerId = 2,
             });
 
 
@@ -157,6 +165,56 @@ namespace JobPortal.AppDbContext
                 Id = 10,
                 JobSkill = "Management",
             });
+
+            /*Candidate Date*/
+
+            modelBuilder.Entity<Candidate>().HasData(new Candidate
+            {
+                Id = 1,
+                Name="Hammad Mirza",
+                ProfileImg = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                AboutMe= "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;",
+                Experience= ".Net Developer",
+                Phone=03000000,
+                Location=Location.Lahore,
+                Email="hammad@gmail.com",
+                ExperienceTime=5,
+                ExpectedSalary = 300,
+                Age =23,
+                Qualification = Qualification.Bachelor
+            });
+            modelBuilder.Entity<Candidate>().HasData(new Candidate
+            {
+                Id = 2,
+                Name = "Ahtesham",
+                ProfileImg = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                AboutMe = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;",
+                Experience = "Php Laravel",
+                Phone = 03000000,
+                Location = Location.Lahore,
+                Email = "Ahtesham@gmail.com",
+                ExperienceTime = 6,
+                ExpectedSalary = 400,
+                Age = 23,
+                Qualification = Qualification.Bachelor
+            });
+            modelBuilder.Entity<Candidate>().HasData(new Candidate
+            {
+                Id = 3,
+                Name = "Sohaib",
+                ProfileImg = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                AboutMe = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;",
+                Experience = "React Designer",
+                Phone = 03000000,
+                Location = Location.Islamabad,
+                Email = "Sohaib@gmail.com",
+                ExperienceTime = 8,
+                ExpectedSalary = 500,
+                Age = 23,
+                Qualification = Qualification.Master
+            });
+
+            /*JobSkils data*/
 
 
             modelBuilder.Entity<JobSkills>().HasData(new JobSkills
@@ -250,6 +308,49 @@ namespace JobPortal.AppDbContext
                 Id = 6,
                 JobId = 3,
                 JobClassId = 3,
+            });
+
+
+            /* Employeers Data*/
+
+            modelBuilder.Entity<Employeer>().HasData(new Employeer
+            {
+                Id = 1,
+                CompanyName = "Avitex Agency",
+                CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
+                CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                Founded = DateTime.Now,
+                Headquarters = "Las Vegas, NV 89107, USA",
+                Industry = "It",
+                CompanyWebsite = "https://jobs.nokriwp.com/",
+                CompanyEmail="Avitex@gmail.com",
+                CompanySize=200
+            }) ;
+            modelBuilder.Entity<Employeer>().HasData(new Employeer
+            {
+                Id = 2,
+                CompanyName = "Demo 1",
+                CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
+                CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                Founded = DateTime.Now,
+                Headquarters = "Lahore",
+                Industry = "It",
+                CompanyWebsite = "https://jobs.nokriwp.com/",
+                CompanyEmail = "demo1@gmail.com",
+                CompanySize = 50
+            });
+            modelBuilder.Entity<Employeer>().HasData(new Employeer
+            {
+                Id = 3,
+                CompanyName = "Honda",
+                CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
+                CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                Founded = DateTime.Now,
+                Headquarters = "Islamabad",
+                Industry = "Machenical",
+                CompanyWebsite = "https://jobs.nokriwp.com/",
+                CompanyEmail = "honda@gmail.com",
+                CompanySize = 600
             });
 
         }

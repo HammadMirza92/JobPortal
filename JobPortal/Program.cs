@@ -39,6 +39,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 
 builder.Services.AddScoped<IJobRepository, JobRepository>();
+builder.Services.AddScoped<IJobClassRepository, JobClassRepository>();
+builder.Services.AddScoped<IAllJobsClassesRepository, AllJobsClassesRepository>();
 
 builder.Services.AddCors(opt =>
 {

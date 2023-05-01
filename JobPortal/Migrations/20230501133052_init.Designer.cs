@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230428130120_init")]
+    [Migration("20230501133052_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -85,6 +85,215 @@ namespace JobPortal.Migrations
                         });
                 });
 
+            modelBuilder.Entity("JobPortal.Models.Candidate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AboutMe")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ExpectedSalary")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Experience")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ExperienceTime")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Location")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Phone")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProfileImg")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Qualification")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Candidate");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AboutMe = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;",
+                            Age = 23,
+                            Email = "hammad@gmail.com",
+                            ExpectedSalary = 300,
+                            Experience = ".Net Developer",
+                            ExperienceTime = 5,
+                            Location = 0,
+                            Name = "Hammad Mirza",
+                            Phone = 3000000,
+                            ProfileImg = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                            Qualification = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AboutMe = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;",
+                            Age = 23,
+                            Email = "Ahtesham@gmail.com",
+                            ExpectedSalary = 400,
+                            Experience = "Php Laravel",
+                            ExperienceTime = 6,
+                            Location = 0,
+                            Name = "Ahtesham",
+                            Phone = 3000000,
+                            ProfileImg = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                            Qualification = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AboutMe = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;",
+                            Age = 23,
+                            Email = "Sohaib@gmail.com",
+                            ExpectedSalary = 500,
+                            Experience = "React Designer",
+                            ExperienceTime = 8,
+                            Location = 1,
+                            Name = "Sohaib",
+                            Phone = 3000000,
+                            ProfileImg = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                            Qualification = 1
+                        });
+                });
+
+            modelBuilder.Entity("JobPortal.Models.CandidateSkills", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CandidateId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SkillId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CandidateId");
+
+                    b.HasIndex("SkillId");
+
+                    b.ToTable("CandidateSkills");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.Employeer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CompanyAbout")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyLogo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CompanySize")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CompanyWebsite")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Founded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Headquarters")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Industry")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Employeer");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
+                            CompanyEmail = "Avitex@gmail.com",
+                            CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                            CompanyName = "Avitex Agency",
+                            CompanySize = 200,
+                            CompanyWebsite = "https://jobs.nokriwp.com/",
+                            Founded = new DateTime(2023, 5, 1, 18, 30, 51, 727, DateTimeKind.Local).AddTicks(9248),
+                            Headquarters = "Las Vegas, NV 89107, USA",
+                            Industry = "It"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
+                            CompanyEmail = "demo1@gmail.com",
+                            CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                            CompanyName = "Demo 1",
+                            CompanySize = 50,
+                            CompanyWebsite = "https://jobs.nokriwp.com/",
+                            Founded = new DateTime(2023, 5, 1, 18, 30, 51, 727, DateTimeKind.Local).AddTicks(9268),
+                            Headquarters = "Lahore",
+                            Industry = "It"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
+                            CompanyEmail = "honda@gmail.com",
+                            CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                            CompanyName = "Honda",
+                            CompanySize = 600,
+                            CompanyWebsite = "https://jobs.nokriwp.com/",
+                            Founded = new DateTime(2023, 5, 1, 18, 30, 51, 727, DateTimeKind.Local).AddTicks(9282),
+                            Headquarters = "Islamabad",
+                            Industry = "Machenical"
+                        });
+                });
+
             modelBuilder.Entity("JobPortal.Models.Job", b =>
                 {
                     b.Property<int>("Id")
@@ -99,6 +308,9 @@ namespace JobPortal.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EmployeerId")
+                        .HasColumnType("int");
 
                     b.Property<double>("EndBudget")
                         .HasColumnType("float");
@@ -147,6 +359,8 @@ namespace JobPortal.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EmployeerId");
+
                     b.ToTable("Jobs");
 
                     b.HasData(
@@ -155,10 +369,11 @@ namespace JobPortal.Migrations
                             Id = 1,
                             DeadLine = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
+                            EmployeerId = 1,
                             EndBudget = 456.0,
                             Icon = "https://img.freepik.com/premium-vector/gradient-business-investment-logo-design_269830-887.jpg?w=2000",
                             JobExperience = 1,
-                            JobPosted = new DateTime(2023, 4, 28, 18, 1, 19, 546, DateTimeKind.Local).AddTicks(379),
+                            JobPosted = new DateTime(2023, 5, 1, 18, 30, 51, 727, DateTimeKind.Local).AddTicks(7943),
                             JobShift = 0,
                             JobStatus = 0,
                             Location = 0,
@@ -167,7 +382,7 @@ namespace JobPortal.Migrations
                             SalaryType = 0,
                             StartBudget = 123.0,
                             Title = "Marketing Manager",
-                            Type = 1,
+                            Type = 0,
                             Vacancy = 20
                         },
                         new
@@ -175,19 +390,20 @@ namespace JobPortal.Migrations
                             Id = 2,
                             DeadLine = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
-                            EndBudget = 456.0,
+                            EmployeerId = 1,
+                            EndBudget = 777.0,
                             Icon = "https://media.istockphoto.com/id/1304359165/vector/motion-data-speed-g-letter-logo-design.jpg?s=612x612&w=0&k=20&c=2A0yYWv8zHhztdShuGoVW87yJZqseV6AKJX0QL2cVuQ=",
                             JobExperience = 6,
-                            JobPosted = new DateTime(2023, 4, 28, 18, 1, 19, 546, DateTimeKind.Local).AddTicks(449),
+                            JobPosted = new DateTime(2023, 5, 1, 18, 30, 51, 727, DateTimeKind.Local).AddTicks(7988),
                             JobShift = 0,
                             JobStatus = 0,
                             Location = 2,
                             Qualifications = 0,
                             Responsibility = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
                             SalaryType = 0,
-                            StartBudget = 123.0,
+                            StartBudget = 334.0,
                             Title = "Software Engineer",
-                            Type = 1,
+                            Type = 0,
                             Vacancy = 5
                         },
                         new
@@ -195,17 +411,18 @@ namespace JobPortal.Migrations
                             Id = 3,
                             DeadLine = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
-                            EndBudget = 456.0,
+                            EmployeerId = 2,
+                            EndBudget = 340.0,
                             Icon = "https://www.logodesign.net/images/abstract-logo.png",
                             JobExperience = 3,
-                            JobPosted = new DateTime(2023, 4, 28, 18, 1, 19, 546, DateTimeKind.Local).AddTicks(469),
+                            JobPosted = new DateTime(2023, 5, 1, 18, 30, 51, 727, DateTimeKind.Local).AddTicks(8004),
                             JobShift = 2,
                             JobStatus = 0,
                             Location = 0,
                             Qualifications = 1,
                             Responsibility = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
                             SalaryType = 0,
-                            StartBudget = 123.0,
+                            StartBudget = 190.0,
                             Title = "Product Designer",
                             Type = 5,
                             Vacancy = 50
@@ -406,21 +623,21 @@ namespace JobPortal.Migrations
                         new
                         {
                             Id = "1d8bbcb9-6d72-4776-b97a-54dd330775ca",
-                            ConcurrencyStamp = "2aa0fd1b-3726-4953-a64e-3e825486384a",
+                            ConcurrencyStamp = "b7d7b3af-4515-4ddf-b7cf-2b9538af5c74",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "7023e28f-c1dc-42cd-ad76-858802f45979",
-                            ConcurrencyStamp = "9899ce23-4c9f-415a-afe6-a22ab1f83178",
+                            ConcurrencyStamp = "416ebff8-7921-43b7-aa5b-1e6b9ba333f8",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "2fe7daaa-bb2f-43a6-915b-083816e43b87",
-                            ConcurrencyStamp = "36c5a517-b9a8-45f5-9610-56d38d6bac64",
+                            ConcurrencyStamp = "7836e24e-7829-496f-bc1e-dcb24d534789",
                             Name = "company",
                             NormalizedName = "COMPANY"
                         });
@@ -641,6 +858,36 @@ namespace JobPortal.Migrations
                     b.Navigation("JobClass");
                 });
 
+            modelBuilder.Entity("JobPortal.Models.CandidateSkills", b =>
+                {
+                    b.HasOne("JobPortal.Models.Candidate", "Candidate")
+                        .WithMany("CandidateSkills")
+                        .HasForeignKey("CandidateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JobPortal.Models.Skills", "Skills")
+                        .WithMany("CandidateSkills")
+                        .HasForeignKey("SkillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Candidate");
+
+                    b.Navigation("Skills");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.Job", b =>
+                {
+                    b.HasOne("JobPortal.Models.Employeer", "Employeer")
+                        .WithMany("JobOffered")
+                        .HasForeignKey("EmployeerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employeer");
+                });
+
             modelBuilder.Entity("JobPortal.Models.JobSkills", b =>
                 {
                     b.HasOne("JobPortal.Models.Job", "Job")
@@ -711,6 +958,16 @@ namespace JobPortal.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("JobPortal.Models.Candidate", b =>
+                {
+                    b.Navigation("CandidateSkills");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.Employeer", b =>
+                {
+                    b.Navigation("JobOffered");
+                });
+
             modelBuilder.Entity("JobPortal.Models.Job", b =>
                 {
                     b.Navigation("AllJobsClasses");
@@ -725,6 +982,8 @@ namespace JobPortal.Migrations
 
             modelBuilder.Entity("JobPortal.Models.Skills", b =>
                 {
+                    b.Navigation("CandidateSkills");
+
                     b.Navigation("JobSkills");
                 });
 #pragma warning restore 612, 618
