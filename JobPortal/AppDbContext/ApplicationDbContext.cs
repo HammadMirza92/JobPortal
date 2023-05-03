@@ -12,7 +12,7 @@ namespace JobPortal.AppDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
         {
-            
+          
         }
         public DbSet<Job> Jobs { get; set; }
         public DbSet<Skills> Skills { get; set; }
@@ -21,12 +21,14 @@ namespace JobPortal.AppDbContext
         public DbSet<JobClass> JobClass { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Candidate> Candidate { get; set; }
-        public DbSet<Employeer> Employeer { get; set; }
+        public DbSet<Employer> Employeer { get; set; }
         public DbSet<CandidateSkills> CandidateSkills { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            /*Jobs Data*/
 
             modelBuilder.Entity<Job>().HasData(new Job
             {
@@ -46,8 +48,8 @@ namespace JobPortal.AppDbContext
                 JobStatus = JobStatus.Open,
                 Vacancy = 20,
                 EmployeerId =1,
-            });
-            modelBuilder.Entity<Job>().HasData(new Job
+            },
+            new Job
             {
                 Id = 2,
                 Icon = "https://media.istockphoto.com/id/1304359165/vector/motion-data-speed-g-letter-logo-design.jpg?s=612x612&w=0&k=20&c=2A0yYWv8zHhztdShuGoVW87yJZqseV6AKJX0QL2cVuQ=",
@@ -65,8 +67,8 @@ namespace JobPortal.AppDbContext
                 JobStatus = JobStatus.Open,
                 Vacancy = 5,
                 EmployeerId = 1,
-            });
-            modelBuilder.Entity<Job>().HasData(new Job
+            },
+            new Job
             {
 
                 Id = 3,
@@ -87,84 +89,203 @@ namespace JobPortal.AppDbContext
                 EmployeerId = 2,
             });
 
-
-
+            /*Roles*/
 
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
             {
                 Id= "1d8bbcb9-6d72-4776-b97a-54dd330775ca",
                 Name="admin",
                 NormalizedName="ADMIN",
-            });
-
-            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
+            },
+            new IdentityRole
             {
                 Id = "7023e28f-c1dc-42cd-ad76-858802f45979",
-                Name = "user",
-                NormalizedName = "USER",
+                Name = "candidate",
+                NormalizedName = "CANDIDATE",
+            },
+            new IdentityRole
+            {
+                Id = "b189a208-8a38-42c5-9922-5dcb918e85c9",
+                Name = "employeer",
+                NormalizedName = "EMPLOYEER",
             });
 
-            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
+           
+
+            /*Identity User*/
+
+            modelBuilder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
                 Id = "2fe7daaa-bb2f-43a6-915b-083816e43b87",
-                Name = "company",
-                NormalizedName = "COMPANY",
+                UserName = "employeer1@gmail.com",
+                FirstName = "Employeer 1",
+                LastName="first Employeer",
+                NormalizedUserName = "EMPLOYEER1@EMAIL.COM",
+                Email = "employeer1@gmail.com",
+                NormalizedEmail = "EMPLOYEER1@EMAIL.COM",
+                EmailConfirmed = true,
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password")
+            },
+            new ApplicationUser
+            {
+                Id = "088fffd7-94b4-448e-9b67-5619fcf19441",
+                UserName = "employeer2@gmail.com",
+                FirstName = "Employeer 2",
+                LastName = "Second Employeer",
+                NormalizedUserName = "EMPLOYEER2@EMAIL.COM",
+                Email = "employeer2@gmail.com",
+                NormalizedEmail = "EMPLOYEER2@EMAIL.COM",
+                EmailConfirmed = true,
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password")
+            },
+              new ApplicationUser
+              {
+                  Id = "06e4bc68-0d75-429c-b513-e12c2ab03494",
+                  UserName = "employeer3@gmail.com",
+                  FirstName = "Employeer 3",
+                  LastName = "Third Employeer",
+                  NormalizedUserName = "EMPLOYEER3@EMAIL.COM",
+                  Email = "employeer3@gmail.com",
+                  NormalizedEmail = "EMPLOYEER3@EMAIL.COM",
+                  EmailConfirmed = true,
+                  PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password")
+              },
+            new ApplicationUser
+            {
+                Id = "995ce588-b342-47b8-88f7-349365f898f9",
+                UserName = "candidate@gmail.com",
+                FirstName = "CAndidate 1",
+                LastName = "First CAndidate",
+                NormalizedUserName = "CANDIDATE@EMAIL.COM",
+                Email = "candidate@gmail.com",
+                NormalizedEmail = "CANDIDATE@EMAIL.COM",
+                EmailConfirmed = true,
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password")
             });
 
+            /*User Roles*/
 
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+            new IdentityUserRole<string>
+            {
+                UserId = "2fe7daaa-bb2f-43a6-915b-083816e43b87",
+                RoleId = "b189a208-8a38-42c5-9922-5dcb918e85c9"
+            },
+            new IdentityUserRole<string>
+            {
+                UserId = "088fffd7-94b4-448e-9b67-5619fcf19441",
+                RoleId = "b189a208-8a38-42c5-9922-5dcb918e85c9"
+            },
+            new IdentityUserRole<string>
+            {
+                UserId = "06e4bc68-0d75-429c-b513-e12c2ab03494",
+                RoleId = "b189a208-8a38-42c5-9922-5dcb918e85c9"
+            },
+            new IdentityUserRole<string>
+            {
+                UserId = "995ce588-b342-47b8-88f7-349365f898f9",
+                RoleId = "7023e28f-c1dc-42cd-ad76-858802f45979"
+            });
 
+            /* Employeers Data*/
 
+            modelBuilder.Entity<Employer>().HasData(new Employer
+            {
+                Id = 1,
+                CompanyName = "Avitex Agency",
+                CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
+                CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                Founded = DateTime.Now,
+                Headquarters = "Las Vegas, NV 89107, USA",
+                Industry = "It",
+                CompanyWebsite = "https://jobs.nokriwp.com/",
+                CompanyEmail = "Avitex@gmail.com",
+                CompanySize = 200,
+                UserId = "2fe7daaa-bb2f-43a6-915b-083816e43b87"
+            },
+            new Employer
+            {
+                Id = 2,
+                CompanyName = "Demo 1",
+                CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
+                CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                Founded = DateTime.Now,
+                Headquarters = "Lahore",
+                Industry = "It",
+                CompanyWebsite = "https://jobs.nokriwp.com/",
+                CompanyEmail = "demo1@gmail.com",
+                CompanySize = 50,
+                UserId = "088fffd7-94b4-448e-9b67-5619fcf19441"
+            },
+            new Employer
+            {
+                Id = 3,
+                CompanyName = "Honda",
+                CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
+                CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                Founded = DateTime.Now,
+                Headquarters = "Islamabad",
+                Industry = "Machenical",
+                CompanyWebsite = "https://jobs.nokriwp.com/",
+                CompanyEmail = "honda@gmail.com",
+                CompanySize = 600,
+                UserId ="06e4bc68-0d75-429c-b513-e12c2ab03494"
+            }) ;
 
-            modelBuilder.Entity<Skills>().HasData(new Skills
+            /*Skills*/
+
+            modelBuilder.Entity<Skills>().HasData(
+            new Skills
             {
                 Id = 1,
                 JobSkill = "Php",
-            });
-            modelBuilder.Entity<Skills>().HasData(new Skills
+            }, 
+            new Skills
             {
                 Id = 2,
                 JobSkill = "JS",
-            });
-            modelBuilder.Entity<Skills>().HasData(new Skills
+            },
+            new Skills
             {
                 Id = 3,
                 JobSkill = "Designing",
-            });
-            modelBuilder.Entity<Skills>().HasData(new Skills
+            },
+            new Skills
             {
                 Id = 4,
                 JobSkill = "Application Development",
-            });
-            modelBuilder.Entity<Skills>().HasData(new Skills
+            },
+            new Skills
             {
                 Id = 5,
                 JobSkill = "Arts",
-            });
-            modelBuilder.Entity<Skills>().HasData(new Skills
+            },
+            new Skills
             {
                 Id = 6,
-                JobSkill = "Painting",
-            });
-            modelBuilder.Entity<Skills>().HasData(new Skills
+                JobSkill = ".Net",
+            },
+            new Skills
             {
                 Id = 7,
                 JobSkill = "Development",
-            });
-            modelBuilder.Entity<Skills>().HasData(new Skills
+            },
+            new Skills
             {
                 Id = 8,
                 JobSkill = "Modeling",
-            });
-            modelBuilder.Entity<Skills>().HasData(new Skills
+            },
+            new Skills
             {
                 Id = 9,
                 JobSkill = "Architecture",
-            });
-            modelBuilder.Entity<Skills>().HasData(new Skills
+            },
+            new Skills
             {
                 Id = 10,
                 JobSkill = "Management",
             });
+ 
 
             /*Candidate Date*/
 
@@ -181,9 +302,10 @@ namespace JobPortal.AppDbContext
                 ExperienceTime=5,
                 ExpectedSalary = 300,
                 Age =23,
-                Qualification = Qualification.Bachelor
-            });
-            modelBuilder.Entity<Candidate>().HasData(new Candidate
+                Qualification = Qualification.Bachelor,
+                
+            },
+            new Candidate
             {
                 Id = 2,
                 Name = "Ahtesham",
@@ -197,8 +319,8 @@ namespace JobPortal.AppDbContext
                 ExpectedSalary = 400,
                 Age = 23,
                 Qualification = Qualification.Bachelor
-            });
-            modelBuilder.Entity<Candidate>().HasData(new Candidate
+            },
+            new Candidate
             {
                 Id = 3,
                 Name = "Sohaib",
@@ -214,145 +336,148 @@ namespace JobPortal.AppDbContext
                 Qualification = Qualification.Master
             });
 
-            /*JobSkils data*/
 
+            /*Candidate skills*/
+            modelBuilder.Entity<CandidateSkills>().HasData(new CandidateSkills
+            {
+                Id = 1,
+                CandidateId = 1,
+                SkillId = 4
+            },
+            new CandidateSkills
+            {
+                Id = 2,
+                CandidateId = 1,
+                SkillId = 6
+            },
+            new CandidateSkills
+            {
+                Id = 3,
+                CandidateId = 1,
+                SkillId = 9
+            },
+            new CandidateSkills
+            {
+                Id = 4,
+                CandidateId = 2,
+                SkillId = 1
+            },
+            new CandidateSkills
+            {
+                Id = 5,
+                CandidateId = 3,
+                SkillId = 3
+            },
+            new CandidateSkills
+            {
+                Id = 6,
+                CandidateId = 3,
+                SkillId = 5
+            },
+            new CandidateSkills
+            {
+                Id = 7,
+                CandidateId = 3,
+                SkillId = 7
+            });
+         
+            /*JobSkils data*/
 
             modelBuilder.Entity<JobSkills>().HasData(new JobSkills
             {
                 Id = 1,
                 JobId = 1,
                 SkillId = 1,
-            });
-            modelBuilder.Entity<JobSkills>().HasData(new JobSkills
+            },
+            new JobSkills
             {
                 Id = 2,
                 JobId = 1,
                 SkillId = 2,
-            });
-            modelBuilder.Entity<JobSkills>().HasData(new JobSkills
+            },
+            new JobSkills
             {
                 Id = 3,
                 JobId = 1,
                 SkillId = 3,
-            });
-
-            modelBuilder.Entity<JobSkills>().HasData(new JobSkills
+            },
+            new JobSkills
             {
                 Id = 4,
                 JobId = 2,
                 SkillId = 3,
-            });
-            modelBuilder.Entity<JobSkills>().HasData(new JobSkills
+            },
+            new JobSkills
             {
                 Id = 5,
                 JobId = 2,
                 SkillId = 6,
-            });
-            modelBuilder.Entity<JobSkills>().HasData(new JobSkills
+            },
+            new JobSkills
             {
                 Id = 6,
                 JobId = 3,
                 SkillId = 6,
             });
+          
+            /*Job Class*/
 
             modelBuilder.Entity<JobClass>().HasData(new JobClass
             {
                 Id = 1,
                name = "Feature"
-            });
-            modelBuilder.Entity<JobClass>().HasData(new JobClass
+            },
+            new JobClass
             {
                 Id = 2,
                 name = "Urgent"
-            });
-            modelBuilder.Entity<JobClass>().HasData(new JobClass
+            },
+            new JobClass
             {
                 Id = 3,
                 name = "Private"
             });
-
-            /* Job Classes Data*/
+   
+            /* All Jobs Classes Data*/
 
             modelBuilder.Entity<AllJobsClasses>().HasData(new AllJobsClasses
             {
                 Id = 1,
                 JobId = 1,
                 JobClassId = 1,
-            });
-            modelBuilder.Entity<AllJobsClasses>().HasData(new AllJobsClasses
+            },
+            new AllJobsClasses
             {
                 Id = 2,
                 JobId = 1,
                 JobClassId = 2,
-            });
-            modelBuilder.Entity<AllJobsClasses>().HasData(new AllJobsClasses
+            },
+            new AllJobsClasses
             {
                 Id = 3,
                 JobId = 1,
                 JobClassId = 3,
-            });
-            modelBuilder.Entity<AllJobsClasses>().HasData(new AllJobsClasses
+            },
+            new AllJobsClasses
             {
                 Id = 4,
                 JobId = 2,
                 JobClassId = 1,
-            });
-            modelBuilder.Entity<AllJobsClasses>().HasData(new AllJobsClasses
+            },
+            new AllJobsClasses
             {
                 Id = 5,
                 JobId = 2,
                 JobClassId = 2,
-            });
-            modelBuilder.Entity<AllJobsClasses>().HasData(new AllJobsClasses
+            },
+            new AllJobsClasses
             {
                 Id = 6,
                 JobId = 3,
                 JobClassId = 3,
             });
-
-
-            /* Employeers Data*/
-
-            modelBuilder.Entity<Employeer>().HasData(new Employeer
-            {
-                Id = 1,
-                CompanyName = "Avitex Agency",
-                CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
-                CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
-                Founded = DateTime.Now,
-                Headquarters = "Las Vegas, NV 89107, USA",
-                Industry = "It",
-                CompanyWebsite = "https://jobs.nokriwp.com/",
-                CompanyEmail="Avitex@gmail.com",
-                CompanySize=200
-            }) ;
-            modelBuilder.Entity<Employeer>().HasData(new Employeer
-            {
-                Id = 2,
-                CompanyName = "Demo 1",
-                CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
-                CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
-                Founded = DateTime.Now,
-                Headquarters = "Lahore",
-                Industry = "It",
-                CompanyWebsite = "https://jobs.nokriwp.com/",
-                CompanyEmail = "demo1@gmail.com",
-                CompanySize = 50
-            });
-            modelBuilder.Entity<Employeer>().HasData(new Employeer
-            {
-                Id = 3,
-                CompanyName = "Honda",
-                CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
-                CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
-                Founded = DateTime.Now,
-                Headquarters = "Islamabad",
-                Industry = "Machenical",
-                CompanyWebsite = "https://jobs.nokriwp.com/",
-                CompanyEmail = "honda@gmail.com",
-                CompanySize = 600
-            });
-
+         
         }
+              
     }
 }

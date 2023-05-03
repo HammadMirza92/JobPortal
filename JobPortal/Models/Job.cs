@@ -48,7 +48,7 @@ namespace JobPortal.Models
         public int Vacancy { get; set; }
         public int EmployeerId { get; set; }
         [ForeignKey(nameof(EmployeerId))]
-        public Employeer Employeer { get; set; }
+        public Employer Employeer { get; set; }
 
         public ICollection<JobSkills> JobSkills { get; set; }
         public ICollection<AllJobsClasses> AllJobsClasses { get; set; }

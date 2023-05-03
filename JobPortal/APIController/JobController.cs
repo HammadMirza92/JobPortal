@@ -38,7 +38,7 @@ namespace JobPortal.APIController
             return Ok(jobs);
         }
         [HttpGet("getFeatureJobs")]
-        /*[ResponseCache(Duration = 120)]*/
+        [ResponseCache(Duration = 120)]
         public async Task<ActionResult<Job>> GetFeatureJobs()
         {
             var featureJobs = await _jobRepository.GetFeatureJobs();

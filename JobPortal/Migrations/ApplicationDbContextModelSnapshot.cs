@@ -202,6 +202,50 @@ namespace JobPortal.Migrations
                     b.HasIndex("SkillId");
 
                     b.ToTable("CandidateSkills");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CandidateId = 1,
+                            SkillId = 4
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CandidateId = 1,
+                            SkillId = 6
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CandidateId = 1,
+                            SkillId = 9
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CandidateId = 2,
+                            SkillId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CandidateId = 3,
+                            SkillId = 3
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CandidateId = 3,
+                            SkillId = 5
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CandidateId = 3,
+                            SkillId = 7
+                        });
                 });
 
             modelBuilder.Entity("JobPortal.Models.Employeer", b =>
@@ -246,7 +290,13 @@ namespace JobPortal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Employeer");
 
@@ -260,9 +310,10 @@ namespace JobPortal.Migrations
                             CompanyName = "Avitex Agency",
                             CompanySize = 200,
                             CompanyWebsite = "https://jobs.nokriwp.com/",
-                            Founded = new DateTime(2023, 5, 1, 18, 30, 51, 727, DateTimeKind.Local).AddTicks(9248),
+                            Founded = new DateTime(2023, 5, 3, 13, 3, 14, 378, DateTimeKind.Local).AddTicks(6632),
                             Headquarters = "Las Vegas, NV 89107, USA",
-                            Industry = "It"
+                            Industry = "It",
+                            UserId = "2fe7daaa-bb2f-43a6-915b-083816e43b87"
                         },
                         new
                         {
@@ -273,9 +324,10 @@ namespace JobPortal.Migrations
                             CompanyName = "Demo 1",
                             CompanySize = 50,
                             CompanyWebsite = "https://jobs.nokriwp.com/",
-                            Founded = new DateTime(2023, 5, 1, 18, 30, 51, 727, DateTimeKind.Local).AddTicks(9268),
+                            Founded = new DateTime(2023, 5, 3, 13, 3, 14, 378, DateTimeKind.Local).AddTicks(6664),
                             Headquarters = "Lahore",
-                            Industry = "It"
+                            Industry = "It",
+                            UserId = "088fffd7-94b4-448e-9b67-5619fcf19441"
                         },
                         new
                         {
@@ -286,9 +338,10 @@ namespace JobPortal.Migrations
                             CompanyName = "Honda",
                             CompanySize = 600,
                             CompanyWebsite = "https://jobs.nokriwp.com/",
-                            Founded = new DateTime(2023, 5, 1, 18, 30, 51, 727, DateTimeKind.Local).AddTicks(9282),
+                            Founded = new DateTime(2023, 5, 3, 13, 3, 14, 378, DateTimeKind.Local).AddTicks(6669),
                             Headquarters = "Islamabad",
-                            Industry = "Machenical"
+                            Industry = "Machenical",
+                            UserId = "06e4bc68-0d75-429c-b513-e12c2ab03494"
                         });
                 });
 
@@ -371,7 +424,7 @@ namespace JobPortal.Migrations
                             EndBudget = 456.0,
                             Icon = "https://img.freepik.com/premium-vector/gradient-business-investment-logo-design_269830-887.jpg?w=2000",
                             JobExperience = 1,
-                            JobPosted = new DateTime(2023, 5, 1, 18, 30, 51, 727, DateTimeKind.Local).AddTicks(7943),
+                            JobPosted = new DateTime(2023, 5, 3, 13, 3, 14, 273, DateTimeKind.Local).AddTicks(5761),
                             JobShift = 0,
                             JobStatus = 0,
                             Location = 0,
@@ -392,7 +445,7 @@ namespace JobPortal.Migrations
                             EndBudget = 777.0,
                             Icon = "https://media.istockphoto.com/id/1304359165/vector/motion-data-speed-g-letter-logo-design.jpg?s=612x612&w=0&k=20&c=2A0yYWv8zHhztdShuGoVW87yJZqseV6AKJX0QL2cVuQ=",
                             JobExperience = 6,
-                            JobPosted = new DateTime(2023, 5, 1, 18, 30, 51, 727, DateTimeKind.Local).AddTicks(7988),
+                            JobPosted = new DateTime(2023, 5, 3, 13, 3, 14, 273, DateTimeKind.Local).AddTicks(5791),
                             JobShift = 0,
                             JobStatus = 0,
                             Location = 2,
@@ -413,7 +466,7 @@ namespace JobPortal.Migrations
                             EndBudget = 340.0,
                             Icon = "https://www.logodesign.net/images/abstract-logo.png",
                             JobExperience = 3,
-                            JobPosted = new DateTime(2023, 5, 1, 18, 30, 51, 727, DateTimeKind.Local).AddTicks(8004),
+                            JobPosted = new DateTime(2023, 5, 3, 13, 3, 14, 273, DateTimeKind.Local).AddTicks(5797),
                             JobShift = 2,
                             JobStatus = 0,
                             Location = 0,
@@ -567,7 +620,7 @@ namespace JobPortal.Migrations
                         new
                         {
                             Id = 6,
-                            JobSkill = "Painting"
+                            JobSkill = ".Net"
                         },
                         new
                         {
@@ -621,23 +674,23 @@ namespace JobPortal.Migrations
                         new
                         {
                             Id = "1d8bbcb9-6d72-4776-b97a-54dd330775ca",
-                            ConcurrencyStamp = "b7d7b3af-4515-4ddf-b7cf-2b9538af5c74",
+                            ConcurrencyStamp = "276b4f9c-ceb4-49cb-b1e2-9ebb2cb3cc5f",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "7023e28f-c1dc-42cd-ad76-858802f45979",
-                            ConcurrencyStamp = "416ebff8-7921-43b7-aa5b-1e6b9ba333f8",
-                            Name = "user",
-                            NormalizedName = "USER"
+                            ConcurrencyStamp = "fda70e66-7ed8-4c5a-b0b6-c7e8a806c4cd",
+                            Name = "candidate",
+                            NormalizedName = "CANDIDATE"
                         },
                         new
                         {
-                            Id = "2fe7daaa-bb2f-43a6-915b-083816e43b87",
-                            ConcurrencyStamp = "7836e24e-7829-496f-bc1e-dcb24d534789",
-                            Name = "company",
-                            NormalizedName = "COMPANY"
+                            Id = "b189a208-8a38-42c5-9922-5dcb918e85c9",
+                            ConcurrencyStamp = "4a6c1ae5-5f6f-425b-9aa4-098dd6877ce6",
+                            Name = "employeer",
+                            NormalizedName = "EMPLOYEER"
                         });
                 });
 
@@ -799,6 +852,28 @@ namespace JobPortal.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "2fe7daaa-bb2f-43a6-915b-083816e43b87",
+                            RoleId = "b189a208-8a38-42c5-9922-5dcb918e85c9"
+                        },
+                        new
+                        {
+                            UserId = "088fffd7-94b4-448e-9b67-5619fcf19441",
+                            RoleId = "b189a208-8a38-42c5-9922-5dcb918e85c9"
+                        },
+                        new
+                        {
+                            UserId = "06e4bc68-0d75-429c-b513-e12c2ab03494",
+                            RoleId = "b189a208-8a38-42c5-9922-5dcb918e85c9"
+                        },
+                        new
+                        {
+                            UserId = "995ce588-b342-47b8-88f7-349365f898f9",
+                            RoleId = "7023e28f-c1dc-42cd-ad76-858802f45979"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -826,6 +901,9 @@ namespace JobPortal.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<int?>("EmployeerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -834,7 +912,83 @@ namespace JobPortal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.HasIndex("EmployeerId");
+
                     b.HasDiscriminator().HasValue("ApplicationUser");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "2fe7daaa-bb2f-43a6-915b-083816e43b87",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "50f30726-59ea-4796-b3ef-08b542d850de",
+                            Email = "employeer1@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "EMPLOYEER1@EMAIL.COM",
+                            NormalizedUserName = "EMPLOYEER1@EMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHEzgVpKTFd7dwpltsc+QFbg+4WzcVRZXWgyk80DVjWRsooCYuz0XB25yAFr43OowQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "f5a1dcb6-39e2-45d4-b50a-84f63f15fa8a",
+                            TwoFactorEnabled = false,
+                            UserName = "employeer1@gmail.com",
+                            FirstName = "Employeer 1",
+                            LastName = "first Employeer"
+                        },
+                        new
+                        {
+                            Id = "088fffd7-94b4-448e-9b67-5619fcf19441",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "00b0ef37-cdcc-4578-ad47-cf363a2667f4",
+                            Email = "employeer2@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "EMPLOYEER2@EMAIL.COM",
+                            NormalizedUserName = "EMPLOYEER2@EMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPr6jEEg22Yh9zfgmWc/K7II6rm+oJiHw/JI+2kDQA/e/vI1xfZGlfYp7obo3N+gqA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "ae6ef3f8-6bc6-4bb2-922f-26bcbf7cfad2",
+                            TwoFactorEnabled = false,
+                            UserName = "employeer2@gmail.com",
+                            FirstName = "Employeer 2",
+                            LastName = "Second Employeer"
+                        },
+                        new
+                        {
+                            Id = "06e4bc68-0d75-429c-b513-e12c2ab03494",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "03046e18-af6c-4275-b820-e7b6a2ceeb4f",
+                            Email = "employeer3@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "EMPLOYEER3@EMAIL.COM",
+                            NormalizedUserName = "EMPLOYEER3@EMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEN7TmmKtDQom6TCZElhN6K9Dpsx2+6YCM7vh3kXEggMXPDsrR1zFDODmC2c0mRKdsg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "34679be6-7ebf-4d69-9a63-3f81f2721b08",
+                            TwoFactorEnabled = false,
+                            UserName = "employeer3@gmail.com",
+                            FirstName = "Employeer 3",
+                            LastName = "Third Employeer"
+                        },
+                        new
+                        {
+                            Id = "995ce588-b342-47b8-88f7-349365f898f9",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b9cb593a-aa4b-48e4-8bef-1438985c2893",
+                            Email = "candidate@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "CANDIDATE@EMAIL.COM",
+                            NormalizedUserName = "CANDIDATE@EMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEG/143n1xJPBHHRC1nY5vA2AZAdSwcqAQUVTkVRazFrhAOmNZpawEYUZWGyd1w1lNg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "ac774161-5855-4fd7-bd7d-07582e71533a",
+                            TwoFactorEnabled = false,
+                            UserName = "candidate@gmail.com",
+                            FirstName = "CAndidate 1",
+                            LastName = "First CAndidate"
+                        });
                 });
 
             modelBuilder.Entity("JobPortal.Models.AllJobsClasses", b =>
@@ -873,6 +1027,17 @@ namespace JobPortal.Migrations
                     b.Navigation("Candidate");
 
                     b.Navigation("Skills");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.Employeer", b =>
+                {
+                    b.HasOne("JobPortal.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("JobPortal.Models.Job", b =>
@@ -954,6 +1119,15 @@ namespace JobPortal.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("JobPortal.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("JobPortal.Models.Employeer", "Employeer")
+                        .WithMany()
+                        .HasForeignKey("EmployeerId");
+
+                    b.Navigation("Employeer");
                 });
 
             modelBuilder.Entity("JobPortal.Models.Candidate", b =>

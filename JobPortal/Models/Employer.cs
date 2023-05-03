@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobPortal.Models
 {
-    public class Employeer
+    public class Employer
     {
         [Key]
         public int Id { get; set; }
@@ -16,5 +18,9 @@ namespace JobPortal.Models
         public string CompanyEmail { get; set; }
         public int CompanySize { get; set; }
         public ICollection<Job> JobOffered { get; set; }
+        public string UserId { get; set; }
+        [ForeignKey(nameof(UserId))]
+        public ApplicationUser User { get; set; }
+
     }
 }

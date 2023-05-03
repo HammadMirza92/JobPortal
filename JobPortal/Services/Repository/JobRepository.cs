@@ -38,7 +38,7 @@ namespace JobPortal.Services.Repository
 
             return allFeatureJobs;
         }
-        public async virtual Task<Job> GetById(int id)
+        public override async Task<Job> GetById(int id)
         {
             var jobById = await _context.Jobs.Include(x => x.JobSkills).ThenInclude(s=> s.Skill)
                 .Include(c => c.AllJobsClasses)

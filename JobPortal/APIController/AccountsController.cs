@@ -1,5 +1,6 @@
 ﻿
 using JobPortal.Models;
+using JobPortal.Services.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -7,9 +8,11 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using NuGet.Protocol;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using static IdentityServer4.Models.IdentityResources;
 
 namespace JobPortal.APIController
 {
@@ -23,11 +26,13 @@ namespace JobPortal.APIController
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly IUserStore<IdentityUser> _userStore;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IApplicationUserRepository _appUserManager;
         public AccountsController(UserManager<IdentityUser> userManager, 
             SignInManager<IdentityUser> sigInManager, 
             IConfiguration configuration, 
             RoleManager<IdentityRole> roleManager, 
-            IUserStore<IdentityUser> userStore
+            IUserStore<IdentityUser> userStore,
+            IApplicationUserRepository appUserManager
             )
         {
             _userManager = userManager;
@@ -36,8 +41,7 @@ namespace JobPortal.APIController
             _configuration = configuration;
             _emailStore = GetEmailStore();
             _roleManager = roleManager;
-
-
+            _appUserManager = appUserManager;
         }
         [HttpPost("create")]
         public async Task<ActionResult<AuthenticationResponse>> Create([FromBody] UserCradential userCradential,bool candidate)
@@ -47,21 +51,18 @@ namespace JobPortal.APIController
             await _userStore.SetUserNameAsync(user, userCradential.Email, CancellationToken.None);
             await _emailStore.SetEmailAsync(user, userCradential.Email, CancellationToken.None);
 
-           /* user.FirstName = Input.FirstName;
-            user.LastName = Input.LastName;*/
-
+           
             var result = await _userManager.CreateAsync(user, userCradential.Password);
-          /*  var user = new IdentityUser { UserName = userCradential.Email, Email = userCradential.Email };
-            var result = await _userManager.CreateAsync(user, userCradential.Password);*/
+          
             if (candidate && result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, "user");
                 return await BuilToken(userCradential);
                
             }
-            else if(!candidate)
+            else if(!candidate && result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, "company");
+                await _userManager.AddToRoleAsync(user, "employeer");
                 return await BuilToken(userCradential);
             }
             else
@@ -85,8 +86,8 @@ namespace JobPortal.APIController
                 return BadRequest("Incorrect Login");
             }
         }
-        [Authorize]
-        [HttpGet("currentUserRole/{email}")]
+/*        [Authorize]
+*/        [HttpGet("currentUserRole/{email}")]
         public async Task<IActionResult> currentUserRole(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -116,25 +117,41 @@ namespace JobPortal.APIController
 
 
         }
+       /* [Authorize]*/
+        [HttpGet("currentUser/{email}")]
+        public async Task<IdentityUser> FindUserByEmail(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+           
+            return user;
+        }
 
         private async Task<AuthenticationResponse> BuilToken(UserCradential userCradential)
         {
+            //var user = await _userManager.FindByEmailAsync(userCradential.Email);
+            var user = await _appUserManager.FindUserByEmail(userCradential.Email);
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var role = await _roleManager.FindByNameAsync(roles[0]);
+
             var claims = new List<Claim>() {
-             new ("email",userCradential.Email)            
+              new ("user",userCradential.Email),
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["keyjwt"]));
-            var creds = new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
-            
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
             var expiration = DateTime.Now.AddDays(5);
+            var token = new JwtSecurityToken(issuer: null, audience: null, claims: claims, expires: expiration, signingCredentials: creds);
 
-
-            var token = new JwtSecurityToken(issuer:null,audience:null,claims:claims,expires: expiration, signingCredentials:creds);
-
-            return new AuthenticationResponse() 
-            { 
+            return new AuthenticationResponse()
+            {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Expiration = expiration,
-
+                User = user,
+                Role = role.ToString(),
+                EmployeerId = user.EmployeerId,
+                Employeer = user.Employeer,
             };
 
         }
