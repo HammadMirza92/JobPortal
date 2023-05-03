@@ -43,8 +43,8 @@ namespace JobPortal.APIController
             _roleManager = roleManager;
             _appUserManager = appUserManager;
         }
-        [HttpPost("create")]
-        public async Task<ActionResult<AuthenticationResponse>> Create([FromBody] UserCradential userCradential,bool candidate)
+        [HttpPost("createEmployeer")]
+        public async Task<ActionResult<AuthenticationResponse>> CreateEmployeer([FromBody] UserCradential userCradential)
         {
             var user = CreateUser();
 
@@ -54,13 +54,7 @@ namespace JobPortal.APIController
            
             var result = await _userManager.CreateAsync(user, userCradential.Password);
           
-            if (candidate && result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(user, "user");
-                return await BuilToken(userCradential);
-               
-            }
-            else if(!candidate && result.Succeeded)
+            if( result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, "employeer");
                 return await BuilToken(userCradential);
@@ -71,7 +65,30 @@ namespace JobPortal.APIController
             }
            
         }
-        
+        [HttpPost("createCandidate")]
+        public async Task<ActionResult<AuthenticationResponse>> CreateCandidate([FromBody] UserCradential userCradential)
+        {
+            var user = CreateUser();
+
+            await _userStore.SetUserNameAsync(user, userCradential.Email, CancellationToken.None);
+            await _emailStore.SetEmailAsync(user, userCradential.Email, CancellationToken.None);
+
+
+            var result = await _userManager.CreateAsync(user, userCradential.Password);
+
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "employer");
+                return await BuilToken(userCradential);
+
+            }
+            else
+            {
+                return BadRequest(result.Errors);
+            }
+
+        }
+
         [HttpPost("login")]
         public async Task<ActionResult<AuthenticationResponse>> Login([FromBody] UserCradential userCradential)
         {

@@ -106,8 +106,8 @@ namespace JobPortal.AppDbContext
             new IdentityRole
             {
                 Id = "b189a208-8a38-42c5-9922-5dcb918e85c9",
-                Name = "employeer",
-                NormalizedName = "EMPLOYEER",
+                Name = "employer",
+                NormalizedName = "EMPLOYER",
             });
 
            
@@ -117,36 +117,36 @@ namespace JobPortal.AppDbContext
             modelBuilder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
                 Id = "2fe7daaa-bb2f-43a6-915b-083816e43b87",
-                UserName = "employeer1@gmail.com",
-                FirstName = "Employeer 1",
-                LastName="first Employeer",
-                NormalizedUserName = "EMPLOYEER1@EMAIL.COM",
-                Email = "employeer1@gmail.com",
-                NormalizedEmail = "EMPLOYEER1@EMAIL.COM",
+                UserName = "employer1@gmail.com",
+                FirstName = "Employer 1",
+                LastName="first Employer",
+                NormalizedUserName = "EMPLOYER1@EMAIL.COM",
+                Email = "employer1@gmail.com",
+                NormalizedEmail = "EMPLOYER1@EMAIL.COM",
                 EmailConfirmed = true,
                 PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password")
             },
             new ApplicationUser
             {
                 Id = "088fffd7-94b4-448e-9b67-5619fcf19441",
-                UserName = "employeer2@gmail.com",
-                FirstName = "Employeer 2",
-                LastName = "Second Employeer",
-                NormalizedUserName = "EMPLOYEER2@EMAIL.COM",
-                Email = "employeer2@gmail.com",
-                NormalizedEmail = "EMPLOYEER2@EMAIL.COM",
+                UserName = "employer2@gmail.com",
+                FirstName = "Employer 2",
+                LastName = "Second Employer",
+                NormalizedUserName = "EMPLOYER2@EMAIL.COM",
+                Email = "employer2@gmail.com",
+                NormalizedEmail = "EMPLOYER2@EMAIL.COM",
                 EmailConfirmed = true,
                 PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password")
             },
               new ApplicationUser
               {
                   Id = "06e4bc68-0d75-429c-b513-e12c2ab03494",
-                  UserName = "employeer3@gmail.com",
-                  FirstName = "Employeer 3",
-                  LastName = "Third Employeer",
-                  NormalizedUserName = "EMPLOYEER3@EMAIL.COM",
-                  Email = "employeer3@gmail.com",
-                  NormalizedEmail = "EMPLOYEER3@EMAIL.COM",
+                  UserName = "employer3@gmail.com",
+                  FirstName = "Employer 3",
+                  LastName = "Third Employer",
+                  NormalizedUserName = "EMPLOYER3@EMAIL.COM",
+                  Email = "employer3@gmail.com",
+                  NormalizedEmail = "EMPLOYER3@EMAIL.COM",
                   EmailConfirmed = true,
                   PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password")
               },
@@ -154,7 +154,7 @@ namespace JobPortal.AppDbContext
             {
                 Id = "995ce588-b342-47b8-88f7-349365f898f9",
                 UserName = "candidate@gmail.com",
-                FirstName = "CAndidate 1",
+                FirstName = "Candidate 1",
                 LastName = "First CAndidate",
                 NormalizedUserName = "CANDIDATE@EMAIL.COM",
                 Email = "candidate@gmail.com",
