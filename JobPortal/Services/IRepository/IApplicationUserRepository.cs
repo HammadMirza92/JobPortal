@@ -7,6 +7,6 @@ namespace JobPortal.Services.IRepository
     public interface IApplicationUserRepository : IBaseRepository<ApplicationUser>
     {
         Task<ApplicationUser> FindUserByEmail(string email);
-
+        Task<ApplicationUser> GetById(string id);
     }
 }

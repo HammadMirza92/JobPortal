@@ -41,16 +41,15 @@ namespace JobPortal.Models
 
         [Required]
         public DateTime DeadLine { get; set; }
-        [Required]
         public DateTime JobPosted { get; set; } = DateTime.Now;
 
         [Required]
         public int Vacancy { get; set; }
-        public int EmployeerId { get; set; }
-        [ForeignKey(nameof(EmployeerId))]
-        public Employer Employeer { get; set; }
+        public int EmployerId { get; set; }
+        [ForeignKey(nameof(EmployerId))]
+        public Employer? Employer { get; set; }
 
-        public ICollection<JobSkills> JobSkills { get; set; }
-        public ICollection<AllJobsClasses> AllJobsClasses { get; set; }
+        public ICollection<JobSkills>? JobSkills { get; set; }
+        public ICollection<AllJobsClasses>? AllJobsClasses { get; set; }
     }
 }

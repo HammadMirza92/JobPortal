@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using static IdentityServer4.Models.IdentityResources;
 
 namespace JobPortal.AppDbContext
@@ -21,12 +22,14 @@ namespace JobPortal.AppDbContext
         public DbSet<JobClass> JobClass { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Candidate> Candidate { get; set; }
-        public DbSet<Employer> Employeer { get; set; }
+        public DbSet<Employer> Employer { get; set; }
         public DbSet<CandidateSkills> CandidateSkills { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+           
+            
 
             /*Jobs Data*/
 
@@ -47,7 +50,7 @@ namespace JobPortal.AppDbContext
                 JobShift = JobShift.Morning,
                 JobStatus = JobStatus.Open,
                 Vacancy = 20,
-                EmployeerId =1,
+                EmployerId =1,
             },
             new Job
             {
@@ -66,7 +69,7 @@ namespace JobPortal.AppDbContext
                 JobShift = JobShift.Morning,
                 JobStatus = JobStatus.Open,
                 Vacancy = 5,
-                EmployeerId = 1,
+                EmployerId = 1,
             },
             new Job
             {
@@ -80,13 +83,13 @@ namespace JobPortal.AppDbContext
                 Type = JobType.PartTime,
                 Qualifications = Qualification.Master,
                 SalaryType = SalaryType.Monthly,
-                JobExperience = JobExperience.Threeyear,
+                JobExperience = JobExperience.Threeyears,
                 StartBudget = 190,
                 EndBudget = 340,
                 JobShift = JobShift.Night,
                 JobStatus = JobStatus.Open,
                 Vacancy = 50,
-                EmployeerId = 2,
+                EmployerId = 2,
             });
 
             /*Roles*/
@@ -124,7 +127,8 @@ namespace JobPortal.AppDbContext
                 Email = "employer1@gmail.com",
                 NormalizedEmail = "EMPLOYER1@EMAIL.COM",
                 EmailConfirmed = true,
-                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password")
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
+                EmployeerId=1
             },
             new ApplicationUser
             {
@@ -136,7 +140,8 @@ namespace JobPortal.AppDbContext
                 Email = "employer2@gmail.com",
                 NormalizedEmail = "EMPLOYER2@EMAIL.COM",
                 EmailConfirmed = true,
-                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password")
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
+                EmployeerId=2
             },
               new ApplicationUser
               {
@@ -148,7 +153,8 @@ namespace JobPortal.AppDbContext
                   Email = "employer3@gmail.com",
                   NormalizedEmail = "EMPLOYER3@EMAIL.COM",
                   EmailConfirmed = true,
-                  PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password")
+                  PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
+                  EmployeerId=3
               },
             new ApplicationUser
             {
@@ -156,9 +162,33 @@ namespace JobPortal.AppDbContext
                 UserName = "candidate@gmail.com",
                 FirstName = "Candidate 1",
                 LastName = "First CAndidate",
-                NormalizedUserName = "CANDIDATE@EMAIL.COM",
-                Email = "candidate@gmail.com",
-                NormalizedEmail = "CANDIDATE@EMAIL.COM",
+                NormalizedUserName = "CANDIDATE1@EMAIL.COM",
+                Email = "candidate1@gmail.com",
+                NormalizedEmail = "CANDIDATE1@EMAIL.COM",
+                EmailConfirmed = true,
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password")
+            },
+            new ApplicationUser
+            {
+                Id = "cc53dc1c-a0d0-49a3-8f31-06b320fe22a9",
+                UserName = "candidate2@gmail.com",
+                FirstName = "Candidate 2",
+                LastName = "Second Candidate",
+                NormalizedUserName = "CANDIDATE2@EMAIL.COM",
+                Email = "candidate2@gmail.com",
+                NormalizedEmail = "CANDIDATE2@EMAIL.COM",
+                EmailConfirmed = true,
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password")
+            },
+            new ApplicationUser
+            {
+                Id = "4e9e311a-0926-423c-b136-eab5ba39998a",
+                UserName = "candidate3@gmail.com",
+                FirstName = "Candidate 3",
+                LastName = "third Candidate",
+                NormalizedUserName = "CANDIDATE3@EMAIL.COM",
+                Email = "candidate3@gmail.com",
+                NormalizedEmail = "CANDIDATE3@EMAIL.COM",
                 EmailConfirmed = true,
                 PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password")
             });
@@ -185,7 +215,17 @@ namespace JobPortal.AppDbContext
             {
                 UserId = "995ce588-b342-47b8-88f7-349365f898f9",
                 RoleId = "7023e28f-c1dc-42cd-ad76-858802f45979"
-            });
+            },
+            new IdentityUserRole<string>
+            {
+                UserId = "cc53dc1c-a0d0-49a3-8f31-06b320fe22a9",
+                RoleId = "7023e28f-c1dc-42cd-ad76-858802f45979"
+            },
+            new IdentityUserRole<string>
+            {
+                UserId = "4e9e311a-0926-423c-b136-eab5ba39998a",
+                RoleId = "7023e28f-c1dc-42cd-ad76-858802f45979"
+            }); 
 
             /* Employeers Data*/
 
@@ -195,11 +235,10 @@ namespace JobPortal.AppDbContext
                 CompanyName = "Avitex Agency",
                 CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
                 CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
-                Founded = DateTime.Now,
+                Founded = DateTime.UtcNow,
                 Headquarters = "Las Vegas, NV 89107, USA",
                 Industry = "It",
                 CompanyWebsite = "https://jobs.nokriwp.com/",
-                CompanyEmail = "Avitex@gmail.com",
                 CompanySize = 200,
                 UserId = "2fe7daaa-bb2f-43a6-915b-083816e43b87"
             },
@@ -209,13 +248,12 @@ namespace JobPortal.AppDbContext
                 CompanyName = "Demo 1",
                 CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
                 CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
-                Founded = DateTime.Now,
+                Founded = DateTime.UtcNow,
                 Headquarters = "Lahore",
                 Industry = "It",
                 CompanyWebsite = "https://jobs.nokriwp.com/",
-                CompanyEmail = "demo1@gmail.com",
                 CompanySize = 50,
-                UserId = "088fffd7-94b4-448e-9b67-5619fcf19441"
+               UserId = "088fffd7-94b4-448e-9b67-5619fcf19441"
             },
             new Employer
             {
@@ -223,11 +261,10 @@ namespace JobPortal.AppDbContext
                 CompanyName = "Honda",
                 CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
                 CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
-                Founded = DateTime.Now,
+                Founded = DateTime.UtcNow,
                 Headquarters = "Islamabad",
                 Industry = "Machenical",
                 CompanyWebsite = "https://jobs.nokriwp.com/",
-                CompanyEmail = "honda@gmail.com",
                 CompanySize = 600,
                 UserId ="06e4bc68-0d75-429c-b513-e12c2ab03494"
             }) ;
@@ -298,12 +335,11 @@ namespace JobPortal.AppDbContext
                 Experience= ".Net Developer",
                 Phone=03000000,
                 Location=Location.Lahore,
-                Email="hammad@gmail.com",
                 ExperienceTime=5,
                 ExpectedSalary = 300,
                 Age =23,
                 Qualification = Qualification.Bachelor,
-                
+                UserId=""
             },
             new Candidate
             {
@@ -314,11 +350,11 @@ namespace JobPortal.AppDbContext
                 Experience = "Php Laravel",
                 Phone = 03000000,
                 Location = Location.Lahore,
-                Email = "Ahtesham@gmail.com",
                 ExperienceTime = 6,
                 ExpectedSalary = 400,
                 Age = 23,
-                Qualification = Qualification.Bachelor
+                Qualification = Qualification.Bachelor,
+                UserId = ""
             },
             new Candidate
             {
@@ -329,11 +365,11 @@ namespace JobPortal.AppDbContext
                 Experience = "React Designer",
                 Phone = 03000000,
                 Location = Location.Islamabad,
-                Email = "Sohaib@gmail.com",
                 ExperienceTime = 8,
                 ExpectedSalary = 500,
                 Age = 23,
-                Qualification = Qualification.Master
+                Qualification = Qualification.Master,
+                UserId = ""
             });
 
 

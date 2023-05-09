@@ -16,7 +16,7 @@ namespace JobPortal.Services.Repository
         }
         public override async Task<IEnumerable<Employer>> GetAll()
         {
-            var allEmployeers = await _context.Employeer
+            var allEmployeers = await _context.Employer
                .Include(x => x.JobOffered)
                .ToListAsync();
 
@@ -24,7 +24,10 @@ namespace JobPortal.Services.Repository
         }
         public override async Task<Employer> GetById(int id)
         {
-            var employeer = await _context.Employeer.Include(x => x.JobOffered).Include(u=> u.User).Where(x=> x.Id == id).FirstOrDefaultAsync();
+            var employeer = await _context.Employer
+                .Include(x => x.JobOffered)
+                .ThenInclude(x=> x.AllJobsClasses)
+                .ThenInclude(x=> x.JobClass).Where(x=> x.Id == id).FirstOrDefaultAsync();
             return employeer;
         }
     }

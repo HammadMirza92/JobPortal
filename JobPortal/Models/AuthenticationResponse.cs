@@ -7,8 +7,8 @@ namespace JobPortal.Models
         public string Token { get; set; }
         public IdentityUser User { get; set; }
         public string Role { get; set; }
-        public int? EmployeerId { get; set; }
-        public Employer? Employeer { get; set; }
+        public int? EmployerId { get; set; }
+        public Employer? Employer { get; set; }
         public DateTime Expiration { get; set; }
     }
 }

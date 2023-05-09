@@ -55,10 +55,10 @@ namespace JobPortal.Enums
     {
         Fresh = 0,
         Oneyear = 1,
-        Twoyear = 2,
-        Threeyear = 3,
-        Fouryear = 4,
-        Fiveyear = 5,
+        Twoyears = 2,
+        Threeyears = 3,
+        Fouryears = 4,
+        Fiveyears = 5,
         AboveFive = 6,
     }
     public enum JobShift

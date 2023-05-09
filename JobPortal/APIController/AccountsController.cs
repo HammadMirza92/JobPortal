@@ -43,8 +43,8 @@ namespace JobPortal.APIController
             _roleManager = roleManager;
             _appUserManager = appUserManager;
         }
-        [HttpPost("createEmployeer")]
-        public async Task<ActionResult<AuthenticationResponse>> CreateEmployeer([FromBody] UserCradential userCradential)
+        [HttpPost("createEmployer")]
+        public async Task<ActionResult<AuthenticationResponse>> CreateEmployer([FromBody] UserCradential userCradential)
         {
             var user = CreateUser();
 
@@ -56,7 +56,7 @@ namespace JobPortal.APIController
           
             if( result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, "employeer");
+                await _userManager.AddToRoleAsync(user, "employer");
                 return await BuilToken(userCradential);
             }
             else
@@ -78,9 +78,8 @@ namespace JobPortal.APIController
 
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, "employer");
-                return await BuilToken(userCradential);
-
+                 await _userManager.AddToRoleAsync(user, "candidate");
+                 return await BuilToken(userCradential);
             }
             else
             {
@@ -167,8 +166,8 @@ namespace JobPortal.APIController
                 Expiration = expiration,
                 User = user,
                 Role = role.ToString(),
-                EmployeerId = user.EmployeerId,
-                Employeer = user.Employeer,
+                EmployerId = user.EmployeerId,
+                Employer = user.Employeer,
             };
 
         }

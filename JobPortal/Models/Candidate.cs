@@ -13,12 +13,13 @@ namespace JobPortal.Models
         public string Experience { get; set; }
         public int Phone { get; set; }
         public Location Location { get; set; }
-        public string Email { get; set; }
         public int ExperienceTime { get; set; }
         public int ExpectedSalary { get; set; }
         public int Age { get; set; }
+        public string UserId { get; set; }
+
         public Qualification Qualification { get; set; }
 
-        public ICollection<CandidateSkills> CandidateSkills { get; set; }
+        public ICollection<CandidateSkills>? CandidateSkills { get; set; }
     }
 }

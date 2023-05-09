@@ -20,5 +20,10 @@ namespace JobPortal.Services.Repository
 
             return user;
         }
+        public async Task<ApplicationUser> GetById(string id)
+        {
+            var appuser = await _context.ApplicationUsers.FindAsync(id);
+            return appuser;
+        }
     }
 }

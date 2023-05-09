@@ -59,7 +59,6 @@ namespace JobPortal.APIController
 
         // POST api/Job
         [HttpPost("create")]
-        [ResponseCache]
         public async Task<Job> Create(Job job)
         {
             var newJob = await _jobRepository.Add(job);

@@ -40,9 +40,12 @@ namespace JobPortal.Services.Repository
         }
         public override async Task<Job> GetById(int id)
         {
-            var jobById = await _context.Jobs.Include(x => x.JobSkills).ThenInclude(s=> s.Skill)
+            var jobById = await _context.Jobs
+                .Include(x => x.JobSkills)
+                .ThenInclude(s=> s.Skill)
                 .Include(c => c.AllJobsClasses)
-                .ThenInclude(jc => jc.JobClass).FirstOrDefaultAsync(j => j.Id == id);
+                .ThenInclude(jc => jc.JobClass)
+                .Include(e => e.Employer).FirstOrDefaultAsync(j => j.Id == id);
 
             return jobById;
         }
