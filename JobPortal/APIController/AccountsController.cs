@@ -144,16 +144,21 @@ namespace JobPortal.APIController
 
         private async Task<AuthenticationResponse> BuilToken(UserCradential userCradential)
         {
-            //var user = await _userManager.FindByEmailAsync(userCradential.Email);
             var user = await _appUserManager.FindUserByEmail(userCradential.Email);
 
             var roles = await _userManager.GetRolesAsync(user);
 
             var role = await _roleManager.FindByNameAsync(roles[0]);
+            var  tokenRole = role.ToString();
+
 
             var claims = new List<Claim>() {
               new ("user",userCradential.Email),
+              new ("email",userCradential.Email),
+              new("role",tokenRole)
             };
+           
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["keyjwt"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -166,8 +171,10 @@ namespace JobPortal.APIController
                 Expiration = expiration,
                 User = user,
                 Role = role.ToString(),
-                EmployerId = user.EmployeerId,
-                Employer = user.Employeer,
+                EmployerId = user.EmployerId,
+                Employer = user.Employer,
+                CandidateId = user.CandidateId,
+                Candidate = user.Candidate,
             };
 
         }

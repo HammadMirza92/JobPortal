@@ -4,8 +4,8 @@ using JobPortal.Services.IRepository.Base;
 
 namespace JobPortal.Services.IRepository
 {
-    public interface IJobClassRepository : IBaseRepository<JobClass>
+    public interface IAppliedJobsRepository : IBaseRepository<AppliedJobs>
     {
-       
+        Task<IEnumerable<AppliedJobs>> GetJobByCandidateId(int id);
     }
 }

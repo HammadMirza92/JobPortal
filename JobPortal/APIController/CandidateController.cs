@@ -9,15 +9,15 @@ namespace JobPortal.APIController
 {
     [Route("api/[controller]")]
     [ApiController]
-    /*[Authorize]*/
+  /*  [Authorize(Roles = "candidate")]*/
     public class CandidateController : ControllerBase
     {
         private readonly ICandidateRepository _candidateRepository;
-
-        public CandidateController(ICandidateRepository candidateRepository)
+        private readonly IApplicationUserRepository _appUserRepository;
+        public CandidateController(ICandidateRepository candidateRepository, IApplicationUserRepository applicationUserRepository)
         {
             _candidateRepository = candidateRepository;
-  
+            _appUserRepository = applicationUserRepository;
         }
         // GET: api/Job
         [HttpGet]
@@ -46,10 +46,37 @@ namespace JobPortal.APIController
        /* [ResponseCache]*/
         public async Task<Candidate> Create(Candidate candidate)
         {
-            var newCandidate = await _candidateRepository.Add(candidate);
+            var newCandidate = await _candidateRepository.Add(candidate); 
+            var id = candidate.Id;
+
+            var candidateUser = await _appUserRepository.GetById(candidate.UserId);
+
+            var newUser = new ApplicationUser()
+            {
+                Id = candidateUser.Id,
+                ConcurrencyStamp = candidateUser.ConcurrencyStamp,
+                FirstName = candidateUser.FirstName,
+                LastName = candidateUser.LastName,
+                EmployerId = candidateUser.EmployerId,
+                CandidateId = id,
+                Email= candidateUser.Email,
+                UserName = candidateUser.UserName,
+                NormalizedUserName = candidateUser.Email,
+                NormalizedEmail = candidateUser.NormalizedEmail,
+                EmailConfirmed = candidateUser.EmailConfirmed,
+                PasswordHash = candidateUser.PasswordHash,
+                SecurityStamp = candidateUser.SecurityStamp,
+                PhoneNumber = candidateUser.PhoneNumber,
+                LockoutEnabled = candidateUser.LockoutEnabled,
+                AccessFailedCount = candidateUser.AccessFailedCount,
+            };
+
+            await _appUserRepository.Update(newUser);
+
 
             return newCandidate;
 
+          
         }
 
         // PUT api/Job/5

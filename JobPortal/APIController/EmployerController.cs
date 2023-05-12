@@ -1,4 +1,5 @@
-﻿using JobPortal.Models;
+﻿using JobPortal.Enums;
+using JobPortal.Models;
 using JobPortal.Services.IRepository;
 using JobPortal.Services.Repository;
 using Microsoft.AspNetCore.Authorization;
@@ -15,18 +16,24 @@ namespace JobPortal.APIController
     {
         private readonly IEmployerRepository _employeerRepository;
         private readonly IApplicationUserRepository _appUserRepository;
+        private readonly IJobRepository _jobRepository;
 
-        public EmployerController(IEmployerRepository employeerRepository, IApplicationUserRepository appUserRepository)
+
+        public EmployerController(IEmployerRepository employeerRepository,
+            IApplicationUserRepository appUserRepository,
+            IJobRepository jobRepository)
         {
             _employeerRepository = employeerRepository;
             _appUserRepository = appUserRepository;
+            _jobRepository = jobRepository;
+            
         }
         // GET: api/Job
         [HttpGet]
         /*[ResponseCache(Duration = 120)]*/
         public async Task<ActionResult<Employer>> Get()
         {
-
+          
             var allEmployeers = await _employeerRepository.GetAll();
             if (!allEmployeers.Any())
             {
@@ -57,7 +64,7 @@ namespace JobPortal.APIController
                 ConcurrencyStamp = employerUser.ConcurrencyStamp,
                 FirstName= employerUser.FirstName,
                 LastName= employerUser.LastName,
-                EmployeerId = id ,
+                EmployerId = id ,
                 UserName = employerUser.UserName,
                 NormalizedUserName = employerUser.NormalizedUserName,
                 Email = employerUser.Email,
@@ -85,6 +92,48 @@ namespace JobPortal.APIController
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        public async Task updateJob()
+        {
+            var employers = await _employeerRepository.GetAll();
+            foreach (var employer in employers)
+            {
+                foreach (var job in employer.JobOffered)
+                {
+                    if(job.DeadLine <= DateTime.Now)
+                    {
+                        Job newJob = new Job()
+                        {
+                            Id = job.Id,
+                            Icon = job.Icon,
+                            Title = job.Title,
+                            Description = job.Description,
+                            Responsibility = job.Responsibility,
+                            Location = job.Location,
+                            Type = job.Type,
+                            Qualifications = job.Qualifications,
+                            SalaryType = job.SalaryType,
+                            StartBudget = job.StartBudget,
+                            EndBudget = job.EndBudget,
+                            JobExperience = job.JobExperience,
+                            JobShift = job.JobShift,
+                            JobStatus = JobStatus.Close,
+                            DeadLine = job.DeadLine,
+                            JobPosted = job.JobPosted,
+                            Vacancy = job.Vacancy,
+                            EmployerId = job.EmployerId,
+                            Employer = job.Employer,
+                            JobSkills = job.JobSkills,
+                            AllJobsClasses = job.AllJobsClasses,
+                        };
+
+                        await _jobRepository.Update(newJob);
+                    }
+                }
+            }
+
+            return ;
         }
     }
 }

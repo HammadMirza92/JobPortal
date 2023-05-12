@@ -44,6 +44,13 @@ namespace JobPortal.Enums
         Yearly = 3
 
     }
+    public enum JobClasses
+    {
+        Feature = 0,
+        Urgent = 1,
+        Private = 2,
+        
+    }
     public enum JobSalary
     {
         Monthly =0,

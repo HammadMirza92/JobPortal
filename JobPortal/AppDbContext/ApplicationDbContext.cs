@@ -24,12 +24,15 @@ namespace JobPortal.AppDbContext
         public DbSet<Candidate> Candidate { get; set; }
         public DbSet<Employer> Employer { get; set; }
         public DbSet<CandidateSkills> CandidateSkills { get; set; }
-
+        public DbSet<AppliedJobs> AppliedJobs { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-           
-            
+
+            DateTime currentDate = DateTime.Now;
+
+            DateTime nextDate = currentDate.AddDays(5);
 
             /*Jobs Data*/
 
@@ -50,6 +53,7 @@ namespace JobPortal.AppDbContext
                 JobShift = JobShift.Morning,
                 JobStatus = JobStatus.Open,
                 Vacancy = 20,
+                DeadLine= nextDate,
                 EmployerId =1,
             },
             new Job
@@ -69,6 +73,7 @@ namespace JobPortal.AppDbContext
                 JobShift = JobShift.Morning,
                 JobStatus = JobStatus.Open,
                 Vacancy = 5,
+                DeadLine = nextDate,
                 EmployerId = 1,
             },
             new Job
@@ -89,6 +94,7 @@ namespace JobPortal.AppDbContext
                 JobShift = JobShift.Night,
                 JobStatus = JobStatus.Open,
                 Vacancy = 50,
+                DeadLine = nextDate,
                 EmployerId = 2,
             });
 
@@ -128,7 +134,7 @@ namespace JobPortal.AppDbContext
                 NormalizedEmail = "EMPLOYER1@EMAIL.COM",
                 EmailConfirmed = true,
                 PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
-                EmployeerId=1
+                EmployerId=1
             },
             new ApplicationUser
             {
@@ -141,7 +147,7 @@ namespace JobPortal.AppDbContext
                 NormalizedEmail = "EMPLOYER2@EMAIL.COM",
                 EmailConfirmed = true,
                 PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
-                EmployeerId=2
+                EmployerId=2
             },
               new ApplicationUser
               {
@@ -154,7 +160,7 @@ namespace JobPortal.AppDbContext
                   NormalizedEmail = "EMPLOYER3@EMAIL.COM",
                   EmailConfirmed = true,
                   PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
-                  EmployeerId=3
+                  EmployerId=3
               },
             new ApplicationUser
             {
@@ -166,7 +172,8 @@ namespace JobPortal.AppDbContext
                 Email = "candidate1@gmail.com",
                 NormalizedEmail = "CANDIDATE1@EMAIL.COM",
                 EmailConfirmed = true,
-                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password")
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
+                CandidateId = 1
             },
             new ApplicationUser
             {
@@ -178,7 +185,8 @@ namespace JobPortal.AppDbContext
                 Email = "candidate2@gmail.com",
                 NormalizedEmail = "CANDIDATE2@EMAIL.COM",
                 EmailConfirmed = true,
-                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password")
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
+                CandidateId = 2
             },
             new ApplicationUser
             {
@@ -190,7 +198,8 @@ namespace JobPortal.AppDbContext
                 Email = "candidate3@gmail.com",
                 NormalizedEmail = "CANDIDATE3@EMAIL.COM",
                 EmailConfirmed = true,
-                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password")
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
+                CandidateId =3
             });
 
             /*User Roles*/
@@ -290,7 +299,7 @@ namespace JobPortal.AppDbContext
             new Skills
             {
                 Id = 4,
-                JobSkill = "Application Development",
+                JobSkill = "React Native",
             },
             new Skills
             {
@@ -305,12 +314,12 @@ namespace JobPortal.AppDbContext
             new Skills
             {
                 Id = 7,
-                JobSkill = "Development",
+                JobSkill = "Java",
             },
             new Skills
             {
                 Id = 8,
-                JobSkill = "Modeling",
+                JobSkill = "MERN Stack",
             },
             new Skills
             {
@@ -461,17 +470,17 @@ namespace JobPortal.AppDbContext
             modelBuilder.Entity<JobClass>().HasData(new JobClass
             {
                 Id = 1,
-               name = "Feature"
+               name = JobClasses.Feature
             },
             new JobClass
             {
                 Id = 2,
-                name = "Urgent"
+                name = JobClasses.Urgent
             },
             new JobClass
             {
                 Id = 3,
-                name = "Private"
+                name = JobClasses.Private
             });
    
             /* All Jobs Classes Data*/
@@ -512,7 +521,27 @@ namespace JobPortal.AppDbContext
                 JobId = 3,
                 JobClassId = 3,
             });
-         
+
+            /*Applied Jobs*/
+
+            modelBuilder.Entity<AppliedJobs>().HasData(new AppliedJobs
+            {
+                Id = 1,
+                JobId = 1,
+                CandidateId = 1
+            },
+            new AppliedJobs
+            {
+                Id = 2,
+                JobId = 1,
+                CandidateId = 2
+            },
+            new AppliedJobs
+            {
+                Id = 3,
+                JobId = 2,
+                CandidateId = 1
+            });
         }
               
     }

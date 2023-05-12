@@ -20,16 +20,13 @@ namespace JobPortal.APIController
             _jobRepository = jobRepository;
             _jobClassRepository = jobClassRepository;
             _alljJobsClassesRepository = alljJobsClassesRepository;
-
+             
         }
         // GET: api/Job
         [HttpGet]
-        [ResponseCache(Duration = 120)]
-        public async Task<ActionResult<Job>> Get()
+/*        [ResponseCache(Duration = 120)]
+*/      public async Task<ActionResult<Job>> Get()
         {
-           // await _alljJobsClassesRepository.GetAllJobs();
-
-
             var jobs = await _jobRepository.GetAll();
             if (!jobs.Any())
             {
@@ -37,11 +34,11 @@ namespace JobPortal.APIController
             }
             return Ok(jobs);
         }
-        [HttpGet("getFeatureJobs")]
-        [ResponseCache(Duration = 120)]
-        public async Task<ActionResult<Job>> GetFeatureJobs()
+        [HttpGet("getFeatureJobs/{id}")]
+       /* [ResponseCache(Duration = 120)]*/
+        public async Task<ActionResult<Job>> GetFeatureJobs(int id)
         {
-            var featureJobs = await _jobRepository.GetFeatureJobs();
+            var featureJobs = await _jobRepository.GetFeatureJobs( id);
             if (!featureJobs.Any())
             {
                 return BadRequest();
@@ -78,5 +75,6 @@ namespace JobPortal.APIController
         public void Delete(int id)
         {
         }
+        
     }
 }

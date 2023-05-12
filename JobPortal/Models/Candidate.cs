@@ -11,7 +11,7 @@ namespace JobPortal.Models
         public string ProfileImg{ get; set; }
         public string AboutMe{ get; set; }
         public string Experience { get; set; }
-        public int Phone { get; set; }
+        public double Phone { get; set; }
         public Location Location { get; set; }
         public int ExperienceTime { get; set; }
         public int ExpectedSalary { get; set; }
@@ -21,5 +21,6 @@ namespace JobPortal.Models
         public Qualification Qualification { get; set; }
 
         public ICollection<CandidateSkills>? CandidateSkills { get; set; }
+        public ICollection<AppliedJobs>? AppliedJobs { get; set; }
     }
 }

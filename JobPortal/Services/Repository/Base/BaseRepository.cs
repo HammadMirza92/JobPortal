@@ -38,8 +38,6 @@ namespace JobPortal.Services.Repository.Base
                 _context.Entry(existingEntity).State = EntityState.Detached;
             }
             _context.Entry(entity).State = EntityState.Modified;
-            /*            _context.SaveChanges();*/
-
 
             _context.Set<T>().Update(entity);
             await _context.SaveChangesAsync();

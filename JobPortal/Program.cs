@@ -45,6 +45,7 @@ builder.Services.AddScoped<ICandidateRepository, CandidateRepository>();
 builder.Services.AddScoped<ICandidateSkillsRepository, CandidateSkillsRepository>();
 builder.Services.AddScoped<IEmployerRepository, EmployerRepository>();
 builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+builder.Services.AddScoped<IAppliedJobsRepository, AppliedJobsRepository>();
 
 builder.Services.AddCors(opt =>
 {

@@ -51,5 +51,6 @@ namespace JobPortal.Models
 
         public ICollection<JobSkills>? JobSkills { get; set; }
         public ICollection<AllJobsClasses>? AllJobsClasses { get; set; }
+        public ICollection<AppliedJobs>? AppliedJobs { get; set; }
     }
 }

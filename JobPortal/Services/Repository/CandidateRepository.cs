@@ -17,7 +17,7 @@ namespace JobPortal.Services.Repository
         public override async Task<IEnumerable<Candidate>> GetAll()
         {
             var allJobs = await _context.Candidate
-               .Include(x => x.CandidateSkills)
+               .Include(x => x.CandidateSkills).ThenInclude(s=> s.Skills)
                .ToListAsync();
 
             return allJobs;
