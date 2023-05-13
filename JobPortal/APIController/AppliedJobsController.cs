@@ -19,8 +19,8 @@ namespace JobPortal.APIController
            
         }
         // GET: api/Job
-        [HttpGet]
-        public async Task<ActionResult<AppliedJobs>> GetJobsogCandidate(int id)
+        [HttpGet("GetJobsofCandidate/{id}")]
+        public async Task<ActionResult<AppliedJobs>> GetJobsofCandidate(int id)
         {
             var JobsOfConadidate = await _appliedJobsRepository.GetJobByCandidateId(id);
             if (!JobsOfConadidate.Any())

@@ -23,11 +23,11 @@ namespace JobPortal.APIController
              
         }
         // GET: api/Job
-        [HttpGet]
+        [HttpGet("getAll/{id}")]
 /*        [ResponseCache(Duration = 120)]
-*/      public async Task<ActionResult<Job>> Get()
+*/      public async Task<ActionResult<Job>> GetAll(int id)
         {
-            var jobs = await _jobRepository.GetAll();
+            var jobs = await _jobRepository.GetAllJobs(id);
             if (!jobs.Any())
             {
                 return BadRequest();

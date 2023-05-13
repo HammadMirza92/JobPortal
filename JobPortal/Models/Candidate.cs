@@ -11,6 +11,7 @@ namespace JobPortal.Models
         public string ProfileImg{ get; set; }
         public string AboutMe{ get; set; }
         public string Experience { get; set; }
+        public string CurrentCompany { get; set; } = "Fresh Graduate";
         public double Phone { get; set; }
         public Location Location { get; set; }
         public int ExperienceTime { get; set; }

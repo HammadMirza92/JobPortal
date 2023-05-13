@@ -9,7 +9,7 @@ namespace JobPortal.APIController
 {
     [Route("api/[controller]")]
     [ApiController]
-  /*  [Authorize(Roles = "candidate")]*/
+    /* [Authorize(Roles = "employer")]*/
     public class CandidateController : ControllerBase
     {
         private readonly ICandidateRepository _candidateRepository;

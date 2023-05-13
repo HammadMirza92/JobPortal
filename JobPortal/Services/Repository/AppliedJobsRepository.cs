@@ -19,6 +19,7 @@ namespace JobPortal.Services.Repository
         {
             var allAppliedJobsofCandidate = await _context.AppliedJobs.Where(x=> x.CandidateId == id)
                 .Include(j=> j.Job)
+                .ThenInclude(ac=>ac.AllJobsClasses).ThenInclude(jc=> jc.JobClass)
                 .Include(c=> c.Candidate)
                 .ToListAsync();
             return allAppliedJobsofCandidate;

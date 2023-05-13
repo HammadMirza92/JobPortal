@@ -16,9 +16,9 @@ namespace JobPortal.Services.Repository
         {
             _context = context;
         }
-        public override async Task<IEnumerable<Job>> GetAll()
+        public async Task<IEnumerable<Job>> GetAllJobs(int id)
         {
-            var allJobs = await _context.Jobs.Where(j => !j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature) || j.AllJobsClasses == null).Where(de=> de.DeadLine >= DateTime.Now)
+            var allJobs = await _context.Jobs.Where(aj => !aj.AppliedJobs.Any(a => a.CandidateId == id)).Where(j => !j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature) || j.AllJobsClasses == null).Where(de=> de.DeadLine >= DateTime.Now)
                .Include(x => x.JobSkills)
                .Include(c => c.AllJobsClasses)
                .ThenInclude(jc => jc.JobClass)
