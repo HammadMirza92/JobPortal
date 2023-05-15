@@ -13,7 +13,7 @@ namespace JobPortal.Services.Repository.Base
         }
         public async virtual Task<IEnumerable<T>> GetAll() => await _context.Set<T>().ToListAsync();
 
-        public async virtual Task<T> GetById(int id) => await _context.Set<T>().FindAsync(id);
+        public async virtual Task<T> GetById(Guid id) => await _context.Set<T>().FindAsync(id);
 
         public async Task<T> Add(T entity)
         {
@@ -22,7 +22,7 @@ namespace JobPortal.Services.Repository.Base
             return entity;
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(Guid id)
         {
             var entity = await _context.Set<T>().FindAsync(id);
 

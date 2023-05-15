@@ -23,7 +23,7 @@ namespace JobPortal.Controllers
         }
 
         // GET: JobController/Details/5
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Details(Guid id)
         {
             var job = await _jobRepository.GetById(id);
             return View(job);

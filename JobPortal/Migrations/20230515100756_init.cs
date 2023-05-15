@@ -27,8 +27,7 @@ namespace JobPortal.Migrations
                 name: "Candidate",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProfileImg = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AboutMe = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -40,7 +39,8 @@ namespace JobPortal.Migrations
                     ExpectedSalary = table.Column<int>(type: "int", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Qualification = table.Column<int>(type: "int", nullable: false)
+                    Qualification = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,8 +51,7 @@ namespace JobPortal.Migrations
                 name: "Employer",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CompanyAbout = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CompanyLogo = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -61,7 +60,8 @@ namespace JobPortal.Migrations
                     Industry = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CompanyWebsite = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CompanySize = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,9 +72,9 @@ namespace JobPortal.Migrations
                 name: "JobClass",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    name = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,9 +85,9 @@ namespace JobPortal.Migrations
                 name: "Skills",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    JobSkill = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    JobSkill = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -123,8 +123,8 @@ namespace JobPortal.Migrations
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmployerId = table.Column<int>(type: "int", nullable: true),
-                    CandidateId = table.Column<int>(type: "int", nullable: true),
+                    EmployerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CandidateId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -159,8 +159,7 @@ namespace JobPortal.Migrations
                 name: "Jobs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Icon = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -177,7 +176,8 @@ namespace JobPortal.Migrations
                     DeadLine = table.Column<DateTime>(type: "datetime2", nullable: false),
                     JobPosted = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Vacancy = table.Column<int>(type: "int", nullable: false),
-                    EmployerId = table.Column<int>(type: "int", nullable: false)
+                    EmployerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -194,10 +194,10 @@ namespace JobPortal.Migrations
                 name: "CandidateSkills",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CandidateId = table.Column<int>(type: "int", nullable: false),
-                    SkillId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CandidateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SkillId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -305,10 +305,10 @@ namespace JobPortal.Migrations
                 name: "AllJobsClasses",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    JobId = table.Column<int>(type: "int", nullable: false),
-                    JobClassId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    JobId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    JobClassId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -331,10 +331,11 @@ namespace JobPortal.Migrations
                 name: "AppliedJobs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    JobId = table.Column<int>(type: "int", nullable: false),
-                    CandidateId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    JobsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CandidateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EmployerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -346,8 +347,13 @@ namespace JobPortal.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AppliedJobs_Jobs_JobId",
-                        column: x => x.JobId,
+                        name: "FK_AppliedJobs_Employer_EmployerId",
+                        column: x => x.EmployerId,
+                        principalTable: "Employer",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_AppliedJobs_Jobs_JobsId",
+                        column: x => x.JobsId,
                         principalTable: "Jobs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -357,10 +363,10 @@ namespace JobPortal.Migrations
                 name: "JobSkills",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    JobId = table.Column<int>(type: "int", nullable: false),
-                    SkillId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    JobId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SkillId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -384,56 +390,56 @@ namespace JobPortal.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1d8bbcb9-6d72-4776-b97a-54dd330775ca", "7b4de6bd-28e8-4742-9719-0b08de07b5f3", "admin", "ADMIN" },
-                    { "7023e28f-c1dc-42cd-ad76-858802f45979", "c815c09b-a20d-4701-8739-57ba1e2ad409", "candidate", "CANDIDATE" },
-                    { "b189a208-8a38-42c5-9922-5dcb918e85c9", "9d83e5df-ff0e-43b4-83d4-1f1052175ea4", "employer", "EMPLOYER" }
+                    { "1d8bbcb9-6d72-4776-b97a-54dd330775ca", "039a135c-2ff5-41c6-a8ca-16317293f744", "admin", "ADMIN" },
+                    { "7023e28f-c1dc-42cd-ad76-858802f45979", "1ecf8f97-b100-47de-a0a9-92538497638d", "candidate", "CANDIDATE" },
+                    { "b189a208-8a38-42c5-9922-5dcb918e85c9", "f3d9f81d-b817-4fd5-b8b7-7a3ff3a1aa3b", "employer", "EMPLOYER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Candidate",
-                columns: new[] { "Id", "AboutMe", "Age", "CurrentCompany", "ExpectedSalary", "Experience", "ExperienceTime", "Location", "Name", "Phone", "ProfileImg", "Qualification", "UserId" },
+                columns: new[] { "Id", "AboutMe", "Age", "CurrentCompany", "ExpectedSalary", "Experience", "ExperienceTime", "IsDeleted", "Location", "Name", "Phone", "ProfileImg", "Qualification", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;", 23, "Fresh Graduate", 300, ".Net Developer", 5, 0, "Hammad Mirza", 3000000.0, "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0", 0, "" },
-                    { 2, "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;", 23, "Fresh Graduate", 400, "Php Laravel", 6, 0, "Ahtesham", 3000000.0, "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0", 0, "" },
-                    { 3, "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;", 23, "Fresh Graduate", 500, "React Designer", 8, 1, "Sohaib", 3000000.0, "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0", 1, "" }
+                    { new Guid("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"), "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;", 23, "Fresh Graduate", 300, ".Net Developer", 5, false, 0, "Hammad Mirza", 3000000.0, "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0", 0, "995ce588-b342-47b8-88f7-349365f898f9" },
+                    { new Guid("31bb5001-4266-4b90-992e-2a729b26d26b"), "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;", 23, "Fresh Graduate", 400, "Php Laravel", 6, false, 0, "Ahtesham", 3000000.0, "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0", 0, "cc53dc1c-a0d0-49a3-8f31-06b320fe22a9" },
+                    { new Guid("6209c878-b598-4939-bccf-909e58d12504"), "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;", 23, "Fresh Graduate", 500, "React Designer", 8, false, 1, "Sohaib", 3000000.0, "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0", 1, "4e9e311a-0926-423c-b136-eab5ba39998a" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Employer",
-                columns: new[] { "Id", "CompanyAbout", "CompanyLogo", "CompanyName", "CompanySize", "CompanyWebsite", "Founded", "Headquarters", "Industry", "UserId" },
+                columns: new[] { "Id", "CompanyAbout", "CompanyLogo", "CompanyName", "CompanySize", "CompanyWebsite", "Founded", "Headquarters", "Industry", "IsDeleted", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.", "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0", "Avitex Agency", 200, "https://jobs.nokriwp.com/", new DateTime(2023, 5, 12, 14, 16, 5, 738, DateTimeKind.Utc).AddTicks(7040), "Las Vegas, NV 89107, USA", "It", "2fe7daaa-bb2f-43a6-915b-083816e43b87" },
-                    { 2, "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.", "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0", "Demo 1", 50, "https://jobs.nokriwp.com/", new DateTime(2023, 5, 12, 14, 16, 5, 738, DateTimeKind.Utc).AddTicks(7047), "Lahore", "It", "088fffd7-94b4-448e-9b67-5619fcf19441" },
-                    { 3, "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.", "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0", "Honda", 600, "https://jobs.nokriwp.com/", new DateTime(2023, 5, 12, 14, 16, 5, 738, DateTimeKind.Utc).AddTicks(7050), "Islamabad", "Machenical", "06e4bc68-0d75-429c-b513-e12c2ab03494" }
+                    { new Guid("262ff2ba-d323-4916-b767-e9f1707ef7a2"), "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.", "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0", "Avitex Agency", 200, "https://jobs.nokriwp.com/", new DateTime(2023, 5, 15, 10, 7, 55, 987, DateTimeKind.Utc).AddTicks(9709), "Las Vegas, NV 89107, USA", "It", false, "2fe7daaa-bb2f-43a6-915b-083816e43b87" },
+                    { new Guid("4ea1f880-57ef-4f0b-8a19-5aa356e93091"), "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.", "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0", "Honda", 600, "https://jobs.nokriwp.com/", new DateTime(2023, 5, 15, 10, 7, 55, 987, DateTimeKind.Utc).AddTicks(9723), "Islamabad", "Machenical", false, "06e4bc68-0d75-429c-b513-e12c2ab03494" },
+                    { new Guid("680b65c6-46cf-48ac-88f7-29ab807b29d5"), "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.", "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0", "Demo 1", 50, "https://jobs.nokriwp.com/", new DateTime(2023, 5, 15, 10, 7, 55, 987, DateTimeKind.Utc).AddTicks(9715), "Lahore", "It", false, "088fffd7-94b4-448e-9b67-5619fcf19441" }
                 });
 
             migrationBuilder.InsertData(
                 table: "JobClass",
-                columns: new[] { "Id", "name" },
+                columns: new[] { "Id", "IsDeleted", "name" },
                 values: new object[,]
                 {
-                    { 1, 0 },
-                    { 2, 1 },
-                    { 3, 2 }
+                    { new Guid("63acd142-d323-42c5-a453-1b67f40fd073"), false, 1 },
+                    { new Guid("642a9e91-5c4a-4284-aa0f-69e39a93ea6d"), false, 0 },
+                    { new Guid("930c379d-d9e6-4a48-82b0-4f586d6aafc8"), false, 2 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Skills",
-                columns: new[] { "Id", "JobSkill" },
+                columns: new[] { "Id", "IsDeleted", "JobSkill" },
                 values: new object[,]
                 {
-                    { 1, "Php" },
-                    { 2, "JS" },
-                    { 3, "Designing" },
-                    { 4, "React Native" },
-                    { 5, "Arts" },
-                    { 6, ".Net" },
-                    { 7, "Java" },
-                    { 8, "MERN Stack" },
-                    { 9, "Architecture" },
-                    { 10, "Management" }
+                    { new Guid("010039fb-a687-4db5-8ada-3b586d3a4788"), false, ".Net" },
+                    { new Guid("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d"), false, "Designing" },
+                    { new Guid("2dd27837-b570-4c81-8bfc-bf8cad8323b6"), false, "Java" },
+                    { new Guid("83c89321-daf9-4ade-b229-d57615a32f10"), false, "Arts" },
+                    { new Guid("9a126650-2936-442e-92ba-7d7dc32ff6f9"), false, "React Native" },
+                    { new Guid("aafbde46-32ee-45bd-b52a-a76a1ac12a78"), false, "Php" },
+                    { new Guid("b749f4b8-3bc3-4a05-816b-56e0d12dfaaa"), false, "Architecture" },
+                    { new Guid("bae33518-8dc8-4d53-80ca-e8f58a9fd808"), false, "JS" },
+                    { new Guid("e4599076-fa12-4fe9-a8e4-35130d73729e"), false, "MERN Stack" },
+                    { new Guid("f235f414-fc41-4acb-a1ee-1fd79aea7eae"), false, "Management" }
                 });
 
             migrationBuilder.InsertData(
@@ -441,59 +447,49 @@ namespace JobPortal.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "CandidateId", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "EmployerId", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "06e4bc68-0d75-429c-b513-e12c2ab03494", 0, null, "287b281c-99cc-4a90-ae68-0183b7432284", "ApplicationUser", "employer3@gmail.com", true, 3, "Employer 3", "Third Employer", false, null, "EMPLOYER3@EMAIL.COM", "EMPLOYER3@EMAIL.COM", "AQAAAAEAACcQAAAAEKn+cH0BkaKdi+huUUk5XPTK9XHxZsq2QxWsTCEx7u7erTlXnyd5votFADcmXZ4egg==", null, false, "0e7b4de8-2a4e-4508-be22-a5d8d5902677", false, "employer3@gmail.com" },
-                    { "088fffd7-94b4-448e-9b67-5619fcf19441", 0, null, "a1d5f8b6-9190-4444-a407-bc3849587759", "ApplicationUser", "employer2@gmail.com", true, 2, "Employer 2", "Second Employer", false, null, "EMPLOYER2@EMAIL.COM", "EMPLOYER2@EMAIL.COM", "AQAAAAEAACcQAAAAEEN2kfIgK+We9WbD7BW444L1hNQNmxz0nM96/zYMK/qQG/1Bqv/ysmphgCW5nP1Ing==", null, false, "d3472176-d327-46de-b760-af9bccddfd81", false, "employer2@gmail.com" },
-                    { "2fe7daaa-bb2f-43a6-915b-083816e43b87", 0, null, "a199c14e-3e37-4246-9eee-5334eea713b1", "ApplicationUser", "employer1@gmail.com", true, 1, "Employer 1", "first Employer", false, null, "EMPLOYER1@EMAIL.COM", "EMPLOYER1@EMAIL.COM", "AQAAAAEAACcQAAAAEOYjm1z2kSfm0rRIcxrJ3e74HpNoJCRU/VTRwjNtWGrG3wzi9YizCw0ohEO+mVMlAQ==", null, false, "2e526695-a96f-4fbb-9e93-b507a6ef0295", false, "employer1@gmail.com" },
-                    { "4e9e311a-0926-423c-b136-eab5ba39998a", 0, 3, "0c8d7d8d-f072-420d-82b6-bcc6b874e5ce", "ApplicationUser", "candidate3@gmail.com", true, null, "Candidate 3", "third Candidate", false, null, "CANDIDATE3@EMAIL.COM", "CANDIDATE3@EMAIL.COM", "AQAAAAEAACcQAAAAEKkuApEKcsz07icE2xGjYPS2NXfOL1ficNNUMdFpSesSQJdQu3f8zAHofrUHCTH6Ow==", null, false, "5bf5a22f-a13e-48ea-bbd0-97dadf6c3f95", false, "candidate3@gmail.com" },
-                    { "995ce588-b342-47b8-88f7-349365f898f9", 0, 1, "4a7f67e7-5371-4324-bc1d-a0e85f7591ce", "ApplicationUser", "candidate1@gmail.com", true, null, "Candidate 1", "First CAndidate", false, null, "CANDIDATE1@EMAIL.COM", "CANDIDATE1@EMAIL.COM", "AQAAAAEAACcQAAAAEKX5GIeRwf+TajpKyz+V4ezUfukkqhIzWcwSxKT5o8zP17yz624/9xkrrnMpwRT1Wg==", null, false, "ea8c1874-4f47-43f0-811c-b0677f1fbb1d", false, "candidate@gmail.com" },
-                    { "cc53dc1c-a0d0-49a3-8f31-06b320fe22a9", 0, 2, "ff46b439-b650-4bf0-8fcd-8e3f20ec7e24", "ApplicationUser", "candidate2@gmail.com", true, null, "Candidate 2", "Second Candidate", false, null, "CANDIDATE2@EMAIL.COM", "CANDIDATE2@EMAIL.COM", "AQAAAAEAACcQAAAAENXiRbEZ5yKdPWQQTXXDqc9lLllK08ilb23TYhJcOMSIuizxbWaamqEelwnqgCXusA==", null, false, "bc0a2527-8c94-42bb-8c52-1664bdbd66a4", false, "candidate2@gmail.com" }
+                    { "06e4bc68-0d75-429c-b513-e12c2ab03494", 0, null, "612735dd-12d0-4569-b84c-10af6f725125", "ApplicationUser", "employer3@gmail.com", true, new Guid("4ea1f880-57ef-4f0b-8a19-5aa356e93091"), "Employer 3", "Third Employer", false, null, "EMPLOYER3@EMAIL.COM", "EMPLOYER3@EMAIL.COM", "AQAAAAEAACcQAAAAEDY7wJgAq6btsLwLJmpHFvVCszmISfLNg1e4+zmmnlfdfTj7SGRoQINtvns09hRRRw==", null, false, "6ccc6965-216a-4903-b063-69c6b66f043b", false, "employer3@gmail.com" },
+                    { "088fffd7-94b4-448e-9b67-5619fcf19441", 0, null, "3c9cdef0-4f99-4a16-b37a-29ce1fef1fcf", "ApplicationUser", "employer2@gmail.com", true, new Guid("680b65c6-46cf-48ac-88f7-29ab807b29d5"), "Employer 2", "Second Employer", false, null, "EMPLOYER2@EMAIL.COM", "EMPLOYER2@EMAIL.COM", "AQAAAAEAACcQAAAAEHMQSjD2J0h/JIfjd04Cgj05kGUYwuD57rEsDM+rrGlX/ATTC94k/5IFIS60RFo74Q==", null, false, "33d18e12-6ddd-4281-9dd9-429b5e05bce4", false, "employer2@gmail.com" },
+                    { "2fe7daaa-bb2f-43a6-915b-083816e43b87", 0, null, "c7c34c56-5acb-471a-bc14-7974d1cafeb1", "ApplicationUser", "employer1@gmail.com", true, new Guid("262ff2ba-d323-4916-b767-e9f1707ef7a2"), "Employer 1", "first Employer", false, null, "EMPLOYER1@EMAIL.COM", "EMPLOYER1@EMAIL.COM", "AQAAAAEAACcQAAAAEJ39HkZGP49XS7ePZN+5QCFwBgvrBUNlqngoDYLe0KvayT1cMYVSrtDxCtM93R8Ytw==", null, false, "e661b7bd-80ef-499f-8820-6ee1357ff786", false, "employer1@gmail.com" },
+                    { "4e9e311a-0926-423c-b136-eab5ba39998a", 0, new Guid("6209c878-b598-4939-bccf-909e58d12504"), "0000eb4e-36a2-46a7-ada7-bbe1834cbe7b", "ApplicationUser", "candidate3@gmail.com", true, null, "Candidate 3", "third Candidate", false, null, "CANDIDATE3@EMAIL.COM", "CANDIDATE3@EMAIL.COM", "AQAAAAEAACcQAAAAEFQQUgIV2IkmZRe7VsqS3Wfl+NZKCwQ/OHV3AfGUFNEvHbJldx4xH9T22+Jt/739oQ==", null, false, "e00f86d4-0707-4434-bbb2-bc0259162e32", false, "candidate3@gmail.com" },
+                    { "995ce588-b342-47b8-88f7-349365f898f9", 0, new Guid("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"), "0241568c-dec7-48d9-b59d-daf1cf98637b", "ApplicationUser", "candidate1@gmail.com", true, null, "Candidate 1", "First CAndidate", false, null, "CANDIDATE1@EMAIL.COM", "CANDIDATE1@EMAIL.COM", "AQAAAAEAACcQAAAAEIG1IHHnsKptIeiXnY2t2IOkTiCA7otyRgl/QQkHlRoTMAd9H0w0v7vAzNS9DwDf3Q==", null, false, "ee8d4d07-aff4-446c-af41-60b564b38513", false, "candidate@gmail.com" },
+                    { "cc53dc1c-a0d0-49a3-8f31-06b320fe22a9", 0, new Guid("31bb5001-4266-4b90-992e-2a729b26d26b"), "1049f261-f902-4e2d-8cd8-a35c5acaf908", "ApplicationUser", "candidate2@gmail.com", true, null, "Candidate 2", "Second Candidate", false, null, "CANDIDATE2@EMAIL.COM", "CANDIDATE2@EMAIL.COM", "AQAAAAEAACcQAAAAEJnoBm4QzLwKc3DWS1QdDl5FrjGJ92KAe8CpDK3ApxQZeGFK/L1zjKOc//YoRhZTdg==", null, false, "ee22b68c-920d-4c85-b373-74bac150f328", false, "candidate2@gmail.com" }
                 });
 
             migrationBuilder.InsertData(
                 table: "CandidateSkills",
-                columns: new[] { "Id", "CandidateId", "SkillId" },
+                columns: new[] { "Id", "CandidateId", "IsDeleted", "SkillId" },
                 values: new object[,]
                 {
-                    { 1, 1, 4 },
-                    { 2, 1, 6 },
-                    { 3, 1, 9 },
-                    { 4, 2, 1 },
-                    { 5, 3, 3 },
-                    { 6, 3, 5 },
-                    { 7, 3, 7 }
+                    { new Guid("037bb42e-67a5-4105-bb3c-539bb8d8a906"), new Guid("6209c878-b598-4939-bccf-909e58d12504"), false, new Guid("2dd27837-b570-4c81-8bfc-bf8cad8323b6") },
+                    { new Guid("232c30ea-e8f6-446a-9af1-a2a20cc1c422"), new Guid("31bb5001-4266-4b90-992e-2a729b26d26b"), false, new Guid("aafbde46-32ee-45bd-b52a-a76a1ac12a78") },
+                    { new Guid("26ae6b7d-0ac2-461a-9a11-42f965a2d977"), new Guid("6209c878-b598-4939-bccf-909e58d12504"), false, new Guid("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d") },
+                    { new Guid("2aa2ed81-38c6-47a3-bfd0-90c031f340df"), new Guid("6209c878-b598-4939-bccf-909e58d12504"), false, new Guid("83c89321-daf9-4ade-b229-d57615a32f10") },
+                    { new Guid("4cf506e5-818e-4f35-ac3c-000f3e87a604"), new Guid("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"), false, new Guid("010039fb-a687-4db5-8ada-3b586d3a4788") },
+                    { new Guid("66b6ad12-bce1-4928-a59d-de02192a7c10"), new Guid("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"), false, new Guid("9a126650-2936-442e-92ba-7d7dc32ff6f9") },
+                    { new Guid("af2e3fb6-a3b7-4e1a-83e4-5ee05dde72d7"), new Guid("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"), false, new Guid("b749f4b8-3bc3-4a05-816b-56e0d12dfaaa") }
                 });
 
             migrationBuilder.InsertData(
                 table: "Jobs",
-                columns: new[] { "Id", "DeadLine", "Description", "EmployerId", "EndBudget", "Icon", "JobExperience", "JobPosted", "JobShift", "JobStatus", "Location", "Qualifications", "Responsibility", "SalaryType", "StartBudget", "Title", "Type", "Vacancy" },
+                columns: new[] { "Id", "DeadLine", "Description", "EmployerId", "EndBudget", "Icon", "IsDeleted", "JobExperience", "JobPosted", "JobShift", "JobStatus", "Location", "Qualifications", "Responsibility", "SalaryType", "StartBudget", "Title", "Type", "Vacancy" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 5, 17, 19, 16, 5, 621, DateTimeKind.Local).AddTicks(7783), "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.", 1, 456.0, "https://img.freepik.com/premium-vector/gradient-business-investment-logo-design_269830-887.jpg?w=2000", 1, new DateTime(2023, 5, 12, 19, 16, 5, 621, DateTimeKind.Local).AddTicks(7930), 0, 0, 0, 0, "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", 0, 123.0, "Marketing Manager", 0, 20 },
-                    { 2, new DateTime(2023, 5, 17, 19, 16, 5, 621, DateTimeKind.Local).AddTicks(7783), "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.", 1, 777.0, "https://media.istockphoto.com/id/1304359165/vector/motion-data-speed-g-letter-logo-design.jpg?s=612x612&w=0&k=20&c=2A0yYWv8zHhztdShuGoVW87yJZqseV6AKJX0QL2cVuQ=", 6, new DateTime(2023, 5, 12, 19, 16, 5, 621, DateTimeKind.Local).AddTicks(7939), 0, 0, 2, 0, "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", 0, 334.0, "Software Engineer", 0, 5 },
-                    { 3, new DateTime(2023, 5, 17, 19, 16, 5, 621, DateTimeKind.Local).AddTicks(7783), "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.", 2, 340.0, "https://www.logodesign.net/images/abstract-logo.png", 3, new DateTime(2023, 5, 12, 19, 16, 5, 621, DateTimeKind.Local).AddTicks(7946), 2, 0, 0, 1, "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", 0, 190.0, "Product Designer", 5, 50 }
+                    { new Guid("4db3c416-6eae-4f01-bfd3-1ff3b45aea98"), new DateTime(2023, 5, 20, 15, 7, 55, 914, DateTimeKind.Local).AddTicks(7305), "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.", new Guid("4ea1f880-57ef-4f0b-8a19-5aa356e93091"), 340.0, "https://www.logodesign.net/images/abstract-logo.png", false, 3, new DateTime(2023, 5, 15, 15, 7, 55, 914, DateTimeKind.Local).AddTicks(7440), 2, 0, 0, 1, "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", 0, 190.0, "Product Designer", 5, 50 },
+                    { new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"), new DateTime(2023, 5, 20, 15, 7, 55, 914, DateTimeKind.Local).AddTicks(7305), "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.", new Guid("262ff2ba-d323-4916-b767-e9f1707ef7a2"), 456.0, "https://img.freepik.com/premium-vector/gradient-business-investment-logo-design_269830-887.jpg?w=2000", false, 1, new DateTime(2023, 5, 15, 15, 7, 55, 914, DateTimeKind.Local).AddTicks(7404), 0, 0, 0, 0, "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", 0, 123.0, "Marketing Manager", 0, 20 },
+                    { new Guid("eec67987-eb6a-4251-95aa-ede40e76332f"), new DateTime(2023, 5, 20, 15, 7, 55, 914, DateTimeKind.Local).AddTicks(7305), "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.", new Guid("680b65c6-46cf-48ac-88f7-29ab807b29d5"), 777.0, "https://media.istockphoto.com/id/1304359165/vector/motion-data-speed-g-letter-logo-design.jpg?s=612x612&w=0&k=20&c=2A0yYWv8zHhztdShuGoVW87yJZqseV6AKJX0QL2cVuQ=", false, 6, new DateTime(2023, 5, 15, 15, 7, 55, 914, DateTimeKind.Local).AddTicks(7432), 0, 0, 2, 0, "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", 0, 334.0, "Software Engineer", 0, 5 }
                 });
 
             migrationBuilder.InsertData(
                 table: "AllJobsClasses",
-                columns: new[] { "Id", "JobClassId", "JobId" },
+                columns: new[] { "Id", "IsDeleted", "JobClassId", "JobId" },
                 values: new object[,]
                 {
-                    { 1, 1, 1 },
-                    { 2, 2, 1 },
-                    { 3, 3, 1 },
-                    { 4, 1, 2 },
-                    { 5, 2, 2 },
-                    { 6, 3, 3 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AppliedJobs",
-                columns: new[] { "Id", "CandidateId", "JobId" },
-                values: new object[,]
-                {
-                    { 1, 1, 1 },
-                    { 2, 2, 1 },
-                    { 3, 1, 2 }
+                    { new Guid("02d42141-3627-48e2-a9ee-4142f85ca4e5"), false, new Guid("930c379d-d9e6-4a48-82b0-4f586d6aafc8"), new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e") },
+                    { new Guid("0d84a83a-3460-41e1-a942-49dd6d0411bd"), false, new Guid("63acd142-d323-42c5-a453-1b67f40fd073"), new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e") },
+                    { new Guid("63c2a7a6-8ebb-4bc9-ac98-8465abbb9994"), false, new Guid("642a9e91-5c4a-4284-aa0f-69e39a93ea6d"), new Guid("eec67987-eb6a-4251-95aa-ede40e76332f") },
+                    { new Guid("6c931ccd-e4db-4671-a7b9-b5be4b1b69ca"), false, new Guid("930c379d-d9e6-4a48-82b0-4f586d6aafc8"), new Guid("4db3c416-6eae-4f01-bfd3-1ff3b45aea98") },
+                    { new Guid("a4b97db1-2aff-49a7-be60-c59867fd74d7"), false, new Guid("63acd142-d323-42c5-a453-1b67f40fd073"), new Guid("eec67987-eb6a-4251-95aa-ede40e76332f") },
+                    { new Guid("e2865ba0-ee6c-43d8-a61e-4b9df0f1d386"), false, new Guid("642a9e91-5c4a-4284-aa0f-69e39a93ea6d"), new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e") }
                 });
 
             migrationBuilder.InsertData(
@@ -511,15 +507,15 @@ namespace JobPortal.Migrations
 
             migrationBuilder.InsertData(
                 table: "JobSkills",
-                columns: new[] { "Id", "JobId", "SkillId" },
+                columns: new[] { "Id", "IsDeleted", "JobId", "SkillId" },
                 values: new object[,]
                 {
-                    { 1, 1, 1 },
-                    { 2, 1, 2 },
-                    { 3, 1, 3 },
-                    { 4, 2, 3 },
-                    { 5, 2, 6 },
-                    { 6, 3, 6 }
+                    { new Guid("037bb42e-67a5-4105-bb3c-539bb8d8a906"), false, new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"), new Guid("aafbde46-32ee-45bd-b52a-a76a1ac12a78") },
+                    { new Guid("272eaf21-8b37-4562-b440-96b4befe752f"), false, new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"), new Guid("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d") },
+                    { new Guid("340a0320-8302-4860-999f-3a256a785a20"), false, new Guid("eec67987-eb6a-4251-95aa-ede40e76332f"), new Guid("010039fb-a687-4db5-8ada-3b586d3a4788") },
+                    { new Guid("ca58283f-d5f4-4eb0-92e3-6873e6821129"), false, new Guid("eec67987-eb6a-4251-95aa-ede40e76332f"), new Guid("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d") },
+                    { new Guid("f0f7f73e-aad5-416a-af2f-0153f313ae05"), false, new Guid("4db3c416-6eae-4f01-bfd3-1ff3b45aea98"), new Guid("010039fb-a687-4db5-8ada-3b586d3a4788") },
+                    { new Guid("fad6993c-c654-4c17-9078-174818d7236f"), false, new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"), new Guid("bae33518-8dc8-4d53-80ca-e8f58a9fd808") }
                 });
 
             migrationBuilder.CreateIndex(
@@ -538,9 +534,14 @@ namespace JobPortal.Migrations
                 column: "CandidateId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppliedJobs_JobId",
+                name: "IX_AppliedJobs_EmployerId",
                 table: "AppliedJobs",
-                column: "JobId");
+                column: "EmployerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppliedJobs_JobsId",
+                table: "AppliedJobs",
+                column: "JobsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

@@ -1,11 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using JobPortal.Models.ModelBase;
+using System.ComponentModel.DataAnnotations;
 
 namespace JobPortal.Models
 {
-    public class JobApplications
+    public class JobApplications: BaseModel
     {
-        [Key]
-        public int Id { get; set; }
         public string Name { get; set; }
         [Required]
         [EmailAddress]

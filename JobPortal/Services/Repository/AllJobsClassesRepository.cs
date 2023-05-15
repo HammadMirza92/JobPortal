@@ -1,6 +1,7 @@
 ﻿using JobPortal.AppDbContext;
 using JobPortal.Enums;
 using JobPortal.Models;
+using JobPortal.Models.ModelBase;
 using JobPortal.Services.IRepository;
 using JobPortal.Services.Repository.Base;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +24,7 @@ namespace JobPortal.Services.Repository
         }
         public async Task<IEnumerable<AllJobsClasses>> GetAllJobs()
         {
-            var allAllJobs =  await _context.AllJobsClasses.Include(x=> x.JobClass).Include(x=> x.Job).Where(x=> x.JobClassId != 1).ToListAsync();
+            var allAllJobs =  await _context.AllJobsClasses.Include(x=> x.JobClass).Include(x=> x.Job).ToListAsync();
                     
             
             return allAllJobs;

@@ -1,5 +1,4 @@
 ﻿using JobPortal.AppDbContext;
-using JobPortal.Enums;
 using JobPortal.Models;
 using JobPortal.Services.IRepository;
 using JobPortal.Services.Repository.Base;

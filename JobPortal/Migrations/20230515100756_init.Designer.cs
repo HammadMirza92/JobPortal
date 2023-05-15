@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230512141606_init")]
+    [Migration("20230515100756_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,17 +26,18 @@ namespace JobPortal.Migrations
 
             modelBuilder.Entity("JobPortal.Models.AllJobsClasses", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("JobClassId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("JobClassId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("JobId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("JobId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -49,92 +50,82 @@ namespace JobPortal.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            JobClassId = 1,
-                            JobId = 1
+                            Id = new Guid("e2865ba0-ee6c-43d8-a61e-4b9df0f1d386"),
+                            IsDeleted = false,
+                            JobClassId = new Guid("642a9e91-5c4a-4284-aa0f-69e39a93ea6d"),
+                            JobId = new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e")
                         },
                         new
                         {
-                            Id = 2,
-                            JobClassId = 2,
-                            JobId = 1
+                            Id = new Guid("0d84a83a-3460-41e1-a942-49dd6d0411bd"),
+                            IsDeleted = false,
+                            JobClassId = new Guid("63acd142-d323-42c5-a453-1b67f40fd073"),
+                            JobId = new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e")
                         },
                         new
                         {
-                            Id = 3,
-                            JobClassId = 3,
-                            JobId = 1
+                            Id = new Guid("02d42141-3627-48e2-a9ee-4142f85ca4e5"),
+                            IsDeleted = false,
+                            JobClassId = new Guid("930c379d-d9e6-4a48-82b0-4f586d6aafc8"),
+                            JobId = new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e")
                         },
                         new
                         {
-                            Id = 4,
-                            JobClassId = 1,
-                            JobId = 2
+                            Id = new Guid("63c2a7a6-8ebb-4bc9-ac98-8465abbb9994"),
+                            IsDeleted = false,
+                            JobClassId = new Guid("642a9e91-5c4a-4284-aa0f-69e39a93ea6d"),
+                            JobId = new Guid("eec67987-eb6a-4251-95aa-ede40e76332f")
                         },
                         new
                         {
-                            Id = 5,
-                            JobClassId = 2,
-                            JobId = 2
+                            Id = new Guid("a4b97db1-2aff-49a7-be60-c59867fd74d7"),
+                            IsDeleted = false,
+                            JobClassId = new Guid("63acd142-d323-42c5-a453-1b67f40fd073"),
+                            JobId = new Guid("eec67987-eb6a-4251-95aa-ede40e76332f")
                         },
                         new
                         {
-                            Id = 6,
-                            JobClassId = 3,
-                            JobId = 3
+                            Id = new Guid("6c931ccd-e4db-4671-a7b9-b5be4b1b69ca"),
+                            IsDeleted = false,
+                            JobClassId = new Guid("930c379d-d9e6-4a48-82b0-4f586d6aafc8"),
+                            JobId = new Guid("4db3c416-6eae-4f01-bfd3-1ff3b45aea98")
                         });
                 });
 
             modelBuilder.Entity("JobPortal.Models.AppliedJobs", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<Guid>("CandidateId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CandidateId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("EmployerId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("JobId")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("JobsId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CandidateId");
 
-                    b.HasIndex("JobId");
+                    b.HasIndex("EmployerId");
+
+                    b.HasIndex("JobsId");
 
                     b.ToTable("AppliedJobs");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CandidateId = 1,
-                            JobId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CandidateId = 2,
-                            JobId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CandidateId = 1,
-                            JobId = 2
-                        });
                 });
 
             modelBuilder.Entity("JobPortal.Models.Candidate", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AboutMe")
                         .IsRequired()
@@ -156,6 +147,9 @@ namespace JobPortal.Migrations
 
                     b.Property<int>("ExperienceTime")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Location")
                         .HasColumnType("int");
@@ -185,67 +179,71 @@ namespace JobPortal.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"),
                             AboutMe = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;",
                             Age = 23,
                             CurrentCompany = "Fresh Graduate",
                             ExpectedSalary = 300,
                             Experience = ".Net Developer",
                             ExperienceTime = 5,
+                            IsDeleted = false,
                             Location = 0,
                             Name = "Hammad Mirza",
                             Phone = 3000000.0,
                             ProfileImg = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
                             Qualification = 0,
-                            UserId = ""
+                            UserId = "995ce588-b342-47b8-88f7-349365f898f9"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = new Guid("31bb5001-4266-4b90-992e-2a729b26d26b"),
                             AboutMe = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;",
                             Age = 23,
                             CurrentCompany = "Fresh Graduate",
                             ExpectedSalary = 400,
                             Experience = "Php Laravel",
                             ExperienceTime = 6,
+                            IsDeleted = false,
                             Location = 0,
                             Name = "Ahtesham",
                             Phone = 3000000.0,
                             ProfileImg = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
                             Qualification = 0,
-                            UserId = ""
+                            UserId = "cc53dc1c-a0d0-49a3-8f31-06b320fe22a9"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = new Guid("6209c878-b598-4939-bccf-909e58d12504"),
                             AboutMe = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;",
                             Age = 23,
                             CurrentCompany = "Fresh Graduate",
                             ExpectedSalary = 500,
                             Experience = "React Designer",
                             ExperienceTime = 8,
+                            IsDeleted = false,
                             Location = 1,
                             Name = "Sohaib",
                             Phone = 3000000.0,
                             ProfileImg = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
                             Qualification = 1,
-                            UserId = ""
+                            UserId = "4e9e311a-0926-423c-b136-eab5ba39998a"
                         });
                 });
 
             modelBuilder.Entity("JobPortal.Models.CandidateSkills", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<Guid>("CandidateId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CandidateId")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("SkillId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SkillId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -258,55 +256,60 @@ namespace JobPortal.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            CandidateId = 1,
-                            SkillId = 4
+                            Id = new Guid("66b6ad12-bce1-4928-a59d-de02192a7c10"),
+                            CandidateId = new Guid("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"),
+                            IsDeleted = false,
+                            SkillId = new Guid("9a126650-2936-442e-92ba-7d7dc32ff6f9")
                         },
                         new
                         {
-                            Id = 2,
-                            CandidateId = 1,
-                            SkillId = 6
+                            Id = new Guid("4cf506e5-818e-4f35-ac3c-000f3e87a604"),
+                            CandidateId = new Guid("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"),
+                            IsDeleted = false,
+                            SkillId = new Guid("010039fb-a687-4db5-8ada-3b586d3a4788")
                         },
                         new
                         {
-                            Id = 3,
-                            CandidateId = 1,
-                            SkillId = 9
+                            Id = new Guid("af2e3fb6-a3b7-4e1a-83e4-5ee05dde72d7"),
+                            CandidateId = new Guid("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"),
+                            IsDeleted = false,
+                            SkillId = new Guid("b749f4b8-3bc3-4a05-816b-56e0d12dfaaa")
                         },
                         new
                         {
-                            Id = 4,
-                            CandidateId = 2,
-                            SkillId = 1
+                            Id = new Guid("232c30ea-e8f6-446a-9af1-a2a20cc1c422"),
+                            CandidateId = new Guid("31bb5001-4266-4b90-992e-2a729b26d26b"),
+                            IsDeleted = false,
+                            SkillId = new Guid("aafbde46-32ee-45bd-b52a-a76a1ac12a78")
                         },
                         new
                         {
-                            Id = 5,
-                            CandidateId = 3,
-                            SkillId = 3
+                            Id = new Guid("26ae6b7d-0ac2-461a-9a11-42f965a2d977"),
+                            CandidateId = new Guid("6209c878-b598-4939-bccf-909e58d12504"),
+                            IsDeleted = false,
+                            SkillId = new Guid("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d")
                         },
                         new
                         {
-                            Id = 6,
-                            CandidateId = 3,
-                            SkillId = 5
+                            Id = new Guid("2aa2ed81-38c6-47a3-bfd0-90c031f340df"),
+                            CandidateId = new Guid("6209c878-b598-4939-bccf-909e58d12504"),
+                            IsDeleted = false,
+                            SkillId = new Guid("83c89321-daf9-4ade-b229-d57615a32f10")
                         },
                         new
                         {
-                            Id = 7,
-                            CandidateId = 3,
-                            SkillId = 7
+                            Id = new Guid("037bb42e-67a5-4105-bb3c-539bb8d8a906"),
+                            CandidateId = new Guid("6209c878-b598-4939-bccf-909e58d12504"),
+                            IsDeleted = false,
+                            SkillId = new Guid("2dd27837-b570-4c81-8bfc-bf8cad8323b6")
                         });
                 });
 
             modelBuilder.Entity("JobPortal.Models.Employer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CompanyAbout")
                         .IsRequired()
@@ -338,6 +341,9 @@ namespace JobPortal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -349,52 +355,53 @@ namespace JobPortal.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("262ff2ba-d323-4916-b767-e9f1707ef7a2"),
                             CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
                             CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
                             CompanyName = "Avitex Agency",
                             CompanySize = 200,
                             CompanyWebsite = "https://jobs.nokriwp.com/",
-                            Founded = new DateTime(2023, 5, 12, 14, 16, 5, 738, DateTimeKind.Utc).AddTicks(7040),
+                            Founded = new DateTime(2023, 5, 15, 10, 7, 55, 987, DateTimeKind.Utc).AddTicks(9709),
                             Headquarters = "Las Vegas, NV 89107, USA",
                             Industry = "It",
+                            IsDeleted = false,
                             UserId = "2fe7daaa-bb2f-43a6-915b-083816e43b87"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = new Guid("680b65c6-46cf-48ac-88f7-29ab807b29d5"),
                             CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
                             CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
                             CompanyName = "Demo 1",
                             CompanySize = 50,
                             CompanyWebsite = "https://jobs.nokriwp.com/",
-                            Founded = new DateTime(2023, 5, 12, 14, 16, 5, 738, DateTimeKind.Utc).AddTicks(7047),
+                            Founded = new DateTime(2023, 5, 15, 10, 7, 55, 987, DateTimeKind.Utc).AddTicks(9715),
                             Headquarters = "Lahore",
                             Industry = "It",
+                            IsDeleted = false,
                             UserId = "088fffd7-94b4-448e-9b67-5619fcf19441"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = new Guid("4ea1f880-57ef-4f0b-8a19-5aa356e93091"),
                             CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
                             CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
                             CompanyName = "Honda",
                             CompanySize = 600,
                             CompanyWebsite = "https://jobs.nokriwp.com/",
-                            Founded = new DateTime(2023, 5, 12, 14, 16, 5, 738, DateTimeKind.Utc).AddTicks(7050),
+                            Founded = new DateTime(2023, 5, 15, 10, 7, 55, 987, DateTimeKind.Utc).AddTicks(9723),
                             Headquarters = "Islamabad",
                             Industry = "Machenical",
+                            IsDeleted = false,
                             UserId = "06e4bc68-0d75-429c-b513-e12c2ab03494"
                         });
                 });
 
             modelBuilder.Entity("JobPortal.Models.Job", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DeadLine")
                         .HasColumnType("datetime2");
@@ -403,8 +410,8 @@ namespace JobPortal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EmployerId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("EmployerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("EndBudget")
                         .HasColumnType("float");
@@ -412,6 +419,9 @@ namespace JobPortal.Migrations
                     b.Property<string>("Icon")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<int>("JobExperience")
                         .HasColumnType("int");
@@ -460,14 +470,15 @@ namespace JobPortal.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            DeadLine = new DateTime(2023, 5, 17, 19, 16, 5, 621, DateTimeKind.Local).AddTicks(7783),
+                            Id = new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"),
+                            DeadLine = new DateTime(2023, 5, 20, 15, 7, 55, 914, DateTimeKind.Local).AddTicks(7305),
                             Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
-                            EmployerId = 1,
+                            EmployerId = new Guid("262ff2ba-d323-4916-b767-e9f1707ef7a2"),
                             EndBudget = 456.0,
                             Icon = "https://img.freepik.com/premium-vector/gradient-business-investment-logo-design_269830-887.jpg?w=2000",
+                            IsDeleted = false,
                             JobExperience = 1,
-                            JobPosted = new DateTime(2023, 5, 12, 19, 16, 5, 621, DateTimeKind.Local).AddTicks(7930),
+                            JobPosted = new DateTime(2023, 5, 15, 15, 7, 55, 914, DateTimeKind.Local).AddTicks(7404),
                             JobShift = 0,
                             JobStatus = 0,
                             Location = 0,
@@ -481,14 +492,15 @@ namespace JobPortal.Migrations
                         },
                         new
                         {
-                            Id = 2,
-                            DeadLine = new DateTime(2023, 5, 17, 19, 16, 5, 621, DateTimeKind.Local).AddTicks(7783),
+                            Id = new Guid("eec67987-eb6a-4251-95aa-ede40e76332f"),
+                            DeadLine = new DateTime(2023, 5, 20, 15, 7, 55, 914, DateTimeKind.Local).AddTicks(7305),
                             Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
-                            EmployerId = 1,
+                            EmployerId = new Guid("680b65c6-46cf-48ac-88f7-29ab807b29d5"),
                             EndBudget = 777.0,
                             Icon = "https://media.istockphoto.com/id/1304359165/vector/motion-data-speed-g-letter-logo-design.jpg?s=612x612&w=0&k=20&c=2A0yYWv8zHhztdShuGoVW87yJZqseV6AKJX0QL2cVuQ=",
+                            IsDeleted = false,
                             JobExperience = 6,
-                            JobPosted = new DateTime(2023, 5, 12, 19, 16, 5, 621, DateTimeKind.Local).AddTicks(7939),
+                            JobPosted = new DateTime(2023, 5, 15, 15, 7, 55, 914, DateTimeKind.Local).AddTicks(7432),
                             JobShift = 0,
                             JobStatus = 0,
                             Location = 2,
@@ -502,14 +514,15 @@ namespace JobPortal.Migrations
                         },
                         new
                         {
-                            Id = 3,
-                            DeadLine = new DateTime(2023, 5, 17, 19, 16, 5, 621, DateTimeKind.Local).AddTicks(7783),
+                            Id = new Guid("4db3c416-6eae-4f01-bfd3-1ff3b45aea98"),
+                            DeadLine = new DateTime(2023, 5, 20, 15, 7, 55, 914, DateTimeKind.Local).AddTicks(7305),
                             Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
-                            EmployerId = 2,
+                            EmployerId = new Guid("4ea1f880-57ef-4f0b-8a19-5aa356e93091"),
                             EndBudget = 340.0,
                             Icon = "https://www.logodesign.net/images/abstract-logo.png",
+                            IsDeleted = false,
                             JobExperience = 3,
-                            JobPosted = new DateTime(2023, 5, 12, 19, 16, 5, 621, DateTimeKind.Local).AddTicks(7946),
+                            JobPosted = new DateTime(2023, 5, 15, 15, 7, 55, 914, DateTimeKind.Local).AddTicks(7440),
                             JobShift = 2,
                             JobStatus = 0,
                             Location = 0,
@@ -525,11 +538,12 @@ namespace JobPortal.Migrations
 
             modelBuilder.Entity("JobPortal.Models.JobClass", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<int>("name")
                         .HasColumnType("int");
@@ -541,34 +555,38 @@ namespace JobPortal.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("642a9e91-5c4a-4284-aa0f-69e39a93ea6d"),
+                            IsDeleted = false,
                             name = 0
                         },
                         new
                         {
-                            Id = 2,
+                            Id = new Guid("63acd142-d323-42c5-a453-1b67f40fd073"),
+                            IsDeleted = false,
                             name = 1
                         },
                         new
                         {
-                            Id = 3,
+                            Id = new Guid("930c379d-d9e6-4a48-82b0-4f586d6aafc8"),
+                            IsDeleted = false,
                             name = 2
                         });
                 });
 
             modelBuilder.Entity("JobPortal.Models.JobSkills", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("JobId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("JobId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("SkillId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SkillId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -581,49 +599,56 @@ namespace JobPortal.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            JobId = 1,
-                            SkillId = 1
+                            Id = new Guid("037bb42e-67a5-4105-bb3c-539bb8d8a906"),
+                            IsDeleted = false,
+                            JobId = new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"),
+                            SkillId = new Guid("aafbde46-32ee-45bd-b52a-a76a1ac12a78")
                         },
                         new
                         {
-                            Id = 2,
-                            JobId = 1,
-                            SkillId = 2
+                            Id = new Guid("fad6993c-c654-4c17-9078-174818d7236f"),
+                            IsDeleted = false,
+                            JobId = new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"),
+                            SkillId = new Guid("bae33518-8dc8-4d53-80ca-e8f58a9fd808")
                         },
                         new
                         {
-                            Id = 3,
-                            JobId = 1,
-                            SkillId = 3
+                            Id = new Guid("272eaf21-8b37-4562-b440-96b4befe752f"),
+                            IsDeleted = false,
+                            JobId = new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"),
+                            SkillId = new Guid("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d")
                         },
                         new
                         {
-                            Id = 4,
-                            JobId = 2,
-                            SkillId = 3
+                            Id = new Guid("ca58283f-d5f4-4eb0-92e3-6873e6821129"),
+                            IsDeleted = false,
+                            JobId = new Guid("eec67987-eb6a-4251-95aa-ede40e76332f"),
+                            SkillId = new Guid("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d")
                         },
                         new
                         {
-                            Id = 5,
-                            JobId = 2,
-                            SkillId = 6
+                            Id = new Guid("340a0320-8302-4860-999f-3a256a785a20"),
+                            IsDeleted = false,
+                            JobId = new Guid("eec67987-eb6a-4251-95aa-ede40e76332f"),
+                            SkillId = new Guid("010039fb-a687-4db5-8ada-3b586d3a4788")
                         },
                         new
                         {
-                            Id = 6,
-                            JobId = 3,
-                            SkillId = 6
+                            Id = new Guid("f0f7f73e-aad5-416a-af2f-0153f313ae05"),
+                            IsDeleted = false,
+                            JobId = new Guid("4db3c416-6eae-4f01-bfd3-1ff3b45aea98"),
+                            SkillId = new Guid("010039fb-a687-4db5-8ada-3b586d3a4788")
                         });
                 });
 
             modelBuilder.Entity("JobPortal.Models.Skills", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("JobSkill")
                         .IsRequired()
@@ -636,52 +661,62 @@ namespace JobPortal.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("aafbde46-32ee-45bd-b52a-a76a1ac12a78"),
+                            IsDeleted = false,
                             JobSkill = "Php"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = new Guid("bae33518-8dc8-4d53-80ca-e8f58a9fd808"),
+                            IsDeleted = false,
                             JobSkill = "JS"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = new Guid("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d"),
+                            IsDeleted = false,
                             JobSkill = "Designing"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = new Guid("9a126650-2936-442e-92ba-7d7dc32ff6f9"),
+                            IsDeleted = false,
                             JobSkill = "React Native"
                         },
                         new
                         {
-                            Id = 5,
+                            Id = new Guid("83c89321-daf9-4ade-b229-d57615a32f10"),
+                            IsDeleted = false,
                             JobSkill = "Arts"
                         },
                         new
                         {
-                            Id = 6,
+                            Id = new Guid("010039fb-a687-4db5-8ada-3b586d3a4788"),
+                            IsDeleted = false,
                             JobSkill = ".Net"
                         },
                         new
                         {
-                            Id = 7,
+                            Id = new Guid("2dd27837-b570-4c81-8bfc-bf8cad8323b6"),
+                            IsDeleted = false,
                             JobSkill = "Java"
                         },
                         new
                         {
-                            Id = 8,
+                            Id = new Guid("e4599076-fa12-4fe9-a8e4-35130d73729e"),
+                            IsDeleted = false,
                             JobSkill = "MERN Stack"
                         },
                         new
                         {
-                            Id = 9,
+                            Id = new Guid("b749f4b8-3bc3-4a05-816b-56e0d12dfaaa"),
+                            IsDeleted = false,
                             JobSkill = "Architecture"
                         },
                         new
                         {
-                            Id = 10,
+                            Id = new Guid("f235f414-fc41-4acb-a1ee-1fd79aea7eae"),
+                            IsDeleted = false,
                             JobSkill = "Management"
                         });
                 });
@@ -716,21 +751,21 @@ namespace JobPortal.Migrations
                         new
                         {
                             Id = "1d8bbcb9-6d72-4776-b97a-54dd330775ca",
-                            ConcurrencyStamp = "7b4de6bd-28e8-4742-9719-0b08de07b5f3",
+                            ConcurrencyStamp = "039a135c-2ff5-41c6-a8ca-16317293f744",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "7023e28f-c1dc-42cd-ad76-858802f45979",
-                            ConcurrencyStamp = "c815c09b-a20d-4701-8739-57ba1e2ad409",
+                            ConcurrencyStamp = "1ecf8f97-b100-47de-a0a9-92538497638d",
                             Name = "candidate",
                             NormalizedName = "CANDIDATE"
                         },
                         new
                         {
                             Id = "b189a208-8a38-42c5-9922-5dcb918e85c9",
-                            ConcurrencyStamp = "9d83e5df-ff0e-43b4-83d4-1f1052175ea4",
+                            ConcurrencyStamp = "f3d9f81d-b817-4fd5-b8b7-7a3ff3a1aa3b",
                             Name = "employer",
                             NormalizedName = "EMPLOYER"
                         });
@@ -953,11 +988,11 @@ namespace JobPortal.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<int?>("CandidateId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("CandidateId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("EmployerId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("EmployerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -978,18 +1013,18 @@ namespace JobPortal.Migrations
                         {
                             Id = "2fe7daaa-bb2f-43a6-915b-083816e43b87",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a199c14e-3e37-4246-9eee-5334eea713b1",
+                            ConcurrencyStamp = "c7c34c56-5acb-471a-bc14-7974d1cafeb1",
                             Email = "employer1@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "EMPLOYER1@EMAIL.COM",
                             NormalizedUserName = "EMPLOYER1@EMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOYjm1z2kSfm0rRIcxrJ3e74HpNoJCRU/VTRwjNtWGrG3wzi9YizCw0ohEO+mVMlAQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ39HkZGP49XS7ePZN+5QCFwBgvrBUNlqngoDYLe0KvayT1cMYVSrtDxCtM93R8Ytw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2e526695-a96f-4fbb-9e93-b507a6ef0295",
+                            SecurityStamp = "e661b7bd-80ef-499f-8820-6ee1357ff786",
                             TwoFactorEnabled = false,
                             UserName = "employer1@gmail.com",
-                            EmployerId = 1,
+                            EmployerId = new Guid("262ff2ba-d323-4916-b767-e9f1707ef7a2"),
                             FirstName = "Employer 1",
                             LastName = "first Employer"
                         },
@@ -997,18 +1032,18 @@ namespace JobPortal.Migrations
                         {
                             Id = "088fffd7-94b4-448e-9b67-5619fcf19441",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a1d5f8b6-9190-4444-a407-bc3849587759",
+                            ConcurrencyStamp = "3c9cdef0-4f99-4a16-b37a-29ce1fef1fcf",
                             Email = "employer2@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "EMPLOYER2@EMAIL.COM",
                             NormalizedUserName = "EMPLOYER2@EMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEN2kfIgK+We9WbD7BW444L1hNQNmxz0nM96/zYMK/qQG/1Bqv/ysmphgCW5nP1Ing==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHMQSjD2J0h/JIfjd04Cgj05kGUYwuD57rEsDM+rrGlX/ATTC94k/5IFIS60RFo74Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d3472176-d327-46de-b760-af9bccddfd81",
+                            SecurityStamp = "33d18e12-6ddd-4281-9dd9-429b5e05bce4",
                             TwoFactorEnabled = false,
                             UserName = "employer2@gmail.com",
-                            EmployerId = 2,
+                            EmployerId = new Guid("680b65c6-46cf-48ac-88f7-29ab807b29d5"),
                             FirstName = "Employer 2",
                             LastName = "Second Employer"
                         },
@@ -1016,18 +1051,18 @@ namespace JobPortal.Migrations
                         {
                             Id = "06e4bc68-0d75-429c-b513-e12c2ab03494",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "287b281c-99cc-4a90-ae68-0183b7432284",
+                            ConcurrencyStamp = "612735dd-12d0-4569-b84c-10af6f725125",
                             Email = "employer3@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "EMPLOYER3@EMAIL.COM",
                             NormalizedUserName = "EMPLOYER3@EMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKn+cH0BkaKdi+huUUk5XPTK9XHxZsq2QxWsTCEx7u7erTlXnyd5votFADcmXZ4egg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDY7wJgAq6btsLwLJmpHFvVCszmISfLNg1e4+zmmnlfdfTj7SGRoQINtvns09hRRRw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0e7b4de8-2a4e-4508-be22-a5d8d5902677",
+                            SecurityStamp = "6ccc6965-216a-4903-b063-69c6b66f043b",
                             TwoFactorEnabled = false,
                             UserName = "employer3@gmail.com",
-                            EmployerId = 3,
+                            EmployerId = new Guid("4ea1f880-57ef-4f0b-8a19-5aa356e93091"),
                             FirstName = "Employer 3",
                             LastName = "Third Employer"
                         },
@@ -1035,18 +1070,18 @@ namespace JobPortal.Migrations
                         {
                             Id = "995ce588-b342-47b8-88f7-349365f898f9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4a7f67e7-5371-4324-bc1d-a0e85f7591ce",
+                            ConcurrencyStamp = "0241568c-dec7-48d9-b59d-daf1cf98637b",
                             Email = "candidate1@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "CANDIDATE1@EMAIL.COM",
                             NormalizedUserName = "CANDIDATE1@EMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKX5GIeRwf+TajpKyz+V4ezUfukkqhIzWcwSxKT5o8zP17yz624/9xkrrnMpwRT1Wg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIG1IHHnsKptIeiXnY2t2IOkTiCA7otyRgl/QQkHlRoTMAd9H0w0v7vAzNS9DwDf3Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ea8c1874-4f47-43f0-811c-b0677f1fbb1d",
+                            SecurityStamp = "ee8d4d07-aff4-446c-af41-60b564b38513",
                             TwoFactorEnabled = false,
                             UserName = "candidate@gmail.com",
-                            CandidateId = 1,
+                            CandidateId = new Guid("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"),
                             FirstName = "Candidate 1",
                             LastName = "First CAndidate"
                         },
@@ -1054,18 +1089,18 @@ namespace JobPortal.Migrations
                         {
                             Id = "cc53dc1c-a0d0-49a3-8f31-06b320fe22a9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ff46b439-b650-4bf0-8fcd-8e3f20ec7e24",
+                            ConcurrencyStamp = "1049f261-f902-4e2d-8cd8-a35c5acaf908",
                             Email = "candidate2@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "CANDIDATE2@EMAIL.COM",
                             NormalizedUserName = "CANDIDATE2@EMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENXiRbEZ5yKdPWQQTXXDqc9lLllK08ilb23TYhJcOMSIuizxbWaamqEelwnqgCXusA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJnoBm4QzLwKc3DWS1QdDl5FrjGJ92KAe8CpDK3ApxQZeGFK/L1zjKOc//YoRhZTdg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bc0a2527-8c94-42bb-8c52-1664bdbd66a4",
+                            SecurityStamp = "ee22b68c-920d-4c85-b373-74bac150f328",
                             TwoFactorEnabled = false,
                             UserName = "candidate2@gmail.com",
-                            CandidateId = 2,
+                            CandidateId = new Guid("31bb5001-4266-4b90-992e-2a729b26d26b"),
                             FirstName = "Candidate 2",
                             LastName = "Second Candidate"
                         },
@@ -1073,18 +1108,18 @@ namespace JobPortal.Migrations
                         {
                             Id = "4e9e311a-0926-423c-b136-eab5ba39998a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0c8d7d8d-f072-420d-82b6-bcc6b874e5ce",
+                            ConcurrencyStamp = "0000eb4e-36a2-46a7-ada7-bbe1834cbe7b",
                             Email = "candidate3@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "CANDIDATE3@EMAIL.COM",
                             NormalizedUserName = "CANDIDATE3@EMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKkuApEKcsz07icE2xGjYPS2NXfOL1ficNNUMdFpSesSQJdQu3f8zAHofrUHCTH6Ow==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFQQUgIV2IkmZRe7VsqS3Wfl+NZKCwQ/OHV3AfGUFNEvHbJldx4xH9T22+Jt/739oQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5bf5a22f-a13e-48ea-bbd0-97dadf6c3f95",
+                            SecurityStamp = "e00f86d4-0707-4434-bbb2-bc0259162e32",
                             TwoFactorEnabled = false,
                             UserName = "candidate3@gmail.com",
-                            CandidateId = 3,
+                            CandidateId = new Guid("6209c878-b598-4939-bccf-909e58d12504"),
                             FirstName = "Candidate 3",
                             LastName = "third Candidate"
                         });
@@ -1117,9 +1152,13 @@ namespace JobPortal.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("JobPortal.Models.Employer", null)
+                        .WithMany("AppliedJobs")
+                        .HasForeignKey("EmployerId");
+
                     b.HasOne("JobPortal.Models.Job", "Job")
                         .WithMany("AppliedJobs")
-                        .HasForeignKey("JobId")
+                        .HasForeignKey("JobsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1252,6 +1291,8 @@ namespace JobPortal.Migrations
 
             modelBuilder.Entity("JobPortal.Models.Employer", b =>
                 {
+                    b.Navigation("AppliedJobs");
+
                     b.Navigation("JobOffered");
                 });
 

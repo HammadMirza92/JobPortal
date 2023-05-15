@@ -20,7 +20,7 @@ namespace JobPortal.APIController
         }
         // GET: api/Job
         [HttpGet("GetJobsofCandidate/{id}")]
-        public async Task<ActionResult<AppliedJobs>> GetJobsofCandidate(int id)
+        public async Task<ActionResult<AppliedJobs>> GetJobsofCandidate(Guid id)
         {
             var JobsOfConadidate = await _appliedJobsRepository.GetJobByCandidateId(id);
             if (!JobsOfConadidate.Any())
@@ -33,7 +33,7 @@ namespace JobPortal.APIController
 
         // GET api/Job/5
         [HttpGet("{id}")]
-        public async Task<AppliedJobs> Get(int id)
+        public async Task<AppliedJobs> Get(Guid id)
         {
             var job = await _appliedJobsRepository.GetById(id);
             return job;

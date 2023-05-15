@@ -1,12 +1,11 @@
 ﻿using JobPortal.Enums;
+using JobPortal.Models.ModelBase;
 using System.ComponentModel.DataAnnotations;
 
 namespace JobPortal.Models
 {
-    public class Candidate
+    public class Candidate: BaseModel
     {
-        [Key]
-        public int Id { get; set; }
         public string Name { get; set; }
         public string ProfileImg{ get; set; }
         public string AboutMe{ get; set; }

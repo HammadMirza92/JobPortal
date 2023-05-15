@@ -22,10 +22,32 @@ namespace JobPortal.APIController
             _alljJobsClassesRepository = alljJobsClassesRepository;
              
         }
+
+        [HttpGet]
+        public async Task<ActionResult<Job>> Get()
+        {
+            var jobs = await _jobRepository.GetAll();
+            if (!jobs.Any())
+            {
+                return BadRequest();
+            }
+            return Ok(jobs);
+        }
+        [HttpGet("getFeatureJobs")]
+        public async Task<ActionResult<Job>> GetFeatureJobs()
+        {
+            var featureJobs = await _jobRepository.GetFeatureJobs();
+            if (!featureJobs.Any())
+            {
+                return BadRequest();
+            }
+            return Ok(featureJobs);
+        }
+
         // GET: api/Job
         [HttpGet("getAll/{id}")]
 /*        [ResponseCache(Duration = 120)]
-*/      public async Task<ActionResult<Job>> GetAll(int id)
+*/      public async Task<ActionResult<Job>> GetAll(Guid id)
         {
             var jobs = await _jobRepository.GetAllJobs(id);
             if (!jobs.Any())
@@ -36,7 +58,7 @@ namespace JobPortal.APIController
         }
         [HttpGet("getFeatureJobs/{id}")]
        /* [ResponseCache(Duration = 120)]*/
-        public async Task<ActionResult<Job>> GetFeatureJobs(int id)
+        public async Task<ActionResult<Job>> GetFeatureJobs(Guid id)
         {
             var featureJobs = await _jobRepository.GetFeatureJobs( id);
             if (!featureJobs.Any())
@@ -48,7 +70,7 @@ namespace JobPortal.APIController
 
         // GET api/Job/5
         [HttpGet("{id}")]
-        public async Task<Job> Get(int id)
+        public async Task<Job> Get(Guid id)
         {
             var job = await _jobRepository.GetById(id);
             return job;

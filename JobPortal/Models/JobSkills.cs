@@ -1,16 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using JobPortal.Models.ModelBase;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobPortal.Models
 {
-    public class JobSkills
+    public class JobSkills: BaseModel
     {
-        [Key]
-        public int Id { get; set; }
-        public int JobId { get; set; }
+        public Guid JobId { get; set; }
         [ForeignKey(nameof(JobId))]
         public Job Job { get; set; }
-        public int SkillId { get; set; }
+        public Guid SkillId { get; set; }
         [ForeignKey(nameof(SkillId))]
         public Skills Skill { get; set; }
     }

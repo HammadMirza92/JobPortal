@@ -7,10 +7,10 @@ namespace JobPortal.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int? EmployerId { get; set; }
+        public Guid? EmployerId { get; set; }
         [ForeignKey(nameof(EmployerId))]
         public Employer? Employer { get; set; }
-        public int? CandidateId { get; set; }
+        public Guid? CandidateId { get; set; }
         [ForeignKey(nameof(CandidateId))]
         public Candidate? Candidate { get; set; }
     }

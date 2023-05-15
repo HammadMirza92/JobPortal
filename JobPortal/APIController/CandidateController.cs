@@ -35,7 +35,7 @@ namespace JobPortal.APIController
 
         // GET api/Job/5
         [HttpGet("{id}")]
-        public async Task<Candidate> Get(int id)
+        public async Task<Candidate> Get(Guid id)
         {
             var candidate = await _candidateRepository.GetById(id);
             return candidate;

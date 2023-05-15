@@ -15,7 +15,7 @@ namespace JobPortal.Services.Repository
             _context = context;
         }
        
-        public async Task<IEnumerable<AppliedJobs>> GetJobByCandidateId(int id)
+        public async Task<IEnumerable<AppliedJobs>> GetJobByCandidateId(Guid id)
         {
             var allAppliedJobsofCandidate = await _context.AppliedJobs.Where(x=> x.CandidateId == id)
                 .Include(j=> j.Job)

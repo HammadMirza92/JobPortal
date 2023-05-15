@@ -1,5 +1,6 @@
 ﻿using JobPortal.Enums;
 using JobPortal.Models;
+using JobPortal.Models.ModelBase;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -28,6 +29,8 @@ namespace JobPortal.AppDbContext
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
+
             base.OnModelCreating(modelBuilder);
 
             DateTime currentDate = DateTime.Now;
@@ -38,7 +41,7 @@ namespace JobPortal.AppDbContext
 
             modelBuilder.Entity<Job>().HasData(new Job
             {
-                Id = 1,
+                Id = Guid.Parse("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"),
                 Icon = "https://img.freepik.com/premium-vector/gradient-business-investment-logo-design_269830-887.jpg?w=2000",
                 Title = "Marketing Manager",
                 Description= "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
@@ -54,11 +57,11 @@ namespace JobPortal.AppDbContext
                 JobStatus = JobStatus.Open,
                 Vacancy = 20,
                 DeadLine= nextDate,
-                EmployerId =1,
+                EmployerId =Guid.Parse("262ff2ba-d323-4916-b767-e9f1707ef7a2"),
             },
             new Job
             {
-                Id = 2,
+                Id = Guid.Parse("eec67987-eb6a-4251-95aa-ede40e76332f"),
                 Icon = "https://media.istockphoto.com/id/1304359165/vector/motion-data-speed-g-letter-logo-design.jpg?s=612x612&w=0&k=20&c=2A0yYWv8zHhztdShuGoVW87yJZqseV6AKJX0QL2cVuQ=",
                 Title = "Software Engineer",
                 Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
@@ -74,12 +77,12 @@ namespace JobPortal.AppDbContext
                 JobStatus = JobStatus.Open,
                 Vacancy = 5,
                 DeadLine = nextDate,
-                EmployerId = 1,
+                EmployerId = Guid.Parse("680b65c6-46cf-48ac-88f7-29ab807b29d5"),
             },
             new Job
             {
 
-                Id = 3,
+                Id = Guid.Parse("4db3c416-6eae-4f01-bfd3-1ff3b45aea98"),
                 Icon = "https://www.logodesign.net/images/abstract-logo.png",
                 Title = "Product Designer",
                 Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
@@ -95,7 +98,7 @@ namespace JobPortal.AppDbContext
                 JobStatus = JobStatus.Open,
                 Vacancy = 50,
                 DeadLine = nextDate,
-                EmployerId = 2,
+                EmployerId = Guid.Parse("4ea1f880-57ef-4f0b-8a19-5aa356e93091"),
             });
 
             /*Roles*/
@@ -119,8 +122,6 @@ namespace JobPortal.AppDbContext
                 NormalizedName = "EMPLOYER",
             });
 
-           
-
             /*Identity User*/
 
             modelBuilder.Entity<ApplicationUser>().HasData(new ApplicationUser
@@ -134,7 +135,7 @@ namespace JobPortal.AppDbContext
                 NormalizedEmail = "EMPLOYER1@EMAIL.COM",
                 EmailConfirmed = true,
                 PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
-                EmployerId=1
+                EmployerId= Guid.Parse("262ff2ba-d323-4916-b767-e9f1707ef7a2"),
             },
             new ApplicationUser
             {
@@ -147,9 +148,9 @@ namespace JobPortal.AppDbContext
                 NormalizedEmail = "EMPLOYER2@EMAIL.COM",
                 EmailConfirmed = true,
                 PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
-                EmployerId=2
+                EmployerId= Guid.Parse("680b65c6-46cf-48ac-88f7-29ab807b29d5"),
             },
-              new ApplicationUser
+            new ApplicationUser
               {
                   Id = "06e4bc68-0d75-429c-b513-e12c2ab03494",
                   UserName = "employer3@gmail.com",
@@ -160,8 +161,8 @@ namespace JobPortal.AppDbContext
                   NormalizedEmail = "EMPLOYER3@EMAIL.COM",
                   EmailConfirmed = true,
                   PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
-                  EmployerId=3
-              },
+                  EmployerId = Guid.Parse("4ea1f880-57ef-4f0b-8a19-5aa356e93091"),
+            },
             new ApplicationUser
             {
                 Id = "995ce588-b342-47b8-88f7-349365f898f9",
@@ -173,7 +174,7 @@ namespace JobPortal.AppDbContext
                 NormalizedEmail = "CANDIDATE1@EMAIL.COM",
                 EmailConfirmed = true,
                 PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
-                CandidateId = 1
+                CandidateId = Guid.Parse("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"),
             },
             new ApplicationUser
             {
@@ -186,7 +187,7 @@ namespace JobPortal.AppDbContext
                 NormalizedEmail = "CANDIDATE2@EMAIL.COM",
                 EmailConfirmed = true,
                 PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
-                CandidateId = 2
+                CandidateId = Guid.Parse("31bb5001-4266-4b90-992e-2a729b26d26b"),
             },
             new ApplicationUser
             {
@@ -199,7 +200,7 @@ namespace JobPortal.AppDbContext
                 NormalizedEmail = "CANDIDATE3@EMAIL.COM",
                 EmailConfirmed = true,
                 PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
-                CandidateId =3
+                CandidateId = Guid.Parse("6209c878-b598-4939-bccf-909e58d12504"),
             });
 
             /*User Roles*/
@@ -240,7 +241,7 @@ namespace JobPortal.AppDbContext
 
             modelBuilder.Entity<Employer>().HasData(new Employer
             {
-                Id = 1,
+                Id = Guid.Parse("262ff2ba-d323-4916-b767-e9f1707ef7a2"),
                 CompanyName = "Avitex Agency",
                 CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
                 CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
@@ -253,7 +254,7 @@ namespace JobPortal.AppDbContext
             },
             new Employer
             {
-                Id = 2,
+                Id = Guid.Parse("680b65c6-46cf-48ac-88f7-29ab807b29d5"),
                 CompanyName = "Demo 1",
                 CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
                 CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
@@ -266,7 +267,7 @@ namespace JobPortal.AppDbContext
             },
             new Employer
             {
-                Id = 3,
+                Id = Guid.Parse("4ea1f880-57ef-4f0b-8a19-5aa356e93091"),
                 CompanyName = "Honda",
                 CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
                 CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
@@ -283,52 +284,52 @@ namespace JobPortal.AppDbContext
             modelBuilder.Entity<Skills>().HasData(
             new Skills
             {
-                Id = 1,
+                Id = Guid.Parse("aafbde46-32ee-45bd-b52a-a76a1ac12a78"),
                 JobSkill = "Php",
             }, 
             new Skills
             {
-                Id = 2,
+                Id = Guid.Parse("bae33518-8dc8-4d53-80ca-e8f58a9fd808"),
                 JobSkill = "JS",
             },
             new Skills
             {
-                Id = 3,
+                Id = Guid.Parse("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d"),
                 JobSkill = "Designing",
             },
             new Skills
             {
-                Id = 4,
+                Id = Guid.Parse("9a126650-2936-442e-92ba-7d7dc32ff6f9"),
                 JobSkill = "React Native",
             },
             new Skills
             {
-                Id = 5,
+                Id = Guid.Parse("83c89321-daf9-4ade-b229-d57615a32f10"),
                 JobSkill = "Arts",
             },
             new Skills
             {
-                Id = 6,
+                Id = Guid.Parse("010039fb-a687-4db5-8ada-3b586d3a4788"),
                 JobSkill = ".Net",
             },
             new Skills
             {
-                Id = 7,
+                Id = Guid.Parse("2dd27837-b570-4c81-8bfc-bf8cad8323b6"),
                 JobSkill = "Java",
             },
             new Skills
             {
-                Id = 8,
+                Id = Guid.Parse("e4599076-fa12-4fe9-a8e4-35130d73729e"),
                 JobSkill = "MERN Stack",
             },
             new Skills
             {
-                Id = 9,
+                Id = Guid.Parse("b749f4b8-3bc3-4a05-816b-56e0d12dfaaa"),
                 JobSkill = "Architecture",
             },
             new Skills
             {
-                Id = 10,
+                Id = Guid.Parse("f235f414-fc41-4acb-a1ee-1fd79aea7eae"),
                 JobSkill = "Management",
             });
  
@@ -337,7 +338,7 @@ namespace JobPortal.AppDbContext
 
             modelBuilder.Entity<Candidate>().HasData(new Candidate
             {
-                Id = 1,
+                Id = Guid.Parse("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"),
                 Name="Hammad Mirza",
                 ProfileImg = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
                 AboutMe= "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;",
@@ -348,11 +349,11 @@ namespace JobPortal.AppDbContext
                 ExpectedSalary = 300,
                 Age =23,
                 Qualification = Qualification.Bachelor,
-                UserId=""
+                UserId = "995ce588-b342-47b8-88f7-349365f898f9",
             },
             new Candidate
             {
-                Id = 2,
+                Id = Guid.Parse("31bb5001-4266-4b90-992e-2a729b26d26b"),
                 Name = "Ahtesham",
                 ProfileImg = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
                 AboutMe = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;",
@@ -363,11 +364,11 @@ namespace JobPortal.AppDbContext
                 ExpectedSalary = 400,
                 Age = 23,
                 Qualification = Qualification.Bachelor,
-                UserId = ""
+                UserId = "cc53dc1c-a0d0-49a3-8f31-06b320fe22a9",
             },
             new Candidate
             {
-                Id = 3,
+                Id = Guid.Parse("6209c878-b598-4939-bccf-909e58d12504"),
                 Name = "Sohaib",
                 ProfileImg = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
                 AboutMe = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;",
@@ -378,108 +379,108 @@ namespace JobPortal.AppDbContext
                 ExpectedSalary = 500,
                 Age = 23,
                 Qualification = Qualification.Master,
-                UserId = ""
+                UserId = "4e9e311a-0926-423c-b136-eab5ba39998a",
             });
 
 
             /*Candidate skills*/
             modelBuilder.Entity<CandidateSkills>().HasData(new CandidateSkills
             {
-                Id = 1,
-                CandidateId = 1,
-                SkillId = 4
+                Id = Guid.Parse("66b6ad12-bce1-4928-a59d-de02192a7c10"),
+                CandidateId = Guid.Parse("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"),
+                SkillId = Guid.Parse("9a126650-2936-442e-92ba-7d7dc32ff6f9"),
             },
             new CandidateSkills
             {
-                Id = 2,
-                CandidateId = 1,
-                SkillId = 6
+                Id = Guid.Parse("4cf506e5-818e-4f35-ac3c-000f3e87a604"),
+                CandidateId = Guid.Parse("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"),
+                SkillId = Guid.Parse("010039fb-a687-4db5-8ada-3b586d3a4788"),
             },
             new CandidateSkills
             {
-                Id = 3,
-                CandidateId = 1,
-                SkillId = 9
+                Id = Guid.Parse("af2e3fb6-a3b7-4e1a-83e4-5ee05dde72d7"),
+                CandidateId = Guid.Parse("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"),
+                SkillId = Guid.Parse("b749f4b8-3bc3-4a05-816b-56e0d12dfaaa"),
             },
             new CandidateSkills
             {
-                Id = 4,
-                CandidateId = 2,
-                SkillId = 1
+                Id = Guid.Parse("232c30ea-e8f6-446a-9af1-a2a20cc1c422"),
+                CandidateId = Guid.Parse("31bb5001-4266-4b90-992e-2a729b26d26b"),
+                SkillId = Guid.Parse("aafbde46-32ee-45bd-b52a-a76a1ac12a78"),
             },
             new CandidateSkills
             {
-                Id = 5,
-                CandidateId = 3,
-                SkillId = 3
+                Id = Guid.Parse("26ae6b7d-0ac2-461a-9a11-42f965a2d977"),
+                CandidateId = Guid.Parse("6209c878-b598-4939-bccf-909e58d12504"),
+                SkillId = Guid.Parse("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d"),
             },
             new CandidateSkills
             {
-                Id = 6,
-                CandidateId = 3,
-                SkillId = 5
+                Id = Guid.Parse("2aa2ed81-38c6-47a3-bfd0-90c031f340df"),
+                CandidateId = Guid.Parse("6209c878-b598-4939-bccf-909e58d12504"),
+                SkillId = Guid.Parse("83c89321-daf9-4ade-b229-d57615a32f10"),
             },
             new CandidateSkills
             {
-                Id = 7,
-                CandidateId = 3,
-                SkillId = 7
+                Id = Guid.Parse("037bb42e-67a5-4105-bb3c-539bb8d8a906"),
+                CandidateId = Guid.Parse("6209c878-b598-4939-bccf-909e58d12504"),
+                SkillId = Guid.Parse("2dd27837-b570-4c81-8bfc-bf8cad8323b6"),
             });
          
             /*JobSkils data*/
 
             modelBuilder.Entity<JobSkills>().HasData(new JobSkills
             {
-                Id = 1,
-                JobId = 1,
-                SkillId = 1,
+                Id = Guid.Parse("037bb42e-67a5-4105-bb3c-539bb8d8a906"),
+                JobId = Guid.Parse("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"),
+                SkillId = Guid.Parse("aafbde46-32ee-45bd-b52a-a76a1ac12a78"),
             },
             new JobSkills
             {
-                Id = 2,
-                JobId = 1,
-                SkillId = 2,
+                Id = Guid.Parse("fad6993c-c654-4c17-9078-174818d7236f"),
+                JobId = Guid.Parse("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"),
+                SkillId = Guid.Parse("bae33518-8dc8-4d53-80ca-e8f58a9fd808"),
             },
             new JobSkills
             {
-                Id = 3,
-                JobId = 1,
-                SkillId = 3,
+                Id = Guid.Parse("272eaf21-8b37-4562-b440-96b4befe752f"),
+                JobId = Guid.Parse("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"),
+                SkillId = Guid.Parse("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d"),
             },
             new JobSkills
             {
-                Id = 4,
-                JobId = 2,
-                SkillId = 3,
+                Id = Guid.Parse("ca58283f-d5f4-4eb0-92e3-6873e6821129"),
+                JobId = Guid.Parse("eec67987-eb6a-4251-95aa-ede40e76332f"),
+                SkillId = Guid.Parse("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d"),
             },
             new JobSkills
             {
-                Id = 5,
-                JobId = 2,
-                SkillId = 6,
+                Id = Guid.Parse("340a0320-8302-4860-999f-3a256a785a20"),
+                JobId = Guid.Parse("eec67987-eb6a-4251-95aa-ede40e76332f"),
+                SkillId = Guid.Parse("010039fb-a687-4db5-8ada-3b586d3a4788"),
             },
             new JobSkills
             {
-                Id = 6,
-                JobId = 3,
-                SkillId = 6,
+                Id = Guid.Parse("f0f7f73e-aad5-416a-af2f-0153f313ae05"),
+                JobId = Guid.Parse("4db3c416-6eae-4f01-bfd3-1ff3b45aea98"),
+                SkillId = Guid.Parse("010039fb-a687-4db5-8ada-3b586d3a4788"),
             });
           
             /*Job Class*/
 
             modelBuilder.Entity<JobClass>().HasData(new JobClass
             {
-                Id = 1,
-               name = JobClasses.Feature
+                Id = Guid.Parse("642a9e91-5c4a-4284-aa0f-69e39a93ea6d"),
+                name = JobClasses.Feature
             },
             new JobClass
             {
-                Id = 2,
+                Id = Guid.Parse("63acd142-d323-42c5-a453-1b67f40fd073"),
                 name = JobClasses.Urgent
             },
             new JobClass
             {
-                Id = 3,
+                Id = Guid.Parse("930c379d-d9e6-4a48-82b0-4f586d6aafc8"),
                 name = JobClasses.Private
             });
    
@@ -487,61 +488,61 @@ namespace JobPortal.AppDbContext
 
             modelBuilder.Entity<AllJobsClasses>().HasData(new AllJobsClasses
             {
-                Id = 1,
-                JobId = 1,
-                JobClassId = 1,
+                Id = Guid.Parse("e2865ba0-ee6c-43d8-a61e-4b9df0f1d386"),
+                JobId = Guid.Parse("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"),
+                JobClassId = Guid.Parse("642a9e91-5c4a-4284-aa0f-69e39a93ea6d"),
             },
             new AllJobsClasses
             {
-                Id = 2,
-                JobId = 1,
-                JobClassId = 2,
+                Id = Guid.Parse("0d84a83a-3460-41e1-a942-49dd6d0411bd"),
+                JobId = Guid.Parse("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"),
+                JobClassId = Guid.Parse("63acd142-d323-42c5-a453-1b67f40fd073"),
             },
             new AllJobsClasses
             {
-                Id = 3,
-                JobId = 1,
-                JobClassId = 3,
+                Id = Guid.Parse("02d42141-3627-48e2-a9ee-4142f85ca4e5"),
+                JobId = Guid.Parse("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"),
+                JobClassId = Guid.Parse("930c379d-d9e6-4a48-82b0-4f586d6aafc8"),
             },
             new AllJobsClasses
             {
-                Id = 4,
-                JobId = 2,
-                JobClassId = 1,
+                Id = Guid.Parse("63c2a7a6-8ebb-4bc9-ac98-8465abbb9994"),
+                JobId = Guid.Parse("eec67987-eb6a-4251-95aa-ede40e76332f"),
+                JobClassId = Guid.Parse("642a9e91-5c4a-4284-aa0f-69e39a93ea6d"),
             },
             new AllJobsClasses
             {
-                Id = 5,
-                JobId = 2,
-                JobClassId = 2,
+                Id = Guid.Parse("a4b97db1-2aff-49a7-be60-c59867fd74d7"),
+                JobId = Guid.Parse("eec67987-eb6a-4251-95aa-ede40e76332f"),
+                JobClassId = Guid.Parse("63acd142-d323-42c5-a453-1b67f40fd073"),
             },
             new AllJobsClasses
             {
-                Id = 6,
-                JobId = 3,
-                JobClassId = 3,
+                Id = Guid.Parse("6c931ccd-e4db-4671-a7b9-b5be4b1b69ca"),
+                JobId = Guid.Parse("4db3c416-6eae-4f01-bfd3-1ff3b45aea98"),
+                JobClassId = Guid.Parse("930c379d-d9e6-4a48-82b0-4f586d6aafc8"),
             });
 
             /*Applied Jobs*/
 
-            modelBuilder.Entity<AppliedJobs>().HasData(new AppliedJobs
+            /*modelBuilder.Entity<AppliedJobs>().HasData(new AppliedJobs
             {
-                Id = 1,
-                JobId = 1,
-                CandidateId = 1
+                Id = Guid.Parse("71d20425-06eb-4aa3-9da7-7deab8952f26"),
+                JobId = Guid.Parse("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"),
+                CandidateId = Guid.Parse("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"),
             },
             new AppliedJobs
             {
-                Id = 2,
-                JobId = 1,
-                CandidateId = 2
+                Id = Guid.Parse("295aa12b-2238-478e-a8a2-d4e31c26800d"),
+                JobId = Guid.Parse("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"),
+                CandidateId = Guid.Parse("31bb5001-4266-4b90-992e-2a729b26d26b"),
             },
             new AppliedJobs
             {
-                Id = 3,
-                JobId = 2,
-                CandidateId = 1
-            });
+                Id = Guid.Parse("3d493df5-0f7b-4a3d-a4e3-90f7d652e4a0"),
+                JobId = Guid.Parse("eec67987-eb6a-4251-95aa-ede40e76332f"),
+                CandidateId = Guid.Parse("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"),
+            });*/
         }
               
     }

@@ -22,7 +22,7 @@ namespace JobPortal.Services.Repository
 
             return allEmployeers;
         }
-        public override async Task<Employer> GetById(int id)
+        public override async Task<Employer> GetById(Guid id)
         {
             var employeer = await _context.Employer
                 .Include(x => x.JobOffered)

@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using JobPortal.Models.ModelBase;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobPortal.Models
 {
-    public class Employer
+    public class Employer: BaseModel
     {
-        [Key]
-        public int Id { get; set; }
         public string CompanyName { get; set; }
         public string CompanyAbout { get; set; }
         public string CompanyLogo { get; set; }
@@ -18,6 +17,7 @@ namespace JobPortal.Models
         public int CompanySize { get; set; }
         public ICollection<Job>? JobOffered { get; set; }
         public string UserId { get; set; }
+        public ICollection<AppliedJobs>? AppliedJobs { get; set; }
         /*public string UserId { get; set; }
         [ForeignKey(nameof(UserId))]
         public ApplicationUser User { get; set; }*/

@@ -22,5 +22,14 @@ namespace JobPortal.Services.Repository
 
             return allJobs;
         }
+        public override async Task<Candidate> GetById(Guid id)
+        {
+            var jobById = await _context.Candidate
+                .Include(aJ => aJ.AppliedJobs).ThenInclude(j=> j.Job)
+                .Include(cs=> cs.CandidateSkills)
+                .FirstOrDefaultAsync();
+
+            return jobById;
+        }
     }
 }

@@ -1,14 +1,13 @@
 ﻿using JobPortal.Enums;
+using JobPortal.Models.ModelBase;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobPortal.Models
 {
-    public class Job
+    public class Job: BaseModel
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         public string Icon { get; set; } 
         [Required]
@@ -45,7 +44,7 @@ namespace JobPortal.Models
 
         [Required]
         public int Vacancy { get; set; }
-        public int EmployerId { get; set; }
+        public Guid EmployerId { get; set; }
         [ForeignKey(nameof(EmployerId))]
         public Employer? Employer { get; set; }
 

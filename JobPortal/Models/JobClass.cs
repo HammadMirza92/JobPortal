@@ -1,13 +1,12 @@
 ﻿using JobPortal.Enums;
+using JobPortal.Models.ModelBase;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobPortal.Models
 {
-    public class JobClass
+    public class JobClass: BaseModel
     {
-        [Key]
-        public int Id { get; set; }
         public JobClasses name { get; set; }
         public ICollection<AllJobsClasses> AllJobsClasses { get; set; }
     }
