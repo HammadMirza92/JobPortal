@@ -3,7 +3,7 @@ using JobPortal.Services.IRepository;
 using JobPortal.Services.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Net.Http.Headers;
 
 namespace JobPortal.APIController
 {
@@ -20,7 +20,6 @@ namespace JobPortal.APIController
             _jobRepository = jobRepository;
             _jobClassRepository = jobClassRepository;
             _alljJobsClassesRepository = alljJobsClassesRepository;
-             
         }
 
         [HttpGet]
@@ -33,6 +32,7 @@ namespace JobPortal.APIController
             }
             return Ok(jobs);
         }
+
         [HttpGet("getFeatureJobs")]
         public async Task<ActionResult<Job>> GetFeatureJobs()
         {
@@ -56,6 +56,7 @@ namespace JobPortal.APIController
             }
             return Ok(jobs);
         }
+
         [HttpGet("getFeatureJobs/{id}")]
        /* [ResponseCache(Duration = 120)]*/
         public async Task<ActionResult<Job>> GetFeatureJobs(Guid id)
@@ -75,11 +76,17 @@ namespace JobPortal.APIController
             var job = await _jobRepository.GetById(id);
             return job;
         }
-
+        [HttpGet("FetchJobApplied/{id}")]
+        public async Task<IEnumerable<AppliedJobs>> FetchJobApplied(Guid id)
+        {
+            var job = await _jobRepository.FetchJobApplied(id);
+            return job;
+        }
         // POST api/Job
         [HttpPost("create")]
         public async Task<Job> Create(Job job)
         {
+           
             var newJob = await _jobRepository.Add(job);
 
             return newJob;

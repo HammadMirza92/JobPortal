@@ -13,8 +13,5 @@ namespace JobPortal.Models
         public Guid CandidateId { get; set; }
         [ForeignKey(nameof(CandidateId))]
         public Candidate? Candidate { get; set; }
-       /* public Guid EmployerId { get; set; }
-        [ForeignKey(nameof(EmployerId))]
-        public Employer? Employer { get; set; }*/
     }
 }

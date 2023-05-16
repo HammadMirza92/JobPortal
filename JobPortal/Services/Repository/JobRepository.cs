@@ -67,6 +67,12 @@ namespace JobPortal.Services.Repository
 
             return jobById;
         }
+        public async Task<IEnumerable<AppliedJobs>> FetchJobApplied(Guid id)
+        {
+            var jobById = await _context.Jobs.Where(x => x.EmployerId == id).Include(aj=> aj.AppliedJobs).ThenInclude(c=> c.Candidate).ToListAsync();
+            var appliedJobs = jobById.SelectMany(j => j.AppliedJobs).ToList();
+            return appliedJobs;
+        }
         public async Task<IEnumerable<Job>> FilterJob(string Title, JobStatus Status, JobType Type, double StartBudget, double EndBudget, int Vacancy, Location Location, DateTime StartDate, DateTime EndDate)
         {
             var result = await _context.Jobs

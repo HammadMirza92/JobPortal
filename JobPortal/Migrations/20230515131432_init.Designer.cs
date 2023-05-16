@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPortal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230515100756_init")]
+    [Migration("20230515131432_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,9 +101,6 @@ namespace JobPortal.Migrations
                     b.Property<Guid>("CandidateId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("EmployerId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -113,8 +110,6 @@ namespace JobPortal.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CandidateId");
-
-                    b.HasIndex("EmployerId");
 
                     b.HasIndex("JobsId");
 
@@ -361,7 +356,7 @@ namespace JobPortal.Migrations
                             CompanyName = "Avitex Agency",
                             CompanySize = 200,
                             CompanyWebsite = "https://jobs.nokriwp.com/",
-                            Founded = new DateTime(2023, 5, 15, 10, 7, 55, 987, DateTimeKind.Utc).AddTicks(9709),
+                            Founded = new DateTime(2023, 5, 15, 13, 14, 32, 139, DateTimeKind.Utc).AddTicks(3264),
                             Headquarters = "Las Vegas, NV 89107, USA",
                             Industry = "It",
                             IsDeleted = false,
@@ -375,7 +370,7 @@ namespace JobPortal.Migrations
                             CompanyName = "Demo 1",
                             CompanySize = 50,
                             CompanyWebsite = "https://jobs.nokriwp.com/",
-                            Founded = new DateTime(2023, 5, 15, 10, 7, 55, 987, DateTimeKind.Utc).AddTicks(9715),
+                            Founded = new DateTime(2023, 5, 15, 13, 14, 32, 139, DateTimeKind.Utc).AddTicks(3269),
                             Headquarters = "Lahore",
                             Industry = "It",
                             IsDeleted = false,
@@ -389,7 +384,7 @@ namespace JobPortal.Migrations
                             CompanyName = "Honda",
                             CompanySize = 600,
                             CompanyWebsite = "https://jobs.nokriwp.com/",
-                            Founded = new DateTime(2023, 5, 15, 10, 7, 55, 987, DateTimeKind.Utc).AddTicks(9723),
+                            Founded = new DateTime(2023, 5, 15, 13, 14, 32, 139, DateTimeKind.Utc).AddTicks(3274),
                             Headquarters = "Islamabad",
                             Industry = "Machenical",
                             IsDeleted = false,
@@ -471,14 +466,14 @@ namespace JobPortal.Migrations
                         new
                         {
                             Id = new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"),
-                            DeadLine = new DateTime(2023, 5, 20, 15, 7, 55, 914, DateTimeKind.Local).AddTicks(7305),
+                            DeadLine = new DateTime(2023, 5, 20, 18, 14, 32, 63, DateTimeKind.Local).AddTicks(3479),
                             Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
                             EmployerId = new Guid("262ff2ba-d323-4916-b767-e9f1707ef7a2"),
                             EndBudget = 456.0,
                             Icon = "https://img.freepik.com/premium-vector/gradient-business-investment-logo-design_269830-887.jpg?w=2000",
                             IsDeleted = false,
                             JobExperience = 1,
-                            JobPosted = new DateTime(2023, 5, 15, 15, 7, 55, 914, DateTimeKind.Local).AddTicks(7404),
+                            JobPosted = new DateTime(2023, 5, 15, 18, 14, 32, 63, DateTimeKind.Local).AddTicks(3567),
                             JobShift = 0,
                             JobStatus = 0,
                             Location = 0,
@@ -493,14 +488,14 @@ namespace JobPortal.Migrations
                         new
                         {
                             Id = new Guid("eec67987-eb6a-4251-95aa-ede40e76332f"),
-                            DeadLine = new DateTime(2023, 5, 20, 15, 7, 55, 914, DateTimeKind.Local).AddTicks(7305),
+                            DeadLine = new DateTime(2023, 5, 20, 18, 14, 32, 63, DateTimeKind.Local).AddTicks(3479),
                             Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
                             EmployerId = new Guid("680b65c6-46cf-48ac-88f7-29ab807b29d5"),
                             EndBudget = 777.0,
                             Icon = "https://media.istockphoto.com/id/1304359165/vector/motion-data-speed-g-letter-logo-design.jpg?s=612x612&w=0&k=20&c=2A0yYWv8zHhztdShuGoVW87yJZqseV6AKJX0QL2cVuQ=",
                             IsDeleted = false,
                             JobExperience = 6,
-                            JobPosted = new DateTime(2023, 5, 15, 15, 7, 55, 914, DateTimeKind.Local).AddTicks(7432),
+                            JobPosted = new DateTime(2023, 5, 15, 18, 14, 32, 63, DateTimeKind.Local).AddTicks(3590),
                             JobShift = 0,
                             JobStatus = 0,
                             Location = 2,
@@ -515,14 +510,14 @@ namespace JobPortal.Migrations
                         new
                         {
                             Id = new Guid("4db3c416-6eae-4f01-bfd3-1ff3b45aea98"),
-                            DeadLine = new DateTime(2023, 5, 20, 15, 7, 55, 914, DateTimeKind.Local).AddTicks(7305),
+                            DeadLine = new DateTime(2023, 5, 20, 18, 14, 32, 63, DateTimeKind.Local).AddTicks(3479),
                             Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
                             EmployerId = new Guid("4ea1f880-57ef-4f0b-8a19-5aa356e93091"),
                             EndBudget = 340.0,
                             Icon = "https://www.logodesign.net/images/abstract-logo.png",
                             IsDeleted = false,
                             JobExperience = 3,
-                            JobPosted = new DateTime(2023, 5, 15, 15, 7, 55, 914, DateTimeKind.Local).AddTicks(7440),
+                            JobPosted = new DateTime(2023, 5, 15, 18, 14, 32, 63, DateTimeKind.Local).AddTicks(3597),
                             JobShift = 2,
                             JobStatus = 0,
                             Location = 0,
@@ -751,21 +746,21 @@ namespace JobPortal.Migrations
                         new
                         {
                             Id = "1d8bbcb9-6d72-4776-b97a-54dd330775ca",
-                            ConcurrencyStamp = "039a135c-2ff5-41c6-a8ca-16317293f744",
+                            ConcurrencyStamp = "7151b06b-6891-42af-91ee-f7c4de9c62d9",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "7023e28f-c1dc-42cd-ad76-858802f45979",
-                            ConcurrencyStamp = "1ecf8f97-b100-47de-a0a9-92538497638d",
+                            ConcurrencyStamp = "5cd972a9-e093-49ce-9297-c7908857a981",
                             Name = "candidate",
                             NormalizedName = "CANDIDATE"
                         },
                         new
                         {
                             Id = "b189a208-8a38-42c5-9922-5dcb918e85c9",
-                            ConcurrencyStamp = "f3d9f81d-b817-4fd5-b8b7-7a3ff3a1aa3b",
+                            ConcurrencyStamp = "742a4575-753d-47f2-a376-17982fc4925c",
                             Name = "employer",
                             NormalizedName = "EMPLOYER"
                         });
@@ -1013,15 +1008,15 @@ namespace JobPortal.Migrations
                         {
                             Id = "2fe7daaa-bb2f-43a6-915b-083816e43b87",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c7c34c56-5acb-471a-bc14-7974d1cafeb1",
+                            ConcurrencyStamp = "1590f093-7cdd-4bbb-82d7-678b7f96f022",
                             Email = "employer1@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "EMPLOYER1@EMAIL.COM",
                             NormalizedUserName = "EMPLOYER1@EMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJ39HkZGP49XS7ePZN+5QCFwBgvrBUNlqngoDYLe0KvayT1cMYVSrtDxCtM93R8Ytw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELz6kQLhTSAKnCts7uGEjpjqnUhUpR7ytmxg8kKuq83PBIywF8CPFC21xVJz1hGySQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e661b7bd-80ef-499f-8820-6ee1357ff786",
+                            SecurityStamp = "9b6bef18-f694-44a9-b8c0-e1817ed4e239",
                             TwoFactorEnabled = false,
                             UserName = "employer1@gmail.com",
                             EmployerId = new Guid("262ff2ba-d323-4916-b767-e9f1707ef7a2"),
@@ -1032,15 +1027,15 @@ namespace JobPortal.Migrations
                         {
                             Id = "088fffd7-94b4-448e-9b67-5619fcf19441",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3c9cdef0-4f99-4a16-b37a-29ce1fef1fcf",
+                            ConcurrencyStamp = "a15ca4fc-6c96-4dd0-a333-7f6782c33f18",
                             Email = "employer2@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "EMPLOYER2@EMAIL.COM",
                             NormalizedUserName = "EMPLOYER2@EMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHMQSjD2J0h/JIfjd04Cgj05kGUYwuD57rEsDM+rrGlX/ATTC94k/5IFIS60RFo74Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBnKJMCz0ptskmJIabziD1T9t9dY8hYTh+DKE72+ExJpuiM+oTw3dU/T6bXM3Y6v1w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "33d18e12-6ddd-4281-9dd9-429b5e05bce4",
+                            SecurityStamp = "f8ab57db-3aff-4cc0-80d7-3e0bbe578bc4",
                             TwoFactorEnabled = false,
                             UserName = "employer2@gmail.com",
                             EmployerId = new Guid("680b65c6-46cf-48ac-88f7-29ab807b29d5"),
@@ -1051,15 +1046,15 @@ namespace JobPortal.Migrations
                         {
                             Id = "06e4bc68-0d75-429c-b513-e12c2ab03494",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "612735dd-12d0-4569-b84c-10af6f725125",
+                            ConcurrencyStamp = "3ab09366-1c92-4df8-9359-fa6a607e7c05",
                             Email = "employer3@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "EMPLOYER3@EMAIL.COM",
                             NormalizedUserName = "EMPLOYER3@EMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDY7wJgAq6btsLwLJmpHFvVCszmISfLNg1e4+zmmnlfdfTj7SGRoQINtvns09hRRRw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELMQoRAg7Iyb/fDI5q1kc0Y2gwjyMWuu4j83yTgWpAwDwE6ouIhV0TgeMVjNAFVgbw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6ccc6965-216a-4903-b063-69c6b66f043b",
+                            SecurityStamp = "777741d5-4e30-42ff-a45f-d80a6a91210c",
                             TwoFactorEnabled = false,
                             UserName = "employer3@gmail.com",
                             EmployerId = new Guid("4ea1f880-57ef-4f0b-8a19-5aa356e93091"),
@@ -1070,15 +1065,15 @@ namespace JobPortal.Migrations
                         {
                             Id = "995ce588-b342-47b8-88f7-349365f898f9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0241568c-dec7-48d9-b59d-daf1cf98637b",
+                            ConcurrencyStamp = "25666956-b80e-4346-aa11-05b3ab8db405",
                             Email = "candidate1@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "CANDIDATE1@EMAIL.COM",
                             NormalizedUserName = "CANDIDATE1@EMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIG1IHHnsKptIeiXnY2t2IOkTiCA7otyRgl/QQkHlRoTMAd9H0w0v7vAzNS9DwDf3Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHhzW/ttpWxntZczQvtVe/6wVz+M7bTVQiLv6uXkUH3fEkxfFVB1XAmTJFzQ+5jbrw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ee8d4d07-aff4-446c-af41-60b564b38513",
+                            SecurityStamp = "bb100257-add6-469e-af0e-d37be33c5236",
                             TwoFactorEnabled = false,
                             UserName = "candidate@gmail.com",
                             CandidateId = new Guid("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"),
@@ -1089,15 +1084,15 @@ namespace JobPortal.Migrations
                         {
                             Id = "cc53dc1c-a0d0-49a3-8f31-06b320fe22a9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1049f261-f902-4e2d-8cd8-a35c5acaf908",
+                            ConcurrencyStamp = "51cc3bf1-de92-4ba8-bd08-a90aadca99b3",
                             Email = "candidate2@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "CANDIDATE2@EMAIL.COM",
                             NormalizedUserName = "CANDIDATE2@EMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJnoBm4QzLwKc3DWS1QdDl5FrjGJ92KAe8CpDK3ApxQZeGFK/L1zjKOc//YoRhZTdg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHWz5FWODKl87LGJrfAbZGSqJrpyHBQF4RQ7SE/tKNCudK0nxrb/KyAYsLzmEfRwbg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ee22b68c-920d-4c85-b373-74bac150f328",
+                            SecurityStamp = "135fe06c-c45c-4511-9233-1fa5caca87aa",
                             TwoFactorEnabled = false,
                             UserName = "candidate2@gmail.com",
                             CandidateId = new Guid("31bb5001-4266-4b90-992e-2a729b26d26b"),
@@ -1108,15 +1103,15 @@ namespace JobPortal.Migrations
                         {
                             Id = "4e9e311a-0926-423c-b136-eab5ba39998a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0000eb4e-36a2-46a7-ada7-bbe1834cbe7b",
+                            ConcurrencyStamp = "e5cbbc66-1c0b-46ff-98a2-2d5ec0f3b361",
                             Email = "candidate3@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "CANDIDATE3@EMAIL.COM",
                             NormalizedUserName = "CANDIDATE3@EMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFQQUgIV2IkmZRe7VsqS3Wfl+NZKCwQ/OHV3AfGUFNEvHbJldx4xH9T22+Jt/739oQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJrGYgsrHoCVdysboFLuM8J3iGT7DF5sj804gA1g7dUrEdMJ5zARnbkpTuM18qRVYw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e00f86d4-0707-4434-bbb2-bc0259162e32",
+                            SecurityStamp = "336bd7af-fd27-44c0-9695-42ce41f9da57",
                             TwoFactorEnabled = false,
                             UserName = "candidate3@gmail.com",
                             CandidateId = new Guid("6209c878-b598-4939-bccf-909e58d12504"),
@@ -1151,10 +1146,6 @@ namespace JobPortal.Migrations
                         .HasForeignKey("CandidateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("JobPortal.Models.Employer", null)
-                        .WithMany("AppliedJobs")
-                        .HasForeignKey("EmployerId");
 
                     b.HasOne("JobPortal.Models.Job", "Job")
                         .WithMany("AppliedJobs")
@@ -1291,8 +1282,6 @@ namespace JobPortal.Migrations
 
             modelBuilder.Entity("JobPortal.Models.Employer", b =>
                 {
-                    b.Navigation("AppliedJobs");
-
                     b.Navigation("JobOffered");
                 });
 

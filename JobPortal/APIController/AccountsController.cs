@@ -151,11 +151,11 @@ namespace JobPortal.APIController
             var role = await _roleManager.FindByNameAsync(roles[0]);
             var  tokenRole = role.ToString();
 
-
             var claims = new List<Claim>() {
               new ("user",userCradential.Email),
               new ("email",userCradential.Email),
-              new("role",tokenRole)
+              new("role",tokenRole),
+
             };
            
 
@@ -170,7 +170,7 @@ namespace JobPortal.APIController
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Expiration = expiration,
                 User = user,
-                Role = role.ToString(),
+                Role = tokenRole,
                 EmployerId = user.EmployerId,
                 Employer = user.Employer,
                 CandidateId = user.CandidateId,
