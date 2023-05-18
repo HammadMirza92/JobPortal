@@ -22,11 +22,11 @@ namespace JobPortal.Services.Repository.Base
             return entity;
         }
 
-        public async Task Delete(Guid id)
+        public async Task Delete()
         {
-            var entity = await _context.Set<T>().FindAsync(id);
+           /* var entity = await _context.Set<T>().FindAsync(id)
+           _context.Set<T>().Remove(entity);*/
 
-            _context.Set<T>().Remove(entity);
             await _context.SaveChangesAsync();
         }
 

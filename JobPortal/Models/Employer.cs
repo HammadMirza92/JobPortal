@@ -8,6 +8,7 @@ namespace JobPortal.Models
     public class Employer: BaseModel
     {
         public string CompanyName { get; set; }
+        public string CompanyEmail { get; set; }
         public string CompanyAbout { get; set; }
         public string CompanyLogo { get; set; }
         public DateTime Founded { get; set; } = DateTime.MaxValue;

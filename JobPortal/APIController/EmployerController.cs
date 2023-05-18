@@ -5,7 +5,7 @@ using JobPortal.Services.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
+using NuGet.Protocol;
 
 namespace JobPortal.APIController
 {
@@ -81,7 +81,28 @@ namespace JobPortal.APIController
             return newEmployeer;
 
         }
+        [HttpPost("uploadImage")]
+        public IActionResult UploadImage(IFormFile image)
+        {
+            if (image == null || image.Length == 0)
+                return BadRequest("No image uploaded.");
 
+            // Generate a unique image file name
+            var imageFileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+
+            if (image != null && image.Length > 0)
+            {
+                var filePath = Path.Combine("D:\\JobPortal\\src\\assets\\Images\\companyLogo\\", imageFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+                var img = imageFileName.ToJson();
+                return Ok(img);
+            }
+
+            return BadRequest("No image file received.");
+        }
         // PUT api/Job/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)

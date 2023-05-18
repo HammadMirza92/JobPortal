@@ -21,27 +21,30 @@ namespace JobPortal.APIController
     public class AccountsController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _sigInManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IConfiguration _configuration;
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly IUserStore<IdentityUser> _userStore;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IApplicationUserRepository _appUserManager;
+        private readonly IEmailRepository _emailRepository;
         public AccountsController(UserManager<IdentityUser> userManager, 
-            SignInManager<IdentityUser> sigInManager, 
+            SignInManager<IdentityUser> signInManager, 
             IConfiguration configuration, 
             RoleManager<IdentityRole> roleManager, 
             IUserStore<IdentityUser> userStore,
-            IApplicationUserRepository appUserManager
+            IApplicationUserRepository appUserManager,
+            IEmailRepository emailRepository
             )
         {
             _userManager = userManager;
-            _sigInManager = sigInManager;
+            _signInManager = signInManager;
             _userStore = userStore;
             _configuration = configuration;
             _emailStore = GetEmailStore();
             _roleManager = roleManager;
             _appUserManager = appUserManager;
+            _emailRepository = emailRepository;
         }
         [HttpPost("createEmployer")]
         public async Task<ActionResult<AuthenticationResponse>> CreateEmployer([FromBody] UserCradential userCradential)
@@ -73,6 +76,12 @@ namespace JobPortal.APIController
             await _userStore.SetUserNameAsync(user, userCradential.Email, CancellationToken.None);
             await _emailStore.SetEmailAsync(user, userCradential.Email, CancellationToken.None);
 
+            // Generate email confirmation token
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            //  await EmailConfirmation(user, token);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, protocol: HttpContext.Request.Scheme);
+            await _emailRepository.SendConfirmationEmail(user, callbackUrl);
 
             var result = await _userManager.CreateAsync(user, userCradential.Password);
 
@@ -88,10 +97,35 @@ namespace JobPortal.APIController
 
         }
 
+        public async Task<ActionResult> EmailConfirmation(ApplicationUser user, string token)
+        {
+
+            if (user != null && !user.EmailConfirmed)
+            {
+
+
+                // Construct the confirmation link URL
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, protocol: HttpContext.Request.Scheme);
+
+                // Send confirmation email
+                await _emailRepository.SendConfirmationEmail(user, callbackUrl);
+
+                // Redirect to a page informing the user to check their email for confirmation
+                return RedirectToAction("EmailConfirmationSent");
+            }
+
+
+            // Authentication failed, display appropriate message to the user
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            return Ok();
+        }
+
         [HttpPost("login")]
         public async Task<ActionResult<AuthenticationResponse>> Login([FromBody] UserCradential userCradential)
         {
-            var result = await _sigInManager.PasswordSignInAsync(userCradential.Email,userCradential.Password,isPersistent:false,lockoutOnFailure:false);
+            var result = await _signInManager.PasswordSignInAsync(userCradential.Email, userCradential.Password, isPersistent: false, lockoutOnFailure: false);
+
+
 
             if (result.Succeeded)
             {
@@ -102,8 +136,59 @@ namespace JobPortal.APIController
                 return BadRequest("Incorrect Login");
             }
         }
-/*        [Authorize]
-*/        [HttpGet("currentUserRole/{email}")]
+
+
+        /* [HttpPost("login")]
+         public async Task<ActionResult<AuthenticationResponse>> Login([FromBody] UserCradential userCradential)
+         {
+            // var result = await _signInManager.PasswordSignInAsync(userCradential.Email,userCradential.Password,isPersistent:false,lockoutOnFailure:false);
+
+
+             var result = await _signInManager.PasswordSignInAsync(userCradential.Email, userCradential.Password, isPersistent: false, lockoutOnFailure: false);
+             if (result.Succeeded)
+             {
+                 var user = await _userManager.FindByEmailAsync(userCradential.Email);
+                 if (user != null && !user.EmailConfirmed)
+                 {
+                     // Generate email confirmation token
+                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                     // Construct the confirmation link URL
+                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, protocol: HttpContext.Request.Scheme);
+
+                     // Send confirmation email
+                     //await _emailService.SendConfirmationEmail(user.Email, callbackUrl);
+
+                     // Redirect to a page informing the user to check their email for confirmation
+                     return RedirectToAction("EmailConfirmationSent");
+                 }
+
+                 // Email is already confirmed, proceed with the login process
+                 return RedirectToAction("Dashboard");
+             }
+
+             // Authentication failed, display appropriate message to the user
+             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+             return Ok(result);
+
+
+
+
+
+             if (result.Succeeded)
+             {
+                 return await BuilToken(userCradential);
+             }
+             else
+             {
+                 return BadRequest("Incorrect Login");
+             }
+         }*/
+
+
+        /*  [Authorize]
+*/
+        [HttpGet("currentUserRole/{email}")]
         public async Task<IActionResult> currentUserRole(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);

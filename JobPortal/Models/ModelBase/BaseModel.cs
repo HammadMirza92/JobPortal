@@ -7,6 +7,6 @@ namespace JobPortal.Models.ModelBase
     {
         [Key]
         public Guid Id { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; } = false;
     }
 }

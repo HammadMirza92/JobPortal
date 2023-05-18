@@ -26,10 +26,12 @@ namespace JobPortal.AppDbContext
         public DbSet<Employer> Employer { get; set; }
         public DbSet<CandidateSkills> CandidateSkills { get; set; }
         public DbSet<AppliedJobs> AppliedJobs { get; set; }
+        public DbSet<SendEmail> SendEmail { get; set; }
+        public DbSet<EmployerToCandidateEmail> EmployerToCandidateEmail { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            var passwords = "password";
 
             base.OnModelCreating(modelBuilder);
 
@@ -42,7 +44,7 @@ namespace JobPortal.AppDbContext
             modelBuilder.Entity<Job>().HasData(new Job
             {
                 Id = Guid.Parse("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"),
-                Icon = "https://img.freepik.com/premium-vector/gradient-business-investment-logo-design_269830-887.jpg?w=2000",
+                Icon = "6300ce91-db26-4348-bb9a-ca606fe43caa.jpg",
                 Title = "Marketing Manager",
                 Description= "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
                 Responsibility = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
@@ -62,7 +64,7 @@ namespace JobPortal.AppDbContext
             new Job
             {
                 Id = Guid.Parse("eec67987-eb6a-4251-95aa-ede40e76332f"),
-                Icon = "https://media.istockphoto.com/id/1304359165/vector/motion-data-speed-g-letter-logo-design.jpg?s=612x612&w=0&k=20&c=2A0yYWv8zHhztdShuGoVW87yJZqseV6AKJX0QL2cVuQ=",
+                Icon = "7c8f5675-8ace-4998-bcfb-7058a5cd2a18.jpg",
                 Title = "Software Engineer",
                 Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
                 Responsibility = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
@@ -83,7 +85,7 @@ namespace JobPortal.AppDbContext
             {
 
                 Id = Guid.Parse("4db3c416-6eae-4f01-bfd3-1ff3b45aea98"),
-                Icon = "https://www.logodesign.net/images/abstract-logo.png",
+                Icon = "1c38ec5e-04a1-42d9-bee5-a09864ec20d5.png",
                 Title = "Product Designer",
                 Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
                 Responsibility = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
@@ -134,7 +136,7 @@ namespace JobPortal.AppDbContext
                 Email = "employer1@gmail.com",
                 NormalizedEmail = "EMPLOYER1@EMAIL.COM",
                 EmailConfirmed = true,
-                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
+                PasswordHash = passwords,
                 EmployerId= Guid.Parse("262ff2ba-d323-4916-b767-e9f1707ef7a2"),
             },
             new ApplicationUser
@@ -147,7 +149,7 @@ namespace JobPortal.AppDbContext
                 Email = "employer2@gmail.com",
                 NormalizedEmail = "EMPLOYER2@EMAIL.COM",
                 EmailConfirmed = true,
-                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, passwords),
                 EmployerId= Guid.Parse("680b65c6-46cf-48ac-88f7-29ab807b29d5"),
             },
             new ApplicationUser
@@ -160,7 +162,7 @@ namespace JobPortal.AppDbContext
                   Email = "employer3@gmail.com",
                   NormalizedEmail = "EMPLOYER3@EMAIL.COM",
                   EmailConfirmed = true,
-                  PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
+                  PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, passwords),
                   EmployerId = Guid.Parse("4ea1f880-57ef-4f0b-8a19-5aa356e93091"),
             },
             new ApplicationUser
@@ -173,7 +175,7 @@ namespace JobPortal.AppDbContext
                 Email = "candidate1@gmail.com",
                 NormalizedEmail = "CANDIDATE1@EMAIL.COM",
                 EmailConfirmed = true,
-                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, passwords),
                 CandidateId = Guid.Parse("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"),
             },
             new ApplicationUser
@@ -186,7 +188,7 @@ namespace JobPortal.AppDbContext
                 Email = "candidate2@gmail.com",
                 NormalizedEmail = "CANDIDATE2@EMAIL.COM",
                 EmailConfirmed = true,
-                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, passwords),
                 CandidateId = Guid.Parse("31bb5001-4266-4b90-992e-2a729b26d26b"),
             },
             new ApplicationUser
@@ -199,7 +201,7 @@ namespace JobPortal.AppDbContext
                 Email = "candidate3@gmail.com",
                 NormalizedEmail = "CANDIDATE3@EMAIL.COM",
                 EmailConfirmed = true,
-                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, passwords),
                 CandidateId = Guid.Parse("6209c878-b598-4939-bccf-909e58d12504"),
             });
 
@@ -242,9 +244,10 @@ namespace JobPortal.AppDbContext
             modelBuilder.Entity<Employer>().HasData(new Employer
             {
                 Id = Guid.Parse("262ff2ba-d323-4916-b767-e9f1707ef7a2"),
-                CompanyName = "Avitex Agency",
+                CompanyName = "Digital Flies",
+                CompanyEmail = "digitalflies@gmail.com",
                 CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
-                CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                CompanyLogo = "f2bfaf5c-b8aa-47c5-915c-f9719ec5a1a7.jpg",
                 Founded = DateTime.UtcNow,
                 Headquarters = "Las Vegas, NV 89107, USA",
                 Industry = "It",
@@ -255,9 +258,10 @@ namespace JobPortal.AppDbContext
             new Employer
             {
                 Id = Guid.Parse("680b65c6-46cf-48ac-88f7-29ab807b29d5"),
-                CompanyName = "Demo 1",
+                CompanyName = "Seasons",
+                CompanyEmail = "seasons@gmail.com",
                 CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
-                CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                CompanyLogo = "79d9cea3-0e9a-4555-b971-58e672f76341.jpg",
                 Founded = DateTime.UtcNow,
                 Headquarters = "Lahore",
                 Industry = "It",
@@ -268,9 +272,10 @@ namespace JobPortal.AppDbContext
             new Employer
             {
                 Id = Guid.Parse("4ea1f880-57ef-4f0b-8a19-5aa356e93091"),
-                CompanyName = "Honda",
+                CompanyName = "Lorem Ipsum",
+                CompanyEmail = "loremipusm@gmail.com",
                 CompanyAbout = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.",
-                CompanyLogo = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                CompanyLogo = "3e931480-2756-49e3-a8f0-66f8a7a05037.jpg",
                 Founded = DateTime.UtcNow,
                 Headquarters = "Islamabad",
                 Industry = "Machenical",
@@ -340,7 +345,8 @@ namespace JobPortal.AppDbContext
             {
                 Id = Guid.Parse("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"),
                 Name="Hammad Mirza",
-                ProfileImg = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                Email="hammadcandidate@gmail.com",
+                ProfileImg = "edc73289-42ac-4c32-927a-b252fb2b1da9.jpg",
                 AboutMe= "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;",
                 Experience= ".Net Developer",
                 Phone=03000000,
@@ -355,7 +361,8 @@ namespace JobPortal.AppDbContext
             {
                 Id = Guid.Parse("31bb5001-4266-4b90-992e-2a729b26d26b"),
                 Name = "Ahtesham",
-                ProfileImg = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                Email = "ahteshamcandidate@gmail.com",
+                ProfileImg = "edc73289-42ac-4c32-927a-b252fb2b1da9.jpg",
                 AboutMe = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;",
                 Experience = "Php Laravel",
                 Phone = 03000000,
@@ -370,7 +377,8 @@ namespace JobPortal.AppDbContext
             {
                 Id = Guid.Parse("6209c878-b598-4939-bccf-909e58d12504"),
                 Name = "Sohaib",
-                ProfileImg = "https://th.bing.com/th/id/R.219c36f0da053be6810bf890683de60a?rik=TMTQOLdr87KvBA&pid=ImgRaw&r=0",
+                Email ="sohaibCandidate@gmail.com",
+                ProfileImg = "edc73289-42ac-4c32-927a-b252fb2b1da9.jpg",
                 AboutMe = "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;",
                 Experience = "React Designer",
                 Phone = 03000000,

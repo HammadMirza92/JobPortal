@@ -7,6 +7,7 @@ namespace JobPortal.Models
     public class Candidate: BaseModel
     {
         public string Name { get; set; }
+        public string Email { get; set; }
         public string ProfileImg{ get; set; }
         public string AboutMe{ get; set; }
         public string Experience { get; set; }

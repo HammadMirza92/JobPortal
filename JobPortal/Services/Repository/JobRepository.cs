@@ -18,7 +18,7 @@ namespace JobPortal.Services.Repository
         }
         public override async Task<IEnumerable<Job>> GetAll()
         {
-            var allJobs = await _context.Jobs.Where(j => !j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature) || j.AllJobsClasses == null).Where(de => de.DeadLine >= DateTime.Now)
+            var allJobs = await _context.Jobs.Where(d => d.IsDeleted == false).Where(j => !j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature) || j.AllJobsClasses == null).Where(de => de.DeadLine >= DateTime.Now)
                .Include(x => x.JobSkills)
                .Include(c => c.AllJobsClasses)
                .ThenInclude(jc => jc.JobClass)
@@ -28,7 +28,7 @@ namespace JobPortal.Services.Repository
         }
         public async Task<IEnumerable<Job>> GetFeatureJobs()
         {
-            var allFeatureJobs = await _context.Jobs.Where(j => j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature)).Where(de => de.DeadLine >= DateTime.Now)
+            var allFeatureJobs = await _context.Jobs.Where(d => d.IsDeleted == false).Where(j => j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature)).Where(de => de.DeadLine >= DateTime.Now)
                 .Include(x => x.JobSkills)
                 .Include(c => c.AllJobsClasses)
                 .ThenInclude(jc => jc.JobClass)
@@ -38,7 +38,7 @@ namespace JobPortal.Services.Repository
         }
         public async Task<IEnumerable<Job>> GetAllJobs(Guid id)
         {
-            var allJobs = await _context.Jobs.Where(aj => !aj.AppliedJobs.Any(a => a.CandidateId == id)).Where(j => !j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature) || j.AllJobsClasses == null).Where(de=> de.DeadLine >= DateTime.Now)
+            var allJobs = await _context.Jobs.Where(d => d.IsDeleted == false).Where(aj => !aj.AppliedJobs.Any(a => a.CandidateId == id)).Where(j => !j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature) || j.AllJobsClasses == null).Where(de=> de.DeadLine >= DateTime.Now)
                .Include(x => x.JobSkills)
                .Include(c => c.AllJobsClasses)
                .ThenInclude(jc => jc.JobClass)
@@ -48,7 +48,7 @@ namespace JobPortal.Services.Repository
         }
         public async Task<IEnumerable<Job>> GetFeatureJobs(Guid id)
         {
-            var allFeatureJobs = await _context.Jobs.Where(aj =>!aj.AppliedJobs.Any(a => a.CandidateId == id)).Where(j => j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature)).Where(de => de.DeadLine >= DateTime.Now)
+            var allFeatureJobs = await _context.Jobs.Where(d => d.IsDeleted == false).Where(aj =>!aj.AppliedJobs.Any(a => a.CandidateId == id)).Where(j => j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature)).Where(de => de.DeadLine >= DateTime.Now)
                 .Include(x => x.JobSkills)
                 .Include(c => c.AllJobsClasses)
                 .ThenInclude(jc => jc.JobClass)
@@ -58,7 +58,7 @@ namespace JobPortal.Services.Repository
         }
         public override async Task<Job> GetById(Guid id)
         {
-            var jobById = await _context.Jobs
+            var jobById = await _context.Jobs.Where(d => d.IsDeleted == false).Include(aj => aj.AppliedJobs)
                 .Include(x => x.JobSkills)
                 .ThenInclude(s=> s.Skill)
                 .Include(c => c.AllJobsClasses)
@@ -69,7 +69,7 @@ namespace JobPortal.Services.Repository
         }
         public async Task<IEnumerable<AppliedJobs>> FetchJobApplied(Guid id)
         {
-            var jobById = await _context.Jobs.Where(x => x.EmployerId == id).Include(aj=> aj.AppliedJobs).ThenInclude(c=> c.Candidate).ToListAsync();
+            var jobById = await _context.Jobs.Where(d => d.IsDeleted == false).Where(d => !d.IsDeleted).Where(x => x.EmployerId == id).Include(aj=> aj.AppliedJobs).ThenInclude(c=> c.Candidate).ToListAsync();
             var appliedJobs = jobById.SelectMany(j => j.AppliedJobs).ToList();
             return appliedJobs;
         }

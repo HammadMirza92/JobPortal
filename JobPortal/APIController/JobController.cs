@@ -6,7 +6,9 @@ using JobPortal.Services.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol;
+using System.Net;
 using System.Net.Http.Headers;
+using System.Net.Mail;
 
 namespace JobPortal.APIController
 {
@@ -18,13 +20,17 @@ namespace JobPortal.APIController
         private readonly IJobRepository _jobRepository;
         private readonly IJobClassRepository _jobClassRepository;
         private readonly IAllJobsClassesRepository _alljJobsClassesRepository;
-        public JobController(IJobRepository jobRepository, IJobClassRepository jobClassRepository, IAllJobsClassesRepository alljJobsClassesRepository)
+        private readonly IEmailRepository _emailRepository;
+        public JobController(IJobRepository jobRepository, IJobClassRepository jobClassRepository, IAllJobsClassesRepository alljJobsClassesRepository, IEmailRepository emailRepository)
         {
             _jobRepository = jobRepository;
             _jobClassRepository = jobClassRepository;
             _alljJobsClassesRepository = alljJobsClassesRepository;
+            _emailRepository = emailRepository;
+
         }
 
+        // GET: api/Job
         [HttpGet]
         public async Task<ActionResult<Job>> Get()
         {
@@ -36,6 +42,7 @@ namespace JobPortal.APIController
             return Ok(jobs);
         }
 
+        // GET: api/Job/getFeatureJobs
         [HttpGet("getFeatureJobs")]
         public async Task<ActionResult<Job>> GetFeatureJobs()
         {
@@ -47,10 +54,10 @@ namespace JobPortal.APIController
             return Ok(featureJobs);
         }
 
-        // GET: api/Job
+        // GET: api/Job/getAll/{id}
         [HttpGet("getAll/{id}")]
-/*        [ResponseCache(Duration = 120)]
-*/      public async Task<ActionResult<Job>> GetAll(Guid id)
+        /*[ResponseCache(Duration = 120)]*/
+        public async Task<ActionResult<Job>> GetAll(Guid id)
         {
             var jobs = await _jobRepository.GetAllJobs(id);
             if (!jobs.Any())
@@ -60,8 +67,8 @@ namespace JobPortal.APIController
             return Ok(jobs);
         }
 
+        // GET: api/Job/getFeatureJobs/{id}
         [HttpGet("getFeatureJobs/{id}")]
-       /* [ResponseCache(Duration = 120)]*/
         public async Task<ActionResult<Job>> GetFeatureJobs(Guid id)
         {
             var featureJobs = await _jobRepository.GetFeatureJobs( id);
@@ -79,61 +86,27 @@ namespace JobPortal.APIController
             var job = await _jobRepository.GetById(id);
             return job;
         }
+
+        // GET api/Job/FetchJobApplied/{id}
         [HttpGet("FetchJobApplied/{id}")]
         public async Task<IEnumerable<AppliedJobs>> FetchJobApplied(Guid id)
         {
             var job = await _jobRepository.FetchJobApplied(id);
             return job;
         }
-        // POST api/Job
+
+        // POST api/Job/create
         [HttpPost("create")]
+        [Authorize(Roles = "employer")]
         public async Task<IActionResult> Create( Job job)
         {
-
-            /*if (job.Icon == null || job.Icon.Length == 0)
-                return BadRequest("No image uploaded.");
-
-            // Generate a unique image file name
-            var imageFileName = Guid.NewGuid().ToString() + Path.GetExtension(job.Icon.FileName);
-
-            // Save the image to a folder on the server
-            var imagePath = Path.Combine("C:\\Users\\Hammad\\source\\repos\\JobPortal\\JobPortal\\wwwroot\\uploadedFiles\\", imageFileName);
-            using (var stream = new FileStream(imagePath, FileMode.Create))
-            {
-                await job.Icon.CopyToAsync(stream);
-            }
-
-            // Create a new product entity
-            var createJob = new Job
-            {
-                Icon = imageFileName,
-                Title = job.Title,
-                Description = job.Description,
-                Responsibility = job.Responsibility,
-                Location = job.Location,
-                Type= job.Type,
-                Qualifications= job.Qualifications,
-                SalaryType = job.SalaryType,
-                StartBudget= job.StartBudget,
-                EndBudget= job.EndBudget,
-                JobExperience = job.JobExperience,
-                JobShift= job.JobShift,
-                JobStatus= job.JobStatus,
-                DeadLine= job.DeadLine,
-                JobPosted= job.JobPosted,
-                Vacancy= job.Vacancy,
-                EmployerId= job.EmployerId,
-                Employer= job.Employer,
-            };*/
             var newJob = await _jobRepository.Add(job);
-
-            // Save the product entity to the database using Entity Framework Core or your preferred ORM
-            // dbContext.Products.Add(product);
-            // await dbContext.SaveChangesAsync();
 
             return Ok(newJob);
 
         }
+
+        // POST api/Job/uploadImage
         [HttpPost("uploadImage")]
         public IActionResult UploadImage(IFormFile image)
         {
@@ -145,7 +118,7 @@ namespace JobPortal.APIController
 
             if (image != null && image.Length > 0)
             {
-                var filePath = Path.Combine("D:\\JobPortal\\src\\assets\\Images\\", imageFileName);
+                var filePath = Path.Combine("D:\\JobPortal\\src\\assets\\Images\\jobIcons\\", imageFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     image.CopyTo(fileStream);
@@ -156,31 +129,33 @@ namespace JobPortal.APIController
 
             return BadRequest("No image file received.");
         }
+  
 
-
-        [HttpPost("image")]
-        public async Task<ActionResult<Job>> ImageCreate(IFormFile job)
+        // DELETE api/Job/delete/{id}
+        [HttpDelete("delete/{id}")]
+        [Authorize(Roles = "employer")]
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var file = job;
-            var featureJobs = await _jobRepository.GetFeatureJobs();
-            if (!featureJobs.Any())
+            var job = await _jobRepository.GetById(id);
+            if (job == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-            return Ok(featureJobs);
-
-        }
-        // PUT api/Job/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
+            job.IsDeleted = true;
+           await _jobRepository.Delete();
+            return Ok(job);
         }
 
-        // DELETE api/Job/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+
+        [HttpPost("sendEmail")]
+        public IActionResult SendEMail(SendEmail email)
         {
+
+            _emailRepository.SendEmail(email);
+
+
+            return Ok();
+
         }
-        
     }
 }

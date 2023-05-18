@@ -25,6 +25,9 @@ namespace JobPortal.Services.Repository
         public override async Task<Employer> GetById(Guid id)
         {
             var employeer = await _context.Employer
+                .Include(x => x.JobOffered).Where(d => d.IsDeleted == false)
+                 .Include(x => x.JobOffered)
+                .ThenInclude(aj => aj.AppliedJobs)
                 .Include(x => x.JobOffered)
                 .ThenInclude(x=> x.AllJobsClasses)
                 .ThenInclude(x=> x.JobClass).Where(x=> x.Id == id).FirstOrDefaultAsync();
