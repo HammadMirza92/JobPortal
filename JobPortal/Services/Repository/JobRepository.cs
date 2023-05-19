@@ -77,11 +77,29 @@ namespace JobPortal.Services.Repository
         {
             var result = await _context.Jobs
                 .Where(x =>
-                (string.IsNullOrEmpty(Title) || x.Title.Contains(Title) )&&
-                ( x.Type == Type) &&
-                (StartBudget == 0|| x.StartBudget >= StartBudget) &&
-                (EndBudget == 0|| x.EndBudget <= EndBudget) &&
-                (Vacancy == 0|| x.Vacancy >= Vacancy)).ToListAsync();
+                (string.IsNullOrEmpty(Title) || x.Title.Contains(Title)) &&
+                (x.Type == Type) &&
+                (StartBudget == 0 || x.StartBudget >= StartBudget) &&
+                (EndBudget == 0 || x.EndBudget <= EndBudget) &&
+                (Vacancy == 0 || x.Vacancy >= Vacancy)).ToListAsync();
+
+            return result;
+        }
+
+        public async Task<IEnumerable<Job>> FilterJobs(SearchJobs searchJobs)
+        {
+            var result = await _context.Jobs.Include(jc => jc.AllJobsClasses).ThenInclude(x => x.JobClass)
+                .Where(x =>
+                (string.IsNullOrEmpty(searchJobs.Title) || x.Title.Contains(searchJobs.Title)) &&
+                (searchJobs.Location == null || x.Location == searchJobs.Location) &&
+                 (searchJobs.Type == null || x.Type == searchJobs.Type) &&
+                  (searchJobs.Qualification == null || x.Qualifications == searchJobs.Qualification) &&
+                   (searchJobs.SalaryType == null || x.SalaryType == searchJobs.SalaryType) &&
+                    (searchJobs.StartBudget == null || x.StartBudget >= searchJobs.StartBudget) &&
+                     (searchJobs.EndBudget == null || x.EndBudget <= searchJobs.EndBudget) &&
+                      (searchJobs.JobExperience == null || x.JobExperience == searchJobs.JobExperience) &&
+                      (searchJobs.JobShift == null || x.JobShift == searchJobs.JobShift)).ToListAsync();
+                      // (searchJobs.JobShift == null || x.AllJobsClasses.Any(x=> x.JobClass.name) == searchJobs.JobShift)).ToListAsync();
 
             return result;
         }

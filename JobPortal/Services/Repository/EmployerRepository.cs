@@ -33,5 +33,15 @@ namespace JobPortal.Services.Repository
                 .ThenInclude(x=> x.JobClass).Where(x=> x.Id == id).FirstOrDefaultAsync();
             return employeer;
         }
+
+        public async Task<IEnumerable<Employer>> FilterEmployer(SearchEmployer searchEmployer)
+        {
+            var result = await _context.Employer
+                .Where(x =>
+                (string.IsNullOrEmpty(searchEmployer.EmployerName) || x.CompanyName.Contains(searchEmployer.EmployerName)) &&
+                (string.IsNullOrEmpty(searchEmployer.Headquarters) || x.Headquarters.Contains(searchEmployer.Headquarters))).ToListAsync();
+
+            return result;
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace JobPortal.Services.IRepository
         Task<IEnumerable<Job>> GetFeatureJobs();
         Task<IEnumerable<Job>> GetAllJobs(Guid id);
         Task<IEnumerable<AppliedJobs>> FetchJobApplied(Guid id);
+        Task<IEnumerable<Job>> FilterJobs(SearchJobs searchJobs);
     }
 }

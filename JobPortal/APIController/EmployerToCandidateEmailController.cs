@@ -49,7 +49,7 @@ namespace JobPortal.APIController
                 Subject = "Confirmation to Job",
                 Body = body
             };
-            await _emailRepository.SendEmail(email);
+            await _emailRepository.SendEmail(email,null);
             return Ok();
         }
         

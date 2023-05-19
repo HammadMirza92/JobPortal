@@ -12,7 +12,9 @@ using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Web;
 using static IdentityServer4.Models.IdentityResources;
+using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace JobPortal.APIController
 {
@@ -76,12 +78,20 @@ namespace JobPortal.APIController
             await _userStore.SetUserNameAsync(user, userCradential.Email, CancellationToken.None);
             await _emailStore.SetEmailAsync(user, userCradential.Email, CancellationToken.None);
 
-            // Generate email confirmation token
+           /* // Generate email confirmation token
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
+            string codeHtmlVersion = HttpUtility.UrlEncode(token);
             //  await EmailConfirmation(user, token);
-            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, protocol: HttpContext.Request.Scheme);
-            await _emailRepository.SendConfirmationEmail(user, callbackUrl);
+            var uriBuilder = new UriBuilder("http://localhost:4200/email-confirmation");
+            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+            query["token"] = codeHtmlVersion;
+            query["userId"] = user.Id;
+            uriBuilder.Query = query.ToString();
+            var urlString = uriBuilder.ToString();
+
+
+            //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, protocol: HttpContext.Request.Scheme);
+            await _emailRepository.SendConfirmationEmail(user, urlString);*/
 
             var result = await _userManager.CreateAsync(user, userCradential.Password);
 
@@ -94,6 +104,21 @@ namespace JobPortal.APIController
             {
                 return BadRequest(result.Errors);
             }
+
+        }
+        [HttpPost("confirmEmail")]
+        public async Task<IActionResult> ConfirmEmail(ConfirmEmail model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+             var token = HttpUtility.UrlEncode(model.Token);
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
 
         }
 
@@ -138,56 +163,8 @@ namespace JobPortal.APIController
         }
 
 
-        /* [HttpPost("login")]
-         public async Task<ActionResult<AuthenticationResponse>> Login([FromBody] UserCradential userCradential)
-         {
-            // var result = await _signInManager.PasswordSignInAsync(userCradential.Email,userCradential.Password,isPersistent:false,lockoutOnFailure:false);
-
-
-             var result = await _signInManager.PasswordSignInAsync(userCradential.Email, userCradential.Password, isPersistent: false, lockoutOnFailure: false);
-             if (result.Succeeded)
-             {
-                 var user = await _userManager.FindByEmailAsync(userCradential.Email);
-                 if (user != null && !user.EmailConfirmed)
-                 {
-                     // Generate email confirmation token
-                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-                     // Construct the confirmation link URL
-                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, protocol: HttpContext.Request.Scheme);
-
-                     // Send confirmation email
-                     //await _emailService.SendConfirmationEmail(user.Email, callbackUrl);
-
-                     // Redirect to a page informing the user to check their email for confirmation
-                     return RedirectToAction("EmailConfirmationSent");
-                 }
-
-                 // Email is already confirmed, proceed with the login process
-                 return RedirectToAction("Dashboard");
-             }
-
-             // Authentication failed, display appropriate message to the user
-             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-             return Ok(result);
-
-
-
-
-
-             if (result.Succeeded)
-             {
-                 return await BuilToken(userCradential);
-             }
-             else
-             {
-                 return BadRequest("Incorrect Login");
-             }
-         }*/
-
-
-        /*  [Authorize]
-*/
+      
+        /*  [Authorize] */
         [HttpGet("currentUserRole/{email}")]
         public async Task<IActionResult> currentUserRole(string email)
         {

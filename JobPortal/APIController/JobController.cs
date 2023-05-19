@@ -1,4 +1,5 @@
-﻿using JobPortal.Enums;
+﻿using CsvHelper;
+using JobPortal.Enums;
 using JobPortal.Models;
 using JobPortal.Models.Dto;
 using JobPortal.Services.IRepository;
@@ -6,6 +7,8 @@ using JobPortal.Services.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol;
+using System.Formats.Asn1;
+using System.Globalization;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Mail;
@@ -31,6 +34,7 @@ namespace JobPortal.APIController
         }
 
         // GET: api/Job
+
         [HttpGet]
         public async Task<ActionResult<Job>> Get()
         {
@@ -151,11 +155,19 @@ namespace JobPortal.APIController
         public IActionResult SendEMail(SendEmail email)
         {
 
-            _emailRepository.SendEmail(email);
+            _emailRepository.SendEmail(email, null);
 
 
             return Ok();
 
+        }
+
+        [HttpPost("searchJobs")]
+        public async Task<IActionResult> SearchJobs(SearchJobs search)
+        {
+            var filterJobs = await _jobRepository.FilterJobs(search);
+
+            return Ok(filterJobs);
         }
     }
 }

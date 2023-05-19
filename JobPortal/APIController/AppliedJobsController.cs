@@ -3,6 +3,7 @@ using JobPortal.Services.IRepository;
 using JobPortal.Services.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 
@@ -57,7 +58,8 @@ namespace JobPortal.APIController
             var job = await _jobRepository.GetById(appliedJob.JobsId);
             var employer = await _employerRepository.GetById(job.EmployerId);
             var candidate = await _candidateRepository.GetById(appliedJob.CandidateId);
-           
+
+            
             var body = "<div style=\"background-color: white;padding: 20px; box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.148);border:1px solid gray;width: 50%;font-family:Arial, Helvetica, sans-serif;margin:0 auto \">" +
             "  <h1>Congratulations!</h1>" +
                " <strong>Dear " + employer.CompanyName + ",</strong>" +
@@ -67,6 +69,7 @@ namespace JobPortal.APIController
                "    <li>Name: " + candidate.Name + " </li>" +
                "    <li>Email: " + candidate.Email + "</li>" +
                "    <li>Phone: " + candidate.Phone + "</li>" +
+               "    <li>Candidate Profile Link : http://localhost:4200/candidate/candidate-detail/"+ candidate.Id +" </li>" +
                "  </ul>" +
                "  <p>Please review the candidate's application and consider them for the position. If you have any further questions or require additional information, you can reach out to the candidate directly using the provided contact details.</p>" +
                "  <p>Thank you for your time and consideration. We wish you the best in finding the right candidate for your job opening.</p>" +
@@ -75,12 +78,13 @@ namespace JobPortal.APIController
                "</div>";
             SendEmail email = new SendEmail()
             {
-                To = employer.CompanyEmail,
+               // To = employer.CompanyEmail,
+               To = "hammad.hassan@purelogics.com",
                 Subject = "Candidate Applied To job",
                 Body = body
             };
 
-            await _emailRepository.SendEmail(email);
+            await _emailRepository.SendEmail(email, null);
 
             return newAppliedJob;
 

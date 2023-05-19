@@ -7,7 +7,7 @@ namespace JobPortal.Services.IRepository
 {
     public interface IEmailRepository : IBaseRepository<SendEmail>
     {
-        Task SendEmail(SendEmail email);
+        Task SendEmail(SendEmail email,string? attachmentPath);
         Task SendConfirmationEmail(ApplicationUser appUser, string token);
     }
 }

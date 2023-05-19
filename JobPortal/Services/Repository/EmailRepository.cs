@@ -8,6 +8,7 @@ using System.Net.Mail;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using static IdentityServer4.Models.IdentityResources;
+using System.Net.Mime;
 
 namespace JobPortal.Services.Repository
 {
@@ -31,7 +32,7 @@ namespace JobPortal.Services.Repository
             client.Credentials = new NetworkCredential(_config.GetSection("EmailUserName").Value, _config.GetSection("EmailPassword").Value);
             return client;
         }
-        public async Task SendEmail(SendEmail email)
+        public async Task SendEmail(SendEmail email, string? attachmentPath)
         {
             SmtpClient client = await GetSMTPSettings();
 
@@ -42,13 +43,16 @@ namespace JobPortal.Services.Repository
             message.Body = email.Body;
             message.IsBodyHtml = true;
 
-            client.Send(message);
-           
-          /*  if (email != null)
+            if (attachmentPath != null)
             {
-               _context.SendEmail.Add(email);
-            }*/
+                Attachment attachment = new Attachment(attachmentPath, MediaTypeNames.Text.Plain);
+                message.Attachments.Add(attachment);
+            }
            
+
+
+            client.Send(message);
+
         }
         public async Task SendConfirmationEmail(ApplicationUser appUser, string token)
         {

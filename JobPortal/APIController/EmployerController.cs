@@ -19,15 +19,13 @@ namespace JobPortal.APIController
         private readonly IJobRepository _jobRepository;
 
 
-        public EmployerController(IEmployerRepository employeerRepository,
-            IApplicationUserRepository appUserRepository,
-            IJobRepository jobRepository)
+        public EmployerController(IEmployerRepository employeerRepository, IApplicationUserRepository appUserRepository, IJobRepository jobRepository)
         {
             _employeerRepository = employeerRepository;
             _appUserRepository = appUserRepository;
-            _jobRepository = jobRepository;
-            
+            _jobRepository = jobRepository;     
         }
+
         // GET: api/Job
         [HttpGet]
         /*[ResponseCache(Duration = 120)]*/
@@ -155,6 +153,15 @@ namespace JobPortal.APIController
             }
 
             return ;
+        }
+        
+        
+        [HttpPost("searchEmployer")]
+        public async Task<IActionResult> SearchEmployer(SearchEmployer search)
+        {
+            var filterEmployers = await _employeerRepository.FilterEmployer(search);
+   
+            return Ok(filterEmployers);
         }
     }
 }

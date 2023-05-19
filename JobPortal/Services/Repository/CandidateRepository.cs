@@ -1,4 +1,5 @@
-﻿using JobPortal.AppDbContext;
+﻿using IdentityServer4.Extensions;
+using JobPortal.AppDbContext;
 using JobPortal.Enums;
 using JobPortal.Models;
 using JobPortal.Services.IRepository;
@@ -30,6 +31,18 @@ namespace JobPortal.Services.Repository
                 .FirstOrDefaultAsync();
 
             return jobById;
+        }
+
+
+        public async Task<IEnumerable<Candidate>> FilterCandidate(SearchCandidate searchCandidate)
+        {
+            var result = await _context.Candidate
+                .Where(x =>
+                (string.IsNullOrEmpty(searchCandidate.CandidateName) || x.Name.Contains(searchCandidate.CandidateName)) &&
+                (string.IsNullOrEmpty(searchCandidate.CandiadteField) || x.Experience.Contains(searchCandidate.CandiadteField))&&
+                (searchCandidate.Location == null || x.Location == searchCandidate.Location)).ToListAsync();
+
+            return result;
         }
     }
 }

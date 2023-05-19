@@ -6,6 +6,6 @@ namespace JobPortal.Services.IRepository
 {
     public interface IEmployerRepository : IBaseRepository<Employer>
     {
-       
+        Task<IEnumerable<Employer>> FilterEmployer(SearchEmployer searchEmployer);
     }
 }

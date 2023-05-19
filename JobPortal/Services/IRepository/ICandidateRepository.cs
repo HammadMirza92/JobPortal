@@ -6,6 +6,6 @@ namespace JobPortal.Services.IRepository
 {
     public interface ICandidateRepository : IBaseRepository<Candidate>
     {
-       
+        Task<IEnumerable<Candidate>> FilterCandidate(SearchCandidate searchCandidate);
     }
 }

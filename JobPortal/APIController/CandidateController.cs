@@ -112,5 +112,13 @@ namespace JobPortal.APIController
         public void Delete(int id)
         {
         }
+
+        [HttpPost("searchCandidate")]
+        public async Task<IActionResult> SearchCandidate(SearchCandidate search)
+        {
+            var filterCandidates = await _candidateRepository.FilterCandidate(search);
+
+            return Ok(filterCandidates);
+        }
     }
 }
