@@ -27,7 +27,8 @@ namespace JobPortal.APIController
             _jobRepository = jobRepository;
             _candidateRepository = candidateRepository;
         }
-        // GET: api/Job
+
+        // GET: api/AppliedJobs/GetJobsofCandidate/{id}
         [HttpGet("GetJobsofCandidate/{id}")]
         public async Task<ActionResult<AppliedJobs>> GetJobsofCandidate(Guid id)
         {
@@ -38,9 +39,9 @@ namespace JobPortal.APIController
             }
             return Ok(JobsOfConadidate);
         }
-      
 
-        // GET api/Job/5
+
+        // GET api/AppliedJobs/{id}
         [HttpGet("{id}")]
         public async Task<AppliedJobs> Get(Guid id)
         {
@@ -48,7 +49,8 @@ namespace JobPortal.APIController
             return job;
         }
 
-        // POST api/Job
+
+        // POST api/AppliedJobs
         [HttpPost("create")]
         public async Task<AppliedJobs> Create(AppliedJobs appliedJob)
         {
@@ -59,8 +61,17 @@ namespace JobPortal.APIController
             var employer = await _employerRepository.GetById(job.EmployerId);
             var candidate = await _candidateRepository.GetById(appliedJob.CandidateId);
 
-            
-            var body = "<div style=\"background-color: white;padding: 20px; box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.148);border:1px solid gray;width: 50%;font-family:Arial, Helvetica, sans-serif;margin:0 auto \">" +
+            string htmlTemplate = System.IO.File.ReadAllText("C:\\Users\\Hammad\\source\\repos\\JobPortal\\JobPortal\\EmailTemplate\\AppliedJobTemplate.html");
+
+            htmlTemplate = htmlTemplate.Replace("{employerName}", employer.CompanyName);
+            htmlTemplate = htmlTemplate.Replace("{candidateName}", candidate.Name);
+            htmlTemplate = htmlTemplate.Replace("{jobTitle}", job.Title);
+            htmlTemplate = htmlTemplate.Replace("{candidateEmail}", candidate.Email);
+            htmlTemplate = htmlTemplate.Replace("{candidatePhone}", candidate.Phone.ToString());
+            htmlTemplate = htmlTemplate.Replace("{candidateId}", candidate.Id.ToString());
+
+
+           /* var body = "<div style=\"background-color: white;padding: 20px; box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.148);border:1px solid gray;width: 50%;font-family:Arial, Helvetica, sans-serif;margin:0 auto \">" +
             "  <h1>Congratulations!</h1>" +
                " <strong>Dear " + employer.CompanyName + ",</strong>" +
                " <p>We are pleased to inform you that a candidate " + candidate.Name + " has applied for the " + job.Title + " job position at your company. " +
@@ -75,13 +86,13 @@ namespace JobPortal.APIController
                "  <p>Thank you for your time and consideration. We wish you the best in finding the right candidate for your job opening.</p>" +
                "  <p>Best regards,</p>" +
                "  <p>GetToJob</p>" +
-               "</div>";
+               "</div>";*/
             SendEmail email = new SendEmail()
             {
-               // To = employer.CompanyEmail,
-               To = "hammad.hassan@purelogics.com",
+                To = employer.CompanyEmail,
+              //  To = "hammad.hassan@purelogics.com",
                 Subject = "Candidate Applied To job",
-                Body = body
+                Body = htmlTemplate
             };
 
             await _emailRepository.SendEmail(email, null);
@@ -90,15 +101,11 @@ namespace JobPortal.APIController
 
         }
 
-        // PUT api/Job/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
 
-        // DELETE api/Job/5
+
+        // DELETE api/AppliedJobs/{id}
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
         }
         

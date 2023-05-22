@@ -11,48 +11,51 @@ namespace JobPortal.APIController
 {
     [Route("api/[controller]")]
     [ApiController]
-    /*[Authorize]*/
     public class EmployerController : ControllerBase
     {
-        private readonly IEmployerRepository _employeerRepository;
+        private readonly IEmployerRepository _employerRepository;
         private readonly IApplicationUserRepository _appUserRepository;
         private readonly IJobRepository _jobRepository;
 
 
-        public EmployerController(IEmployerRepository employeerRepository, IApplicationUserRepository appUserRepository, IJobRepository jobRepository)
+        public EmployerController(IEmployerRepository employerRepository, IApplicationUserRepository appUserRepository, IJobRepository jobRepository)
         {
-            _employeerRepository = employeerRepository;
+            _employerRepository = employerRepository;
             _appUserRepository = appUserRepository;
             _jobRepository = jobRepository;     
         }
 
-        // GET: api/Job
+        // GET: api/Employer
         [HttpGet]
-        /*[ResponseCache(Duration = 120)]*/
+        [ResponseCache(Duration = 120)]
         public async Task<ActionResult<Employer>> Get()
         {
           
-            var allEmployeers = await _employeerRepository.GetAll();
-            if (!allEmployeers.Any())
+            var allEmployers = await _employerRepository.GetAll();
+            if (!allEmployers.Any())
             {
                 return BadRequest();
             }
-            return Ok(allEmployeers);
+            return Ok(allEmployers);
         }
 
-        // GET api/Job/5
+        // GET api/Employer/{id}
         [HttpGet("{id}")]
-        public async Task<Employer> Get(Guid id)
+        public async Task<ActionResult<Employer>> Get(Guid id)
         {
-            var employeer = await _employeerRepository.GetById(id);
-            return employeer;
+            var employer = await _employerRepository.GetById(id);
+            if (employer == null)
+            {
+                return BadRequest("employer not Found!");
+            }
+            return employer;
         }
 
-        // POST api/Job
+        // POST api/Employer/create
         [HttpPost("create")]
         public async Task<Employer> Create([FromBody] Employer employeer)
         {
-            var newEmployeer = await _employeerRepository.Add(employeer);
+            var newEmployeer = await _employerRepository.Add(employeer);
             var id = newEmployeer.Id;
 
             var employerUser = await _appUserRepository.GetById(employeer.UserId);
@@ -75,10 +78,21 @@ namespace JobPortal.APIController
                 AccessFailedCount = employerUser.AccessFailedCount,
             };
 
-             await _appUserRepository.Update(newUser);
+            try
+            {
+                await _appUserRepository.Update(newUser);
+            }
+            catch (Exception)
+            {
+
+                BadRequest("app user not updated");
+            }
+           
             return newEmployeer;
 
         }
+
+        // POST api/Employer/uploadImage
         [HttpPost("uploadImage")]
         public IActionResult UploadImage(IFormFile image)
         {
@@ -101,65 +115,19 @@ namespace JobPortal.APIController
 
             return BadRequest("No image file received.");
         }
-        // PUT api/Job/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
 
-        // DELETE api/Job/5
+
+        // DELETE api/Employer/{id}
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
         }
 
-        public async Task updateJob()
-        {
-            var employers = await _employeerRepository.GetAll();
-            foreach (var employer in employers)
-            {
-                foreach (var job in employer.JobOffered)
-                {
-                    if(job.DeadLine <= DateTime.Now)
-                    {
-                        Job newJob = new Job()
-                        {
-                            Id = job.Id,
-                            Icon = job.Icon,
-                            Title = job.Title,
-                            Description = job.Description,
-                            Responsibility = job.Responsibility,
-                            Location = job.Location,
-                            Type = job.Type,
-                            Qualifications = job.Qualifications,
-                            SalaryType = job.SalaryType,
-                            StartBudget = job.StartBudget,
-                            EndBudget = job.EndBudget,
-                            JobExperience = job.JobExperience,
-                            JobShift = job.JobShift,
-                            JobStatus = JobStatus.Close,
-                            DeadLine = job.DeadLine,
-                            JobPosted = job.JobPosted,
-                            Vacancy = job.Vacancy,
-                            EmployerId = job.EmployerId,
-                            Employer = job.Employer,
-                            JobSkills = job.JobSkills,
-                            AllJobsClasses = job.AllJobsClasses,
-                        };
-
-                        await _jobRepository.Update(newJob);
-                    }
-                }
-            }
-
-            return ;
-        }
-        
-        
+        // POST api/Employer/searchEmployer
         [HttpPost("searchEmployer")]
         public async Task<IActionResult> SearchEmployer(SearchEmployer search)
         {
-            var filterEmployers = await _employeerRepository.FilterEmployer(search);
+            var filterEmployers = await _employerRepository.FilterEmployer(search);
    
             return Ok(filterEmployers);
         }

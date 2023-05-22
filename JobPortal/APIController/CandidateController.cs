@@ -19,9 +19,10 @@ namespace JobPortal.APIController
             _candidateRepository = candidateRepository;
             _appUserRepository = applicationUserRepository;
         }
-        // GET: api/Job
+
+        // GET: api/Candidate
         [HttpGet]
-        /*[ResponseCache(Duration = 120)]*/
+        [ResponseCache(Duration = 120)]
         public async Task<ActionResult<Candidate>> Get()
         {
 
@@ -33,7 +34,7 @@ namespace JobPortal.APIController
             return Ok(allCandidates);
         }
 
-        // GET api/Job/5
+        // GET api/Candidate/{id}
         [HttpGet("{id}")]
         public async Task<Candidate> Get(Guid id)
         {
@@ -41,9 +42,8 @@ namespace JobPortal.APIController
             return candidate;
         }
 
-        // POST api/Job
+        // POST api/Candidate/create
         [HttpPost("create")]
-       /* [ResponseCache]*/
         public async Task<Candidate> Create(Candidate candidate)
         {
             var newCandidate = await _candidateRepository.Add(candidate); 
@@ -78,6 +78,9 @@ namespace JobPortal.APIController
 
           
         }
+
+
+        // POST api/Candidate/uploadImage
         [HttpPost("uploadImage")]
         public IActionResult UploadImage(IFormFile image)
         {
@@ -101,18 +104,14 @@ namespace JobPortal.APIController
             return BadRequest("No image file received.");
         }
 
-        // PUT api/Job/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
 
-        // DELETE api/Job/5
+        // DELETE api/Candidate/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
         }
 
+        // POST api/Candidate/searchCandidate
         [HttpPost("searchCandidate")]
         public async Task<IActionResult> SearchCandidate(SearchCandidate search)
         {

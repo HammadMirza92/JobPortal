@@ -72,26 +72,8 @@ namespace JobPortal.Controllers
         {
             return View();
         }
-        [Authorize("Admin")]
-        // POST: JobController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+      
 
-        public async Task<IActionResult> Filter(string Title, JobStatus Status, JobType Type, double StartBudget, double EndBudget, int Vacancy, Location Location, DateTime StartDate, DateTime EndDate)
-        {
-            var result = await _jobRepository.FilterJob(Title, Status, Type, StartBudget, EndBudget, Vacancy, Location, StartDate, EndDate);
-            return View(result);
-        }
+       
     }
 }

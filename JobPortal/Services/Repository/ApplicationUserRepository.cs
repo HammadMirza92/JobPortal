@@ -14,12 +14,16 @@ namespace JobPortal.Services.Repository
         {
             _context = context;
         }
+
+        // Get User By Email
         public async Task<ApplicationUser> FindUserByEmail(string email)
         {
             var user = await _context.ApplicationUsers.Where(x => x.Email == email).FirstOrDefaultAsync();
 
             return user;
         }
+
+        // Get User By Id
         public async Task<ApplicationUser> GetById(string id)
         {
             var appuser = await _context.ApplicationUsers.FindAsync(id);

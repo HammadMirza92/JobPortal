@@ -16,9 +16,11 @@ namespace JobPortal.Services.Repository
         {
             _context = context;
         }
+
+        // Get Regular Jobs for Normal Users
         public override async Task<IEnumerable<Job>> GetAll()
         {
-            var allJobs = await _context.Jobs.Where(d => d.IsDeleted == false).Where(j => !j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature) || j.AllJobsClasses == null).Where(de => de.DeadLine >= DateTime.Now)
+            var allJobs = await _context.Jobs.Where(d => d.IsDeleted == false).Where(j => !j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature || jc.JobClass.name == JobClasses.Private || jc.JobClass.name == JobClasses.Urgent)).Where(de => de.DeadLine >= DateTime.Now)
                .Include(x => x.JobSkills)
                .Include(c => c.AllJobsClasses)
                .ThenInclude(jc => jc.JobClass)
@@ -26,9 +28,11 @@ namespace JobPortal.Services.Repository
 
             return allJobs;
         }
+
+        // Get Feature Jobs for normal Users
         public async Task<IEnumerable<Job>> GetFeatureJobs()
         {
-            var allFeatureJobs = await _context.Jobs.Where(d => d.IsDeleted == false).Where(j => j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature)).Where(de => de.DeadLine >= DateTime.Now)
+            var allFeatureJobs = await _context.Jobs.Where(d => d.IsDeleted == false).Where(j => j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature || jc.JobClass.name == JobClasses.Private || jc.JobClass.name == JobClasses.Urgent)).Where(de => de.DeadLine >= DateTime.Now)
                 .Include(x => x.JobSkills)
                 .Include(c => c.AllJobsClasses)
                 .ThenInclude(jc => jc.JobClass)
@@ -36,9 +40,11 @@ namespace JobPortal.Services.Repository
 
             return allFeatureJobs;
         }
+
+        // Get Regular Jobs of candidate
         public async Task<IEnumerable<Job>> GetAllJobs(Guid id)
         {
-            var allJobs = await _context.Jobs.Where(d => d.IsDeleted == false).Where(aj => !aj.AppliedJobs.Any(a => a.CandidateId == id)).Where(j => !j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature) || j.AllJobsClasses == null).Where(de=> de.DeadLine >= DateTime.Now)
+            var allJobs = await _context.Jobs.Where(d => d.IsDeleted == false).Where(aj => !aj.AppliedJobs.Any(a => a.CandidateId == id)).Where(j => !j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature || jc.JobClass.name == JobClasses.Private || jc.JobClass.name == JobClasses.Urgent) || j.AllJobsClasses == null).Where(de=> de.DeadLine >= DateTime.Now)
                .Include(x => x.JobSkills)
                .Include(c => c.AllJobsClasses)
                .ThenInclude(jc => jc.JobClass)
@@ -46,9 +52,11 @@ namespace JobPortal.Services.Repository
 
             return allJobs;
         }
+
+        // Get Feature Jobs of candidate
         public async Task<IEnumerable<Job>> GetFeatureJobs(Guid id)
         {
-            var allFeatureJobs = await _context.Jobs.Where(d => d.IsDeleted == false).Where(aj =>!aj.AppliedJobs.Any(a => a.CandidateId == id)).Where(j => j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature)).Where(de => de.DeadLine >= DateTime.Now)
+            var allFeatureJobs = await _context.Jobs.Where(d => d.IsDeleted == false).Where(aj =>!aj.AppliedJobs.Any(a => a.CandidateId == id)).Where(j => j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature || jc.JobClass.name == JobClasses.Private || jc.JobClass.name == JobClasses.Urgent)).Where(de => de.DeadLine >= DateTime.Now)
                 .Include(x => x.JobSkills)
                 .Include(c => c.AllJobsClasses)
                 .ThenInclude(jc => jc.JobClass)
@@ -56,6 +64,8 @@ namespace JobPortal.Services.Repository
 
             return allFeatureJobs;
         }
+
+        // Get Job By Id and include JobSkills, AllJobsClasses, Employer
         public override async Task<Job> GetById(Guid id)
         {
             var jobById = await _context.Jobs.Where(d => d.IsDeleted == false).Include(aj => aj.AppliedJobs)
@@ -67,39 +77,30 @@ namespace JobPortal.Services.Repository
 
             return jobById;
         }
+
+        // Fetch AppliedJobs of Company
         public async Task<IEnumerable<AppliedJobs>> FetchJobApplied(Guid id)
         {
-            var jobById = await _context.Jobs.Where(d => d.IsDeleted == false).Where(d => !d.IsDeleted).Where(x => x.EmployerId == id).Include(aj=> aj.AppliedJobs).ThenInclude(c=> c.Candidate).ToListAsync();
-            var appliedJobs = jobById.SelectMany(j => j.AppliedJobs).ToList();
+            var jobByEmployerId = await _context.Jobs.Where(d => d.IsDeleted == false).Where(x => x.EmployerId == id).Include(aj=> aj.AppliedJobs).ThenInclude(c=> c.Candidate).ToListAsync();
+            var appliedJobs = jobByEmployerId.SelectMany(j => j.AppliedJobs).ToList();
             return appliedJobs;
         }
-        public async Task<IEnumerable<Job>> FilterJob(string Title, JobStatus Status, JobType Type, double StartBudget, double EndBudget, int Vacancy, Location Location, DateTime StartDate, DateTime EndDate)
-        {
-            var result = await _context.Jobs
-                .Where(x =>
-                (string.IsNullOrEmpty(Title) || x.Title.Contains(Title)) &&
-                (x.Type == Type) &&
-                (StartBudget == 0 || x.StartBudget >= StartBudget) &&
-                (EndBudget == 0 || x.EndBudget <= EndBudget) &&
-                (Vacancy == 0 || x.Vacancy >= Vacancy)).ToListAsync();
 
-            return result;
-        }
-
+        // Filter Job on the basis of Title, Location, Type, Qualification, SalaryType, StartBudget, EndBudget, JobExperience, JobShift, JobClass
         public async Task<IEnumerable<Job>> FilterJobs(SearchJobs searchJobs)
         {
             var result = await _context.Jobs.Include(jc => jc.AllJobsClasses).ThenInclude(x => x.JobClass)
                 .Where(x =>
                 (string.IsNullOrEmpty(searchJobs.Title) || x.Title.Contains(searchJobs.Title)) &&
                 (searchJobs.Location == null || x.Location == searchJobs.Location) &&
-                 (searchJobs.Type == null || x.Type == searchJobs.Type) &&
-                  (searchJobs.Qualification == null || x.Qualifications == searchJobs.Qualification) &&
-                   (searchJobs.SalaryType == null || x.SalaryType == searchJobs.SalaryType) &&
-                    (searchJobs.StartBudget == null || x.StartBudget >= searchJobs.StartBudget) &&
-                     (searchJobs.EndBudget == null || x.EndBudget <= searchJobs.EndBudget) &&
-                      (searchJobs.JobExperience == null || x.JobExperience == searchJobs.JobExperience) &&
-                      (searchJobs.JobShift == null || x.JobShift == searchJobs.JobShift)).ToListAsync();
-                      // (searchJobs.JobShift == null || x.AllJobsClasses.Any(x=> x.JobClass.name) == searchJobs.JobShift)).ToListAsync();
+                (searchJobs.Type == null || x.Type == searchJobs.Type) &&
+                (searchJobs.Qualification == null || x.Qualifications == searchJobs.Qualification) &&
+                (searchJobs.SalaryType == null || x.SalaryType == searchJobs.SalaryType) &&
+                (searchJobs.StartBudget == null || x.StartBudget >= searchJobs.StartBudget) &&
+                (searchJobs.EndBudget == null || x.EndBudget <= searchJobs.EndBudget) &&
+                (searchJobs.JobExperience == null || x.JobExperience == searchJobs.JobExperience) &&
+                (searchJobs.JobShift == null || x.JobShift == searchJobs.JobShift)&&
+                (searchJobs.JobClass == null || x.AllJobsClasses.Any(x=> x.JobClass.name == searchJobs.JobClass))).ToListAsync();
 
             return result;
         }

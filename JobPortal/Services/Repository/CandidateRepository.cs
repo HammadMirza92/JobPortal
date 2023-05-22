@@ -15,6 +15,8 @@ namespace JobPortal.Services.Repository
         {
             _context = context;
         }
+
+        // Get All Candidates
         public override async Task<IEnumerable<Candidate>> GetAll()
         {
             var allJobs = await _context.Candidate
@@ -23,6 +25,8 @@ namespace JobPortal.Services.Repository
 
             return allJobs;
         }
+
+        // Get Candidate By Id
         public override async Task<Candidate> GetById(Guid id)
         {
             var jobById = await _context.Candidate.Where(c=> c.Id==id)
@@ -33,7 +37,7 @@ namespace JobPortal.Services.Repository
             return jobById;
         }
 
-
+        // Filter Candidate
         public async Task<IEnumerable<Candidate>> FilterCandidate(SearchCandidate searchCandidate)
         {
             var result = await _context.Candidate

@@ -17,18 +17,7 @@ namespace JobPortal.Services.Repository
             _context = context;
         }
        
-        public async Task<IEnumerable<AllJobsClasses>> GetFeatureJobs()
-        {
-            var allFeatureJobs = await _context.AllJobsClasses.Include(x => x.JobClass).Include(j=> j.Job).ToListAsync();
-            return allFeatureJobs;
-        }
-        public async Task<IEnumerable<AllJobsClasses>> GetAllJobs()
-        {
-            var allAllJobs =  await _context.AllJobsClasses.Include(x=> x.JobClass).Include(x=> x.Job).ToListAsync();
-                    
-            
-            return allAllJobs;
-        }
+       
 
     }
 }

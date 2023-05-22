@@ -48,6 +48,8 @@ namespace JobPortal.APIController
             _appUserManager = appUserManager;
             _emailRepository = emailRepository;
         }
+
+        // POST: api/Accounts/createEmployer
         [HttpPost("createEmployer")]
         public async Task<ActionResult<AuthenticationResponse>> CreateEmployer([FromBody] UserCradential userCradential)
         {
@@ -70,6 +72,9 @@ namespace JobPortal.APIController
             }
            
         }
+
+
+        // POST: api/Accounts/createCandidate
         [HttpPost("createCandidate")]
         public async Task<ActionResult<AuthenticationResponse>> CreateCandidate([FromBody] UserCradential userCradential)
         {
@@ -77,21 +82,6 @@ namespace JobPortal.APIController
 
             await _userStore.SetUserNameAsync(user, userCradential.Email, CancellationToken.None);
             await _emailStore.SetEmailAsync(user, userCradential.Email, CancellationToken.None);
-
-           /* // Generate email confirmation token
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            string codeHtmlVersion = HttpUtility.UrlEncode(token);
-            //  await EmailConfirmation(user, token);
-            var uriBuilder = new UriBuilder("http://localhost:4200/email-confirmation");
-            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-            query["token"] = codeHtmlVersion;
-            query["userId"] = user.Id;
-            uriBuilder.Query = query.ToString();
-            var urlString = uriBuilder.ToString();
-
-
-            //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, protocol: HttpContext.Request.Scheme);
-            await _emailRepository.SendConfirmationEmail(user, urlString);*/
 
             var result = await _userManager.CreateAsync(user, userCradential.Password);
 
@@ -106,6 +96,9 @@ namespace JobPortal.APIController
             }
 
         }
+
+
+        // POST: api/Accounts/confirmEmail
         [HttpPost("confirmEmail")]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmail model)
         {
@@ -122,29 +115,8 @@ namespace JobPortal.APIController
 
         }
 
-        public async Task<ActionResult> EmailConfirmation(ApplicationUser user, string token)
-        {
 
-            if (user != null && !user.EmailConfirmed)
-            {
-
-
-                // Construct the confirmation link URL
-                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, protocol: HttpContext.Request.Scheme);
-
-                // Send confirmation email
-                await _emailRepository.SendConfirmationEmail(user, callbackUrl);
-
-                // Redirect to a page informing the user to check their email for confirmation
-                return RedirectToAction("EmailConfirmationSent");
-            }
-
-
-            // Authentication failed, display appropriate message to the user
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-            return Ok();
-        }
-
+        // POST: api/Accounts/login
         [HttpPost("login")]
         public async Task<ActionResult<AuthenticationResponse>> Login([FromBody] UserCradential userCradential)
         {
@@ -162,48 +134,8 @@ namespace JobPortal.APIController
             }
         }
 
-
-      
-        /*  [Authorize] */
-        [HttpGet("currentUserRole/{email}")]
-        public async Task<IActionResult> currentUserRole(string email)
-        {
-            var user = await _userManager.FindByEmailAsync(email);
-
-            if (user == null)
-            {
-                return BadRequest("User not found");
-            }
-
-            var roles = await _userManager.GetRolesAsync(user);
-
-            if (roles == null || roles.Count == 0)
-            {
-                return BadRequest("User does not have any roles");
-            }
-
-            var role = await _roleManager.FindByNameAsync(roles[0]);
-
-            if (role == null)
-            {
-                return BadRequest("User's role not found");
-            }
-            var name = role.Name.ToJson();
-
-          return Ok(name);
-       //   return Ok("Company");
-
-
-        }
-       /* [Authorize]*/
-        [HttpGet("currentUser/{email}")]
-        public async Task<IdentityUser> FindUserByEmail(string email)
-        {
-            var user = await _userManager.FindByEmailAsync(email);
-           
-            return user;
-        }
-
+             
+        //Build Token 
         private async Task<AuthenticationResponse> BuilToken(UserCradential userCradential)
         {
             var user = await _appUserManager.FindUserByEmail(userCradential.Email);
@@ -213,10 +145,11 @@ namespace JobPortal.APIController
             var role = await _roleManager.FindByNameAsync(roles[0]);
             var  tokenRole = role.ToString();
 
+            // Token calims
             var claims = new List<Claim>() {
               new ("user",userCradential.Email),
               new ("email",userCradential.Email),
-              new("role",tokenRole),
+              new ("role",tokenRole),
 
             };
            
@@ -224,9 +157,13 @@ namespace JobPortal.APIController
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["keyjwt"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var expiration = DateTime.Now.AddDays(5);
+            //Token exp date
+            var expiration = DateTime.Now.AddDays(2);
+            
+            //create token
             var token = new JwtSecurityToken(issuer: null, audience: null, claims: claims, expires: expiration, signingCredentials: creds);
 
+            // return response as an AuthenticationResponse
             return new AuthenticationResponse()
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
@@ -242,7 +179,7 @@ namespace JobPortal.APIController
         }
 
 
-
+        // Create New User
         private ApplicationUser CreateUser()
         {
             try

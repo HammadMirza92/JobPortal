@@ -13,5 +13,6 @@ namespace JobPortal.Models
         public int? EndBudget { get; set; }
         public JobExperience? JobExperience { get; set; }
         public JobShift? JobShift { get; set; }
+        public JobClasses? JobClass { get; set; }
     }
 }

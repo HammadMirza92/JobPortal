@@ -15,6 +15,7 @@ namespace JobPortal.Services.Repository
             _context = context;
         }
        
+        // fetch Jobs In which Candidate applied
         public async Task<IEnumerable<AppliedJobs>> GetJobByCandidateId(Guid id)
         {
             var allAppliedJobsofCandidate = await _context.AppliedJobs.Where(x=> x.CandidateId == id)

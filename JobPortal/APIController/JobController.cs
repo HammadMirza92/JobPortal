@@ -17,86 +17,94 @@ namespace JobPortal.APIController
 {
     [Route("api/[controller]")]
     [ApiController]
-    /*[Authorize]*/
     public class JobController : ControllerBase
     {
         private readonly IJobRepository _jobRepository;
-        private readonly IJobClassRepository _jobClassRepository;
-        private readonly IAllJobsClassesRepository _alljJobsClassesRepository;
         private readonly IEmailRepository _emailRepository;
-        public JobController(IJobRepository jobRepository, IJobClassRepository jobClassRepository, IAllJobsClassesRepository alljJobsClassesRepository, IEmailRepository emailRepository)
+        public JobController(IJobRepository jobRepository , IEmailRepository emailRepository)
         {
             _jobRepository = jobRepository;
-            _jobClassRepository = jobClassRepository;
-            _alljJobsClassesRepository = alljJobsClassesRepository;
             _emailRepository = emailRepository;
 
         }
 
         // GET: api/Job
-
         [HttpGet]
+        [ResponseCache(Duration = 120)]
         public async Task<ActionResult<Job>> Get()
         {
             var jobs = await _jobRepository.GetAll();
             if (!jobs.Any())
             {
-                return BadRequest();
+                return BadRequest("No Job Found");
             }
             return Ok(jobs);
         }
 
+
         // GET: api/Job/getFeatureJobs
         [HttpGet("getFeatureJobs")]
+        [ResponseCache(Duration = 120)]
         public async Task<ActionResult<Job>> GetFeatureJobs()
         {
             var featureJobs = await _jobRepository.GetFeatureJobs();
             if (!featureJobs.Any())
             {
-                return BadRequest();
+                return BadRequest("No Feature Job Found");
             }
             return Ok(featureJobs);
         }
 
-        // GET: api/Job/getAll/{id}
+
+        // GET: api/Job/getAll/{id}   : id = candidateId
         [HttpGet("getAll/{id}")]
-        /*[ResponseCache(Duration = 120)]*/
         public async Task<ActionResult<Job>> GetAll(Guid id)
         {
             var jobs = await _jobRepository.GetAllJobs(id);
             if (!jobs.Any())
             {
-                return BadRequest();
+                return BadRequest("No Job Found For This Candidate");
             }
             return Ok(jobs);
         }
 
-        // GET: api/Job/getFeatureJobs/{id}
+
+        // GET: api/Job/getFeatureJobs/{id}   : id = candidateId
         [HttpGet("getFeatureJobs/{id}")]
         public async Task<ActionResult<Job>> GetFeatureJobs(Guid id)
         {
             var featureJobs = await _jobRepository.GetFeatureJobs( id);
             if (!featureJobs.Any())
             {
-                return BadRequest();
+                return BadRequest("No Feature Job Found For This Candidate");
             }
             return Ok(featureJobs);
         }
 
+
         // GET api/Job/5
         [HttpGet("{id}")]
-        public async Task<Job> Get(Guid id)
+        public async Task<ActionResult<Job>> Get(Guid id)
         {
-            var job = await _jobRepository.GetById(id);
-            return job;
+            var jobById = await _jobRepository.GetById(id);
+            if (jobById == null)
+            {
+                return BadRequest("No Job Found");
+            }
+            return Ok(jobById);
         }
+
 
         // GET api/Job/FetchJobApplied/{id}
         [HttpGet("FetchJobApplied/{id}")]
-        public async Task<IEnumerable<AppliedJobs>> FetchJobApplied(Guid id)
+        public async Task<ActionResult<AppliedJobs>> FetchJobApplied(Guid id)
         {
-            var job = await _jobRepository.FetchJobApplied(id);
-            return job;
+            var appliedJobs = await _jobRepository.FetchJobApplied(id);
+            if (!appliedJobs.Any())
+            {
+                return BadRequest("No AppliedJob Found");
+            }
+            return Ok(appliedJobs);
         }
 
         // POST api/Job/create
@@ -104,11 +112,12 @@ namespace JobPortal.APIController
         [Authorize(Roles = "employer")]
         public async Task<IActionResult> Create( Job job)
         {
-            var newJob = await _jobRepository.Add(job);
 
+            var newJob = await _jobRepository.Add(job);
             return Ok(newJob);
 
         }
+
 
         // POST api/Job/uploadImage
         [HttpPost("uploadImage")]
@@ -151,13 +160,20 @@ namespace JobPortal.APIController
         }
 
 
+        // POST api/Job/sendEmail
         [HttpPost("sendEmail")]
         public IActionResult SendEMail(SendEmail email)
         {
+            try
+            {
+                _emailRepository.SendEmail(email, null);
+            }
+            catch (Exception)
+            {
 
-            _emailRepository.SendEmail(email, null);
-
-
+                BadRequest("Email Not Sent");
+            }
+           
             return Ok();
 
         }
@@ -166,7 +182,10 @@ namespace JobPortal.APIController
         public async Task<IActionResult> SearchJobs(SearchJobs search)
         {
             var filterJobs = await _jobRepository.FilterJobs(search);
-
+            if (filterJobs == null)
+            {
+                return NotFound();
+            }
             return Ok(filterJobs);
         }
     }

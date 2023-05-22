@@ -28,11 +28,10 @@ namespace JobPortal.AppDbContext
         public DbSet<AppliedJobs> AppliedJobs { get; set; }
         public DbSet<SendEmail> SendEmail { get; set; }
         public DbSet<EmployerToCandidateEmail> EmployerToCandidateEmail { get; set; }
-        
+      
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var passwords = "password";
-
+           
             base.OnModelCreating(modelBuilder);
 
             DateTime currentDate = DateTime.Now;
@@ -44,7 +43,7 @@ namespace JobPortal.AppDbContext
             modelBuilder.Entity<Job>().HasData(new Job
             {
                 Id = Guid.Parse("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"),
-                Icon = "6300ce91-db26-4348-bb9a-ca606fe43caa.jpg",
+                Icon = "6300ce91-db26-4348-bb9a-ca606fe43caa-Job1.jpg",
                 Title = "Marketing Manager",
                 Description= "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
                 Responsibility = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
@@ -64,7 +63,7 @@ namespace JobPortal.AppDbContext
             new Job
             {
                 Id = Guid.Parse("eec67987-eb6a-4251-95aa-ede40e76332f"),
-                Icon = "7c8f5675-8ace-4998-bcfb-7058a5cd2a18.jpg",
+                Icon = "7c8f5675-8ace-4998-bcfb-7058a5cd2a18-Job2.jpg",
                 Title = "Software Engineer",
                 Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
                 Responsibility = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
@@ -85,7 +84,7 @@ namespace JobPortal.AppDbContext
             {
 
                 Id = Guid.Parse("4db3c416-6eae-4f01-bfd3-1ff3b45aea98"),
-                Icon = "1c38ec5e-04a1-42d9-bee5-a09864ec20d5.png",
+                Icon = "1c38ec5e-04a1-42d9-bee5-a09864ec20d5-Job3.png",
                 Title = "Product Designer",
                 Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
                 Responsibility = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
@@ -101,7 +100,28 @@ namespace JobPortal.AppDbContext
                 Vacancy = 50,
                 DeadLine = nextDate,
                 EmployerId = Guid.Parse("4ea1f880-57ef-4f0b-8a19-5aa356e93091"),
-            });
+            },
+             new Job
+             {
+
+                 Id = Guid.Parse("1a667533-5826-42f5-add4-15e8d930db45"),
+                 Icon = "81d7952a-fbd1-470d-bbbf-3f39c9ee0b60.jpg",
+                 Title = "MERN",
+                 Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
+                 Responsibility = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
+                 Location = Location.Multan,
+                 Type = JobType.Contract,
+                 Qualifications = Qualification.Bachelor,
+                 SalaryType = SalaryType.Hourly,
+                 JobExperience = JobExperience.Fouryears,
+                 StartBudget = 190,
+                 EndBudget = 340,
+                 JobShift = JobShift.Night,
+                 JobStatus = JobStatus.Open,
+                 Vacancy = 50,
+                 DeadLine = nextDate,
+                 EmployerId = Guid.Parse("4ea1f880-57ef-4f0b-8a19-5aa356e93091"),
+             });
 
             /*Roles*/
 
@@ -136,8 +156,8 @@ namespace JobPortal.AppDbContext
                 Email = "employer1@gmail.com",
                 NormalizedEmail = "EMPLOYER1@EMAIL.COM",
                 EmailConfirmed = true,
-                PasswordHash = passwords,
-                EmployerId= Guid.Parse("262ff2ba-d323-4916-b767-e9f1707ef7a2"),
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
+                EmployerId = Guid.Parse("262ff2ba-d323-4916-b767-e9f1707ef7a2"),
             },
             new ApplicationUser
             {
@@ -149,8 +169,8 @@ namespace JobPortal.AppDbContext
                 Email = "employer2@gmail.com",
                 NormalizedEmail = "EMPLOYER2@EMAIL.COM",
                 EmailConfirmed = true,
-                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, passwords),
-                EmployerId= Guid.Parse("680b65c6-46cf-48ac-88f7-29ab807b29d5"),
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
+                EmployerId = Guid.Parse("680b65c6-46cf-48ac-88f7-29ab807b29d5"),
             },
             new ApplicationUser
               {
@@ -162,8 +182,8 @@ namespace JobPortal.AppDbContext
                   Email = "employer3@gmail.com",
                   NormalizedEmail = "EMPLOYER3@EMAIL.COM",
                   EmailConfirmed = true,
-                  PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, passwords),
-                  EmployerId = Guid.Parse("4ea1f880-57ef-4f0b-8a19-5aa356e93091"),
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
+                EmployerId = Guid.Parse("4ea1f880-57ef-4f0b-8a19-5aa356e93091"),
             },
             new ApplicationUser
             {
@@ -175,7 +195,7 @@ namespace JobPortal.AppDbContext
                 Email = "candidate1@gmail.com",
                 NormalizedEmail = "CANDIDATE1@EMAIL.COM",
                 EmailConfirmed = true,
-                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, passwords),
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
                 CandidateId = Guid.Parse("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"),
             },
             new ApplicationUser
@@ -188,7 +208,7 @@ namespace JobPortal.AppDbContext
                 Email = "candidate2@gmail.com",
                 NormalizedEmail = "CANDIDATE2@EMAIL.COM",
                 EmailConfirmed = true,
-                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, passwords),
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
                 CandidateId = Guid.Parse("31bb5001-4266-4b90-992e-2a729b26d26b"),
             },
             new ApplicationUser
@@ -201,7 +221,7 @@ namespace JobPortal.AppDbContext
                 Email = "candidate3@gmail.com",
                 NormalizedEmail = "CANDIDATE3@EMAIL.COM",
                 EmailConfirmed = true,
-                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, passwords),
+                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "password"),
                 CandidateId = Guid.Parse("6209c878-b598-4939-bccf-909e58d12504"),
             });
 
