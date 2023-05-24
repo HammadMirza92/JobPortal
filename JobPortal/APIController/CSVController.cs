@@ -8,6 +8,7 @@ using NuGet.ContentModel;
 using NuGet.Protocol;
 using System.Globalization;
 using static IdentityServer4.Models.IdentityResources;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace JobPortal.APIController
 {
@@ -18,74 +19,40 @@ namespace JobPortal.APIController
     {
         private readonly IEmailRepository _emailRepository;
         private readonly IEmployerRepository _employerRepository;
+        private readonly ICandidateRepository _candidateRepository;
+        private readonly ICSVRepository _csvRepository;
+        private readonly IAppliedJobsRepository _appliedJobsRepository;
 
-        public CSVController(IEmailRepository emailRepository, IEmployerRepository employerRepository)
+        public CSVController(IEmailRepository emailRepository, IEmployerRepository employerRepository, ICandidateRepository candidateRepository, ICSVRepository csvRepository, IAppliedJobsRepository appliedJobsRepository)
         {
             _emailRepository = emailRepository;
             _employerRepository = employerRepository;
-
+            _candidateRepository = candidateRepository;
+            _csvRepository = csvRepository;
+            _appliedJobsRepository = appliedJobsRepository;
         }
-        // GET: api/CSV/jobOfferedCSV
+
+        // POST: api/CSV/jobOfferedCSV
         [HttpPost("jobOfferedCSV")]
         public async Task<ActionResult> JobOfferedCSV(List<Job> job)
         {
             var employerId = job.FirstOrDefault().EmployerId;
             var employer = await _employerRepository.GetById(employerId);
-            using StringWriter stringWriter = new StringWriter();
-            using CsvWriter csvWriter = new CsvWriter(stringWriter, CultureInfo.InvariantCulture);
-            csvWriter.WriteField("Job Title");
-            csvWriter.WriteField("Job Description");
-            csvWriter.WriteField("Job Responsibility");
-            csvWriter.WriteField("Job Location");
-            csvWriter.WriteField("Job Type");
-            csvWriter.WriteField("Job Qualification");
-            csvWriter.WriteField("Job SalarayType");
-            csvWriter.WriteField("Job Start Budget");
-            csvWriter.WriteField("Job End Budget");
-            csvWriter.WriteField("Job Experience");
-            csvWriter.WriteField("Job Shift");
-            csvWriter.WriteField("Job Status");
-            csvWriter.WriteField("Job DeadLine");
-            csvWriter.WriteField("Job Posted Date");
-            csvWriter.WriteField("Job Vacancy");
-            csvWriter.WriteField("Job End Budget");
-            csvWriter.NextRecord();
 
-            foreach (var item in job)
-            {
-                csvWriter.WriteField(item.Title);
-                csvWriter.WriteField(item.Description);
-                csvWriter.WriteField(item.Responsibility);
-                csvWriter.WriteField(item.Location);
-                csvWriter.WriteField(item.Type);
-                csvWriter.WriteField(item.Qualifications);
-                csvWriter.WriteField(item.Type);
-                csvWriter.WriteField(item.StartBudget);
-                csvWriter.WriteField(item.EndBudget);
-                csvWriter.WriteField(item.JobExperience);
-                csvWriter.WriteField(item.JobShift);
-                csvWriter.WriteField(item.JobStatus);
-                csvWriter.WriteField(item.DeadLine);
-                csvWriter.WriteField(item.JobPosted);
-                csvWriter.WriteField(item.Vacancy);
-                csvWriter.WriteField(item.EndBudget);
-    
+            var filePath = await _csvRepository.JobsCSV(job);
 
-                csvWriter.NextRecord(); // Move to the next line
-            }
-            string csvData = stringWriter.ToString();
-            Guid csvId = Guid.NewGuid();
-            string filePath = "D:\\JobPortal\\src\\assets\\Images\\CSV\\" + csvId+ ".csv";
+            //Get html template
+            string htmlTemplate = System.IO.File.ReadAllText("C:\\Users\\Hammad\\source\\repos\\JobPortal\\JobPortal\\EmailTemplate\\JobOfferedCSVTemplate.html");
 
-            System.IO.File.WriteAllText(filePath, csvData);
+            // add data into html template
+            htmlTemplate = htmlTemplate.Replace("{candidateName}", employer.CompanyName);
+                  
 
-            var body = "<h1>CSV File</h1> here is the csv file ";
             SendEmail email = new SendEmail()
             {
-                 To = employer.CompanyEmail,
-                //To = "hammad.hassan@purelogics.com",
-                Subject = "CSV",
-                Body = body
+                To = employer.CompanyEmail,
+                Subject = "CSV of Jobs",
+                Body = htmlTemplate
             };
 
             await _emailRepository.SendEmail(email, filePath);
@@ -93,6 +60,89 @@ namespace JobPortal.APIController
             return Ok();
         }
 
-       
+        // GET: api/CSV/allCandidateCSV
+        [HttpGet("allCandidateCSV")]
+        public async Task<ActionResult> AllCandidateCSV()
+        {
+            var candidates = await _candidateRepository.GetAll();
+            
+            var filePath = await _csvRepository.CandidateCSV(candidates);
+            
+           
+
+            //Get html template
+            string htmlTemplate = System.IO.File.ReadAllText("C:\\Users\\Hammad\\source\\repos\\JobPortal\\JobPortal\\EmailTemplate\\AllCandidatesCSVTemplate.html");
+
+            // add data into html template
+           // htmlTemplate = htmlTemplate.Replace("{candidateName}", employer.CompanyName);
+
+
+            SendEmail email = new SendEmail()
+            {
+                To = "hammad.hassan@purelogics.com",
+                Subject = "All Candidates CSV",
+                Body = htmlTemplate
+            };
+
+            await _emailRepository.SendEmail(email, filePath);
+
+            return Ok();
+        }
+
+        // GET: api/CSV/allEmployerCSV
+        [HttpGet("allEmployerCSV")]
+        public async Task<ActionResult> AllEmployerCSV()
+        {
+            var allEmployer = await _employerRepository.GetAll();
+
+            var filePath = await _csvRepository.EmployerCSV(allEmployer);
+
+
+
+            //Get html template
+            string htmlTemplate = System.IO.File.ReadAllText("C:\\Users\\Hammad\\source\\repos\\JobPortal\\JobPortal\\EmailTemplate\\AllEmployerCSVTemplate.html");
+
+            // add data into html template
+            // htmlTemplate = htmlTemplate.Replace("{candidateName}", employer.CompanyName);
+
+
+            SendEmail email = new SendEmail()
+            {
+                To = "hammad.hassan@purelogics.com",
+                Subject = "All Employer CSV",
+                Body = htmlTemplate
+            };
+
+            await _emailRepository.SendEmail(email, filePath);
+
+            return Ok();
+        }
+
+        // GET: api/CSV/allAppliedJobsCSV
+        [HttpGet("allAppliedJobsCSV")]
+        public async Task<ActionResult> AllAppliedJobsCSV()
+        {
+            var allAppliedJobs = await _appliedJobsRepository.GetAll();
+
+            var filePath = await _csvRepository.AppliedJobsCSV(allAppliedJobs);
+
+            //Get html template
+            string htmlTemplate = System.IO.File.ReadAllText("C:\\Users\\Hammad\\source\\repos\\JobPortal\\JobPortal\\EmailTemplate\\AllAppliedJobsCSVTemplate.html");
+
+            // add data into html template
+            // htmlTemplate = htmlTemplate.Replace("{candidateName}", employer.CompanyName);
+
+            SendEmail email = new SendEmail()
+            {
+                To = "hammad.hassan@purelogics.com",
+                Subject = "All Applied Jobs CSV",
+                Body = htmlTemplate
+            };
+
+            await _emailRepository.SendEmail(email, filePath);
+
+            return Ok();
+        }
+
     }
 }

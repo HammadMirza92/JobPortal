@@ -60,6 +60,7 @@ builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository
 builder.Services.AddScoped<IAppliedJobsRepository, AppliedJobsRepository>();
 builder.Services.AddScoped<IEmailRepository, EmailRepository>();
 builder.Services.AddScoped<IEmployerToCandidateEmailRepository, EmployerToCandidateEmailRepository>();
+builder.Services.AddScoped<ICSVRepository, CSVRepository>();
 
 builder.Services.AddCors(opt =>
 {
@@ -69,6 +70,8 @@ builder.Services.AddCors(opt =>
 
 
 var app = builder.Build();
+
+DataSeeding.Initialize(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

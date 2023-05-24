@@ -6,6 +6,7 @@ namespace JobPortal.Services.IRepository
 {
     public interface IJobRepository : IBaseRepository<Job>
     {
+        Task<IEnumerable<Job>> GetAllJobs();
         Task<IEnumerable<Job>> GetFeatureJobs(Guid id);
         Task<IEnumerable<Job>> GetFeatureJobs();
         Task<IEnumerable<Job>> GetAllJobs(Guid id);

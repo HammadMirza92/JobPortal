@@ -30,7 +30,7 @@ namespace JobPortal.APIController
 
         // GET: api/Job
         [HttpGet]
-        [ResponseCache(Duration = 120)]
+        /*[ResponseCache(Duration = 120)]*/
         public async Task<ActionResult<Job>> Get()
         {
             var jobs = await _jobRepository.GetAll();
@@ -41,6 +41,18 @@ namespace JobPortal.APIController
             return Ok(jobs);
         }
 
+        // GET: api/Job/getAll
+        [HttpGet("getAll")]
+        [ResponseCache(Duration = 120)]
+        public async Task<ActionResult<Job>> GetAllJobs()
+        {
+            var jobs = await _jobRepository.GetAllJobs();
+            if (!jobs.Any())
+            {
+                return BadRequest("No Job Found");
+            }
+            return Ok(jobs);
+        }
 
         // GET: api/Job/getFeatureJobs
         [HttpGet("getFeatureJobs")]

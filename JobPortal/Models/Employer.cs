@@ -18,9 +18,7 @@ namespace JobPortal.Models
         public int CompanySize { get; set; }
         public ICollection<Job>? JobOffered { get; set; }
         public string UserId { get; set; }
-        /*public string UserId { get; set; }
-        [ForeignKey(nameof(UserId))]
-        public ApplicationUser User { get; set; }*/
+        
 
     }
 }

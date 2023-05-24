@@ -434,29 +434,9 @@ namespace JobPortal.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1d8bbcb9-6d72-4776-b97a-54dd330775ca", "2f677cc3-7463-4955-a214-27505b924030", "admin", "ADMIN" },
-                    { "7023e28f-c1dc-42cd-ad76-858802f45979", "dafa0f7c-71da-4712-96b9-6273699e2f50", "candidate", "CANDIDATE" },
-                    { "b189a208-8a38-42c5-9922-5dcb918e85c9", "efe60ad1-3511-42b1-a605-ca34c6fffb1e", "employer", "EMPLOYER" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Candidate",
-                columns: new[] { "Id", "AboutMe", "Age", "CurrentCompany", "Email", "ExpectedSalary", "Experience", "ExperienceTime", "IsDeleted", "Location", "Name", "Phone", "ProfileImg", "Qualification", "UserId" },
-                values: new object[,]
-                {
-                    { new Guid("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"), "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;", 23, "Fresh Graduate", "hammadcandidate@gmail.com", 300, ".Net Developer", 5, false, 0, "Hammad Mirza", 3000000.0, "edc73289-42ac-4c32-927a-b252fb2b1da9.jpg", 0, "995ce588-b342-47b8-88f7-349365f898f9" },
-                    { new Guid("31bb5001-4266-4b90-992e-2a729b26d26b"), "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;", 23, "Fresh Graduate", "ahteshamcandidate@gmail.com", 400, "Php Laravel", 6, false, 0, "Ahtesham", 3000000.0, "edc73289-42ac-4c32-927a-b252fb2b1da9.jpg", 0, "cc53dc1c-a0d0-49a3-8f31-06b320fe22a9" },
-                    { new Guid("6209c878-b598-4939-bccf-909e58d12504"), "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines;", 23, "Fresh Graduate", "sohaibCandidate@gmail.com", 500, "React Designer", 8, false, 1, "Sohaib", 3000000.0, "edc73289-42ac-4c32-927a-b252fb2b1da9.jpg", 1, "4e9e311a-0926-423c-b136-eab5ba39998a" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Employer",
-                columns: new[] { "Id", "CompanyAbout", "CompanyEmail", "CompanyLogo", "CompanyName", "CompanySize", "CompanyWebsite", "Founded", "Headquarters", "Industry", "IsDeleted", "UserId" },
-                values: new object[,]
-                {
-                    { new Guid("262ff2ba-d323-4916-b767-e9f1707ef7a2"), "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.", "digitalflies@gmail.com", "f2bfaf5c-b8aa-47c5-915c-f9719ec5a1a7.jpg", "Digital Flies", 200, "https://jobs.nokriwp.com/", new DateTime(2023, 5, 22, 11, 31, 16, 571, DateTimeKind.Utc).AddTicks(6146), "Las Vegas, NV 89107, USA", "It", false, "2fe7daaa-bb2f-43a6-915b-083816e43b87" },
-                    { new Guid("4ea1f880-57ef-4f0b-8a19-5aa356e93091"), "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.", "loremipusm@gmail.com", "3e931480-2756-49e3-a8f0-66f8a7a05037.jpg", "Lorem Ipsum", 600, "https://jobs.nokriwp.com/", new DateTime(2023, 5, 22, 11, 31, 16, 571, DateTimeKind.Utc).AddTicks(6159), "Islamabad", "Machenical", false, "06e4bc68-0d75-429c-b513-e12c2ab03494" },
-                    { new Guid("680b65c6-46cf-48ac-88f7-29ab807b29d5"), "Are you a User Experience Designer with a track record of delivering intuitive digital experiences that drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart, world-class campaigns across a variety of mediums?\r\n\r\nDeloitte's Green Dot Agency is looking to add a Lead User Experience Designer to our experience design team. We want a passionate creative who's inspired by new trends and emerging technologies, and is able to integrate them into memorable user experiences. A problem solver who is entrepreneurial, collaborative, hungry, and humble; can deliver beautifully designed, leading-edge experiences under tight deadlines; and who has demonstrated proven expertise.", "seasons@gmail.com", "79d9cea3-0e9a-4555-b971-58e672f76341.jpg", "Seasons", 50, "https://jobs.nokriwp.com/", new DateTime(2023, 5, 22, 11, 31, 16, 571, DateTimeKind.Utc).AddTicks(6153), "Lahore", "It", false, "088fffd7-94b4-448e-9b67-5619fcf19441" }
+                    { "1d8bbcb9-6d72-4776-b97a-54dd330775ca", "3c9a719b-d296-4bbc-89af-54efcf22f2ea", "admin", "ADMIN" },
+                    { "7023e28f-c1dc-42cd-ad76-858802f45979", "1a5fd604-2d09-4ac2-943a-299342c1fbdb", "candidate", "CANDIDATE" },
+                    { "b189a208-8a38-42c5-9922-5dcb918e85c9", "953061d5-41ae-4233-8297-c7525e562115", "employer", "EMPLOYER" }
                 });
 
             migrationBuilder.InsertData(
@@ -484,83 +464,6 @@ namespace JobPortal.Migrations
                     { new Guid("bae33518-8dc8-4d53-80ca-e8f58a9fd808"), false, "JS" },
                     { new Guid("e4599076-fa12-4fe9-a8e4-35130d73729e"), false, "MERN Stack" },
                     { new Guid("f235f414-fc41-4acb-a1ee-1fd79aea7eae"), false, "Management" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "CandidateId", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "EmployerId", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[,]
-                {
-                    { "06e4bc68-0d75-429c-b513-e12c2ab03494", 0, null, "04e4000e-5ca5-483a-82e4-24041a01687d", "ApplicationUser", "employer3@gmail.com", true, new Guid("4ea1f880-57ef-4f0b-8a19-5aa356e93091"), "Employer 3", "Third Employer", false, null, "EMPLOYER3@EMAIL.COM", "EMPLOYER3@EMAIL.COM", "AQAAAAEAACcQAAAAEOVzTJGEO0RvvdNi00RZ9yUlVo+bxONDGMca6Y6TSer0d09GwS0no++wmDEy1cngiw==", null, false, "8442dea0-c5bc-4963-b91e-fa2607d6aebc", false, "employer3@gmail.com" },
-                    { "088fffd7-94b4-448e-9b67-5619fcf19441", 0, null, "9693f7b5-668b-4a4e-a622-b0ca81418019", "ApplicationUser", "employer2@gmail.com", true, new Guid("680b65c6-46cf-48ac-88f7-29ab807b29d5"), "Employer 2", "Second Employer", false, null, "EMPLOYER2@EMAIL.COM", "EMPLOYER2@EMAIL.COM", "AQAAAAEAACcQAAAAEOVzTJGEO0RvvdNi00RZ9yUlVo+bxONDGMca6Y6TSer0d09GwS0no++wmDEy1cngiw==", null, false, "72973518-ece1-4f2e-be31-81efa448634d", false, "employer2@gmail.com" },
-                    { "2fe7daaa-bb2f-43a6-915b-083816e43b87", 0, null, "6045d44d-c7c4-4c1e-8c7f-81aa58f69237", "ApplicationUser", "employer1@gmail.com", true, new Guid("262ff2ba-d323-4916-b767-e9f1707ef7a2"), "Employer 1", "first Employer", false, null, "EMPLOYER1@EMAIL.COM", "EMPLOYER1@EMAIL.COM", "AQAAAAEAACcQAAAAEOVzTJGEO0RvvdNi00RZ9yUlVo+bxONDGMca6Y6TSer0d09GwS0no++wmDEy1cngiw==", null, false, "81a0e3ee-9dcf-43dd-a3d1-e2699e3b29c0", false, "employer1@gmail.com" },
-                    { "4e9e311a-0926-423c-b136-eab5ba39998a", 0, new Guid("6209c878-b598-4939-bccf-909e58d12504"), "ca39b5b8-20b7-4add-9ba6-ff177bbfa3f9", "ApplicationUser", "candidate3@gmail.com", true, null, "Candidate 3", "third Candidate", false, null, "CANDIDATE3@EMAIL.COM", "CANDIDATE3@EMAIL.COM", "AQAAAAEAACcQAAAAEOVzTJGEO0RvvdNi00RZ9yUlVo+bxONDGMca6Y6TSer0d09GwS0no++wmDEy1cngiw==", null, false, "c301136a-1fe4-4696-b06e-b86d4554fc0f", false, "candidate3@gmail.com" },
-                    { "995ce588-b342-47b8-88f7-349365f898f9", 0, new Guid("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"), "18e66776-b559-46d2-91be-ca1812008085", "ApplicationUser", "candidate1@gmail.com", true, null, "Candidate 1", "First CAndidate", false, null, "CANDIDATE1@EMAIL.COM", "CANDIDATE1@EMAIL.COM", "AQAAAAEAACcQAAAAEOVzTJGEO0RvvdNi00RZ9yUlVo+bxONDGMca6Y6TSer0d09GwS0no++wmDEy1cngiw==", null, false, "ba8a896a-2f10-4cff-84ca-823c2ed5e5cf", false, "candidate@gmail.com" },
-                    { "cc53dc1c-a0d0-49a3-8f31-06b320fe22a9", 0, new Guid("31bb5001-4266-4b90-992e-2a729b26d26b"), "4578ffbd-b1b6-4c95-b874-6a71245a6218", "ApplicationUser", "candidate2@gmail.com", true, null, "Candidate 2", "Second Candidate", false, null, "CANDIDATE2@EMAIL.COM", "CANDIDATE2@EMAIL.COM", "AQAAAAEAACcQAAAAEOVzTJGEO0RvvdNi00RZ9yUlVo+bxONDGMca6Y6TSer0d09GwS0no++wmDEy1cngiw==", null, false, "56e25fa9-0f7a-440b-94f1-561c054de4df", false, "candidate2@gmail.com" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "CandidateSkills",
-                columns: new[] { "Id", "CandidateId", "IsDeleted", "SkillId" },
-                values: new object[,]
-                {
-                    { new Guid("037bb42e-67a5-4105-bb3c-539bb8d8a906"), new Guid("6209c878-b598-4939-bccf-909e58d12504"), false, new Guid("2dd27837-b570-4c81-8bfc-bf8cad8323b6") },
-                    { new Guid("232c30ea-e8f6-446a-9af1-a2a20cc1c422"), new Guid("31bb5001-4266-4b90-992e-2a729b26d26b"), false, new Guid("aafbde46-32ee-45bd-b52a-a76a1ac12a78") },
-                    { new Guid("26ae6b7d-0ac2-461a-9a11-42f965a2d977"), new Guid("6209c878-b598-4939-bccf-909e58d12504"), false, new Guid("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d") },
-                    { new Guid("2aa2ed81-38c6-47a3-bfd0-90c031f340df"), new Guid("6209c878-b598-4939-bccf-909e58d12504"), false, new Guid("83c89321-daf9-4ade-b229-d57615a32f10") },
-                    { new Guid("4cf506e5-818e-4f35-ac3c-000f3e87a604"), new Guid("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"), false, new Guid("010039fb-a687-4db5-8ada-3b586d3a4788") },
-                    { new Guid("66b6ad12-bce1-4928-a59d-de02192a7c10"), new Guid("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"), false, new Guid("9a126650-2936-442e-92ba-7d7dc32ff6f9") },
-                    { new Guid("af2e3fb6-a3b7-4e1a-83e4-5ee05dde72d7"), new Guid("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"), false, new Guid("b749f4b8-3bc3-4a05-816b-56e0d12dfaaa") }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Jobs",
-                columns: new[] { "Id", "DeadLine", "Description", "EmployerId", "EndBudget", "Icon", "IsDeleted", "JobExperience", "JobPosted", "JobShift", "JobStatus", "Location", "Qualifications", "Responsibility", "SalaryType", "StartBudget", "Title", "Type", "Vacancy" },
-                values: new object[,]
-                {
-                    { new Guid("1a667533-5826-42f5-add4-15e8d930db45"), new DateTime(2023, 5, 27, 16, 31, 16, 571, DateTimeKind.Local).AddTicks(5199), "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.", new Guid("4ea1f880-57ef-4f0b-8a19-5aa356e93091"), 340.0, "81d7952a-fbd1-470d-bbbf-3f39c9ee0b60.jpg", false, 4, new DateTime(2023, 5, 22, 16, 31, 16, 571, DateTimeKind.Local).AddTicks(5368), 2, 0, 3, 0, "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", 2, 190.0, "MERN", 2, 50 },
-                    { new Guid("4db3c416-6eae-4f01-bfd3-1ff3b45aea98"), new DateTime(2023, 5, 27, 16, 31, 16, 571, DateTimeKind.Local).AddTicks(5199), "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.", new Guid("4ea1f880-57ef-4f0b-8a19-5aa356e93091"), 340.0, "1c38ec5e-04a1-42d9-bee5-a09864ec20d5-Job3.png", false, 3, new DateTime(2023, 5, 22, 16, 31, 16, 571, DateTimeKind.Local).AddTicks(5360), 2, 0, 0, 1, "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", 0, 190.0, "Product Designer", 5, 50 },
-                    { new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"), new DateTime(2023, 5, 27, 16, 31, 16, 571, DateTimeKind.Local).AddTicks(5199), "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.", new Guid("262ff2ba-d323-4916-b767-e9f1707ef7a2"), 456.0, "6300ce91-db26-4348-bb9a-ca606fe43caa-Job1.jpg", false, 1, new DateTime(2023, 5, 22, 16, 31, 16, 571, DateTimeKind.Local).AddTicks(5315), 0, 0, 0, 0, "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", 0, 123.0, "Marketing Manager", 0, 20 },
-                    { new Guid("eec67987-eb6a-4251-95aa-ede40e76332f"), new DateTime(2023, 5, 27, 16, 31, 16, 571, DateTimeKind.Local).AddTicks(5199), "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.", new Guid("680b65c6-46cf-48ac-88f7-29ab807b29d5"), 777.0, "7c8f5675-8ace-4998-bcfb-7058a5cd2a18-Job2.jpg", false, 6, new DateTime(2023, 5, 22, 16, 31, 16, 571, DateTimeKind.Local).AddTicks(5351), 0, 0, 2, 0, "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor", 0, 334.0, "Software Engineer", 0, 5 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AllJobsClasses",
-                columns: new[] { "Id", "IsDeleted", "JobClassId", "JobId" },
-                values: new object[,]
-                {
-                    { new Guid("02d42141-3627-48e2-a9ee-4142f85ca4e5"), false, new Guid("930c379d-d9e6-4a48-82b0-4f586d6aafc8"), new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e") },
-                    { new Guid("0d84a83a-3460-41e1-a942-49dd6d0411bd"), false, new Guid("63acd142-d323-42c5-a453-1b67f40fd073"), new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e") },
-                    { new Guid("63c2a7a6-8ebb-4bc9-ac98-8465abbb9994"), false, new Guid("642a9e91-5c4a-4284-aa0f-69e39a93ea6d"), new Guid("eec67987-eb6a-4251-95aa-ede40e76332f") },
-                    { new Guid("6c931ccd-e4db-4671-a7b9-b5be4b1b69ca"), false, new Guid("930c379d-d9e6-4a48-82b0-4f586d6aafc8"), new Guid("4db3c416-6eae-4f01-bfd3-1ff3b45aea98") },
-                    { new Guid("a4b97db1-2aff-49a7-be60-c59867fd74d7"), false, new Guid("63acd142-d323-42c5-a453-1b67f40fd073"), new Guid("eec67987-eb6a-4251-95aa-ede40e76332f") },
-                    { new Guid("e2865ba0-ee6c-43d8-a61e-4b9df0f1d386"), false, new Guid("642a9e91-5c4a-4284-aa0f-69e39a93ea6d"), new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e") }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "RoleId", "UserId" },
-                values: new object[,]
-                {
-                    { "b189a208-8a38-42c5-9922-5dcb918e85c9", "06e4bc68-0d75-429c-b513-e12c2ab03494" },
-                    { "b189a208-8a38-42c5-9922-5dcb918e85c9", "088fffd7-94b4-448e-9b67-5619fcf19441" },
-                    { "b189a208-8a38-42c5-9922-5dcb918e85c9", "2fe7daaa-bb2f-43a6-915b-083816e43b87" },
-                    { "7023e28f-c1dc-42cd-ad76-858802f45979", "4e9e311a-0926-423c-b136-eab5ba39998a" },
-                    { "7023e28f-c1dc-42cd-ad76-858802f45979", "995ce588-b342-47b8-88f7-349365f898f9" },
-                    { "7023e28f-c1dc-42cd-ad76-858802f45979", "cc53dc1c-a0d0-49a3-8f31-06b320fe22a9" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "JobSkills",
-                columns: new[] { "Id", "IsDeleted", "JobId", "SkillId" },
-                values: new object[,]
-                {
-                    { new Guid("037bb42e-67a5-4105-bb3c-539bb8d8a906"), false, new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"), new Guid("aafbde46-32ee-45bd-b52a-a76a1ac12a78") },
-                    { new Guid("272eaf21-8b37-4562-b440-96b4befe752f"), false, new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"), new Guid("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d") },
-                    { new Guid("340a0320-8302-4860-999f-3a256a785a20"), false, new Guid("eec67987-eb6a-4251-95aa-ede40e76332f"), new Guid("010039fb-a687-4db5-8ada-3b586d3a4788") },
-                    { new Guid("ca58283f-d5f4-4eb0-92e3-6873e6821129"), false, new Guid("eec67987-eb6a-4251-95aa-ede40e76332f"), new Guid("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d") },
-                    { new Guid("f0f7f73e-aad5-416a-af2f-0153f313ae05"), false, new Guid("4db3c416-6eae-4f01-bfd3-1ff3b45aea98"), new Guid("010039fb-a687-4db5-8ada-3b586d3a4788") },
-                    { new Guid("fad6993c-c654-4c17-9078-174818d7236f"), false, new Guid("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"), new Guid("bae33518-8dc8-4d53-80ca-e8f58a9fd808") }
                 });
 
             migrationBuilder.CreateIndex(

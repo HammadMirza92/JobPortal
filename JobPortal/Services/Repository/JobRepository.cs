@@ -18,13 +18,20 @@ namespace JobPortal.Services.Repository
         }
 
         // Get Regular Jobs for Normal Users
-        public override async Task<IEnumerable<Job>> GetAll()
+        public async Task<IEnumerable<Job>> GetAllJobs()
         {
-            var allJobs = await _context.Jobs.Where(d => d.IsDeleted == false).Where(j => !j.AllJobsClasses.Any(jc => jc.JobClass.name == JobClasses.Feature || jc.JobClass.name == JobClasses.Private || jc.JobClass.name == JobClasses.Urgent)).Where(de => de.DeadLine >= DateTime.Now)
-               .Include(x => x.JobSkills)
-               .Include(c => c.AllJobsClasses)
-               .ThenInclude(jc => jc.JobClass)
-               .ToListAsync();
+            var allJobs = await _context.Jobs
+                .Where(d => !d.IsDeleted &&
+                            (!d.AllJobsClasses.Any(jc =>
+                                jc.JobClass.name == JobClasses.Feature ||
+                                jc.JobClass.name == JobClasses.Private ||
+                                jc.JobClass.name == JobClasses.Urgent)) &&
+                            d.DeadLine >= DateTime.Now)
+                .Include(x => x.JobSkills)
+                .Include(c => c.AllJobsClasses)
+                .ThenInclude(jc => jc.JobClass)
+                .Include(e=> e.Employer)           
+                .ToListAsync();
 
             return allJobs;
         }
@@ -36,6 +43,7 @@ namespace JobPortal.Services.Repository
                 .Include(x => x.JobSkills)
                 .Include(c => c.AllJobsClasses)
                 .ThenInclude(jc => jc.JobClass)
+                .Include(e => e.Employer)
                 .ToListAsync();
 
             return allFeatureJobs;
@@ -48,6 +56,7 @@ namespace JobPortal.Services.Repository
                .Include(x => x.JobSkills)
                .Include(c => c.AllJobsClasses)
                .ThenInclude(jc => jc.JobClass)
+               .Include(e => e.Employer)
                .ToListAsync();
 
             return allJobs;
@@ -60,6 +69,7 @@ namespace JobPortal.Services.Repository
                 .Include(x => x.JobSkills)
                 .Include(c => c.AllJobsClasses)
                 .ThenInclude(jc => jc.JobClass)
+                .Include(e => e.Employer)
                 .ToListAsync();
 
             return allFeatureJobs;
@@ -89,7 +99,7 @@ namespace JobPortal.Services.Repository
         // Filter Job on the basis of Title, Location, Type, Qualification, SalaryType, StartBudget, EndBudget, JobExperience, JobShift, JobClass
         public async Task<IEnumerable<Job>> FilterJobs(SearchJobs searchJobs)
         {
-            var result = await _context.Jobs.Include(jc => jc.AllJobsClasses).ThenInclude(x => x.JobClass)
+            var result = await _context.Jobs.Include(jc => jc.AllJobsClasses).ThenInclude(x => x.JobClass).Include(e=> e.Employer)
                 .Where(x =>
                 (string.IsNullOrEmpty(searchJobs.Title) || x.Title.Contains(searchJobs.Title)) &&
                 (searchJobs.Location == null || x.Location == searchJobs.Location) &&

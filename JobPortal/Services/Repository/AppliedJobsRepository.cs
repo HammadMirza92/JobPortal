@@ -14,7 +14,17 @@ namespace JobPortal.Services.Repository
         {
             _context = context;
         }
-       
+
+        public override async Task<IEnumerable<AppliedJobs>> GetAll()
+        {
+            var allAppliedJobs = await _context.AppliedJobs
+                .Where(d => !d.IsDeleted)
+                .Include(x => x.Job).ThenInclude(emp=> emp.Employer)
+                .Include(c => c.Candidate)
+                .ToListAsync();
+
+            return allAppliedJobs;
+        }
         // fetch Jobs In which Candidate applied
         public async Task<IEnumerable<AppliedJobs>> GetJobByCandidateId(Guid id)
         {

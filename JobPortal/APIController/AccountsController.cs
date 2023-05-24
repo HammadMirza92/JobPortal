@@ -53,12 +53,18 @@ namespace JobPortal.APIController
         [HttpPost("createEmployer")]
         public async Task<ActionResult<AuthenticationResponse>> CreateEmployer([FromBody] UserCradential userCradential)
         {
-            var user = CreateUser();
+           // var user = CreateUser();
 
-            await _userStore.SetUserNameAsync(user, userCradential.Email, CancellationToken.None);
-            await _emailStore.SetEmailAsync(user, userCradential.Email, CancellationToken.None);
+           // await _userStore.SetUserNameAsync(user, userCradential.Email, CancellationToken.None);
+           // await _emailStore.SetEmailAsync(user, userCradential.Email, CancellationToken.None);
 
-           
+            var user = new ApplicationUser
+            {
+                UserName = userCradential.Email,
+                Email = userCradential.Email
+            };
+
+
             var result = await _userManager.CreateAsync(user, userCradential.Password);
           
             if( result.Succeeded)
@@ -78,10 +84,16 @@ namespace JobPortal.APIController
         [HttpPost("createCandidate")]
         public async Task<ActionResult<AuthenticationResponse>> CreateCandidate([FromBody] UserCradential userCradential)
         {
-            var user = CreateUser();
+            /*var user = CreateUser();
 
             await _userStore.SetUserNameAsync(user, userCradential.Email, CancellationToken.None);
             await _emailStore.SetEmailAsync(user, userCradential.Email, CancellationToken.None);
+*/
+            var user = new ApplicationUser
+            {
+                UserName = userCradential.Email,
+                Email = userCradential.Email
+            };
 
             var result = await _userManager.CreateAsync(user, userCradential.Password);
 

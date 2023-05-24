@@ -11,7 +11,7 @@ namespace JobPortal.APIController
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "candidate")]
+    
     public class AppliedJobsController : ControllerBase
     {
         private readonly IAppliedJobsRepository _appliedJobsRepository;
@@ -27,6 +27,19 @@ namespace JobPortal.APIController
             _jobRepository = jobRepository;
             _candidateRepository = candidateRepository;
         }
+
+        // GET: api/AppliedJobs
+        [HttpGet]
+        public async Task<ActionResult<AppliedJobs>> GetAll()
+        {
+            var allAppliedJobs = await _appliedJobsRepository.GetAll();
+            if (!allAppliedJobs.Any())
+            {
+                return BadRequest();
+            }
+            return Ok(allAppliedJobs);
+        }
+
 
         // GET: api/AppliedJobs/GetJobsofCandidate/{id}
         [HttpGet("GetJobsofCandidate/{id}")]
@@ -52,6 +65,7 @@ namespace JobPortal.APIController
 
         // POST api/AppliedJobs
         [HttpPost("create")]
+        [Authorize(Roles = "candidate")]
         public async Task<AppliedJobs> Create(AppliedJobs appliedJob)
         {
 
@@ -70,23 +84,6 @@ namespace JobPortal.APIController
             htmlTemplate = htmlTemplate.Replace("{candidatePhone}", candidate.Phone.ToString());
             htmlTemplate = htmlTemplate.Replace("{candidateId}", candidate.Id.ToString());
 
-
-           /* var body = "<div style=\"background-color: white;padding: 20px; box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.148);border:1px solid gray;width: 50%;font-family:Arial, Helvetica, sans-serif;margin:0 auto \">" +
-            "  <h1>Congratulations!</h1>" +
-               " <strong>Dear " + employer.CompanyName + ",</strong>" +
-               " <p>We are pleased to inform you that a candidate " + candidate.Name + " has applied for the " + job.Title + " job position at your company. " +
-               "Congratulations on receiving this application!</p> <p>The candidate's details are as follows:</p>" +
-               " <ul> " +
-               "    <li>Name: " + candidate.Name + " </li>" +
-               "    <li>Email: " + candidate.Email + "</li>" +
-               "    <li>Phone: " + candidate.Phone + "</li>" +
-               "    <li>Candidate Profile Link : http://localhost:4200/candidate/candidate-detail/"+ candidate.Id +" </li>" +
-               "  </ul>" +
-               "  <p>Please review the candidate's application and consider them for the position. If you have any further questions or require additional information, you can reach out to the candidate directly using the provided contact details.</p>" +
-               "  <p>Thank you for your time and consideration. We wish you the best in finding the right candidate for your job opening.</p>" +
-               "  <p>Best regards,</p>" +
-               "  <p>GetToJob</p>" +
-               "</div>";*/
             SendEmail email = new SendEmail()
             {
                 To = employer.CompanyEmail,
