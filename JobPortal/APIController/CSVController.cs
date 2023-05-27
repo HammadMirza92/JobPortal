@@ -45,7 +45,7 @@ namespace JobPortal.APIController
             string htmlTemplate = System.IO.File.ReadAllText("C:\\Users\\Hammad\\source\\repos\\JobPortal\\JobPortal\\EmailTemplate\\JobOfferedCSVTemplate.html");
 
             // add data into html template
-            htmlTemplate = htmlTemplate.Replace("{candidateName}", employer.CompanyName);
+            htmlTemplate = htmlTemplate.Replace("{companyName}", employer.CompanyName);
                   
 
             SendEmail email = new SendEmail()
@@ -66,16 +66,10 @@ namespace JobPortal.APIController
         {
             var candidates = await _candidateRepository.GetAll();
             
-            var filePath = await _csvRepository.CandidateCSV(candidates);
-            
-           
+            var filePath = await _csvRepository.CandidateCSV(candidates);       
 
             //Get html template
             string htmlTemplate = System.IO.File.ReadAllText("C:\\Users\\Hammad\\source\\repos\\JobPortal\\JobPortal\\EmailTemplate\\AllCandidatesCSVTemplate.html");
-
-            // add data into html template
-           // htmlTemplate = htmlTemplate.Replace("{candidateName}", employer.CompanyName);
-
 
             SendEmail email = new SendEmail()
             {
@@ -97,14 +91,8 @@ namespace JobPortal.APIController
 
             var filePath = await _csvRepository.EmployerCSV(allEmployer);
 
-
-
             //Get html template
             string htmlTemplate = System.IO.File.ReadAllText("C:\\Users\\Hammad\\source\\repos\\JobPortal\\JobPortal\\EmailTemplate\\AllEmployerCSVTemplate.html");
-
-            // add data into html template
-            // htmlTemplate = htmlTemplate.Replace("{candidateName}", employer.CompanyName);
-
 
             SendEmail email = new SendEmail()
             {
@@ -128,9 +116,6 @@ namespace JobPortal.APIController
 
             //Get html template
             string htmlTemplate = System.IO.File.ReadAllText("C:\\Users\\Hammad\\source\\repos\\JobPortal\\JobPortal\\EmailTemplate\\AllAppliedJobsCSVTemplate.html");
-
-            // add data into html template
-            // htmlTemplate = htmlTemplate.Replace("{candidateName}", employer.CompanyName);
 
             SendEmail email = new SendEmail()
             {

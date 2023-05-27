@@ -78,7 +78,7 @@ namespace JobPortal.Services.Repository
         // Get Job By Id and include JobSkills, AllJobsClasses, Employer
         public override async Task<Job> GetById(Guid id)
         {
-            var jobById = await _context.Jobs.Where(d => d.IsDeleted == false).Include(aj => aj.AppliedJobs)
+            var jobById = await _context.Jobs.Include(aj => aj.AppliedJobs)
                 .Include(x => x.JobSkills)
                 .ThenInclude(s=> s.Skill)
                 .Include(c => c.AllJobsClasses)
@@ -91,7 +91,7 @@ namespace JobPortal.Services.Repository
         // Fetch AppliedJobs of Company
         public async Task<IEnumerable<AppliedJobs>> FetchJobApplied(Guid id)
         {
-            var jobByEmployerId = await _context.Jobs.Where(d => d.IsDeleted == false).Where(x => x.EmployerId == id).Include(aj=> aj.AppliedJobs).ThenInclude(c=> c.Candidate).ToListAsync();
+            var jobByEmployerId = await _context.Jobs.Where(x => x.EmployerId == id).Include(aj=> aj.AppliedJobs).ThenInclude(c=> c.Candidate).ToListAsync();
             var appliedJobs = jobByEmployerId.SelectMany(j => j.AppliedJobs).ToList();
             return appliedJobs;
         }
@@ -99,7 +99,7 @@ namespace JobPortal.Services.Repository
         // Filter Job on the basis of Title, Location, Type, Qualification, SalaryType, StartBudget, EndBudget, JobExperience, JobShift, JobClass
         public async Task<IEnumerable<Job>> FilterJobs(SearchJobs searchJobs)
         {
-            var result = await _context.Jobs.Include(jc => jc.AllJobsClasses).ThenInclude(x => x.JobClass).Include(e=> e.Employer)
+            var result = await _context.Jobs.Include(jc => jc.AllJobsClasses).ThenInclude(x => x.JobClass).Include(e=> e.Employer).Where(d=> d.IsDeleted == false)
                 .Where(x =>
                 (string.IsNullOrEmpty(searchJobs.Title) || x.Title.Contains(searchJobs.Title)) &&
                 (searchJobs.Location == null || x.Location == searchJobs.Location) &&

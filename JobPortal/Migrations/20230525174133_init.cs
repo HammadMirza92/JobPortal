@@ -434,9 +434,9 @@ namespace JobPortal.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1d8bbcb9-6d72-4776-b97a-54dd330775ca", "3c9a719b-d296-4bbc-89af-54efcf22f2ea", "admin", "ADMIN" },
-                    { "7023e28f-c1dc-42cd-ad76-858802f45979", "1a5fd604-2d09-4ac2-943a-299342c1fbdb", "candidate", "CANDIDATE" },
-                    { "b189a208-8a38-42c5-9922-5dcb918e85c9", "953061d5-41ae-4233-8297-c7525e562115", "employer", "EMPLOYER" }
+                    { "1d8bbcb9-6d72-4776-b97a-54dd330775ca", "4de92406-73ce-4c98-923d-88bdf8961cae", "admin", "ADMIN" },
+                    { "7023e28f-c1dc-42cd-ad76-858802f45979", "41f9d8b5-06e4-4d53-a195-cd580504102c", "candidate", "CANDIDATE" },
+                    { "b189a208-8a38-42c5-9922-5dcb918e85c9", "a8660423-58f7-490b-9d26-80c17fb3d924", "employer", "EMPLOYER" }
                 });
 
             migrationBuilder.InsertData(

@@ -20,6 +20,7 @@ namespace JobPortal.AppDbContext
 
                 var _userManager = serviceScope.ServiceProvider.GetService<UserManager<IdentityUser>>();
                 var _roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+
                 if (!context.Users.Any(usr => usr.UserName == "adminhammad@gmail.com"))
                 {
                     var user = new ApplicationUser()
@@ -34,7 +35,6 @@ namespace JobPortal.AppDbContext
                     var role = _userManager.AddToRoleAsync(user, "admin").Result;
 
                 }
-
 
                 if (!context.Users.Any(usr => usr.UserName == "employer1@gmail.com"))
                 {
@@ -66,7 +66,7 @@ namespace JobPortal.AppDbContext
                     var addEmployer = context.Employer.Add(employer).Entity;
                     user.EmployerId = addEmployer.Id;
 
-                   var job =  new Job
+                    var job =  new Job
                     {
                         Id = Guid.Parse("a8c485f2-b08b-45bb-b1cf-8fd43556e00e"),
                         Icon = "6300ce91-db26-4348-bb9a-ca606fe43caa-Job1.jpg",
@@ -78,8 +78,8 @@ namespace JobPortal.AppDbContext
                         Qualifications = Qualification.Bachelor,
                         SalaryType = SalaryType.Monthly,
                         JobExperience = JobExperience.Oneyear,
-                        StartBudget = 123,
-                        EndBudget = 456,
+                        StartBudget = 20000,
+                        EndBudget = 40000,
                         JobShift = JobShift.Morning,
                         JobStatus = JobStatus.Open,
                         Vacancy = 20,
@@ -87,7 +87,7 @@ namespace JobPortal.AppDbContext
                         EmployerId = addEmployer.Id,
                     };
                     var addJob = context.Jobs.Add(job).Entity;
-                    context.SaveChanges();
+                    /*context.SaveChanges();*/
 
                     var firstJobSkill = new JobSkills
                     {
@@ -96,7 +96,7 @@ namespace JobPortal.AppDbContext
                         SkillId = Guid.Parse("aafbde46-32ee-45bd-b52a-a76a1ac12a78"),
                     };
                     var firstJobSkilladded = context.JobSkills.Add(firstJobSkill).Entity;
-                    context.SaveChanges();
+                   /* context.SaveChanges();*/
 
                     var secondJobSkill = new JobSkills
                     {
@@ -105,7 +105,7 @@ namespace JobPortal.AppDbContext
                         SkillId = Guid.Parse("bae33518-8dc8-4d53-80ca-e8f58a9fd808"),
                     };
                     var secondJobSkilladded = context.JobSkills.Add(secondJobSkill).Entity;
-                    context.SaveChanges();
+                   /* context.SaveChanges();*/
 
                     var thirdJobSkill = new JobSkills
                     {
@@ -114,7 +114,7 @@ namespace JobPortal.AppDbContext
                         SkillId = Guid.Parse("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d"),
                     };
                     var thirdJobSkilladded = context.JobSkills.Add(thirdJobSkill).Entity;
-                    context.SaveChanges();
+                   /* context.SaveChanges();*/
 
                     var firstJobClass = new AllJobsClasses
                     {
@@ -123,7 +123,7 @@ namespace JobPortal.AppDbContext
                         JobClassId = Guid.Parse("642a9e91-5c4a-4284-aa0f-69e39a93ea6d"),
                     };
                     var firstJobClassadded = context.AllJobsClasses.Add(firstJobClass).Entity;
-                    context.SaveChanges();
+                   /* context.SaveChanges();*/
 
                     var secondJobClass = new AllJobsClasses
                     {
@@ -132,7 +132,7 @@ namespace JobPortal.AppDbContext
                         JobClassId = Guid.Parse("63acd142-d323-42c5-a453-1b67f40fd073"),
                     };
                     var secondJobClassadded = context.AllJobsClasses.Add(secondJobClass).Entity;
-                    context.SaveChanges();
+                  /*  context.SaveChanges();*/
 
                     var thirdJobClass = new AllJobsClasses
                     {
@@ -187,8 +187,8 @@ namespace JobPortal.AppDbContext
                         Qualifications = Qualification.Bachelor,
                         SalaryType = SalaryType.Monthly,
                         JobExperience = JobExperience.AboveFive,
-                        StartBudget = 334,
-                        EndBudget = 777,
+                        StartBudget = 30000,
+                        EndBudget = 70000,
                         JobShift = JobShift.Morning,
                         JobStatus = JobStatus.Open,
                         Vacancy = 5,
@@ -196,7 +196,7 @@ namespace JobPortal.AppDbContext
                         EmployerId = addEmployer.Id,
                     };
                     var addJob = context.Jobs.Add(job).Entity;
-                    context.SaveChanges();
+                   /* context.SaveChanges();*/
 
                     var firstJobSkill = new JobSkills
                     {
@@ -205,7 +205,7 @@ namespace JobPortal.AppDbContext
                         SkillId = Guid.Parse("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d"),
                     };
                     var firstJobSkilladded = context.JobSkills.Add(firstJobSkill).Entity;
-                    context.SaveChanges();
+                 /*   context.SaveChanges();*/
 
                     var secondJobSkill = new JobSkills
                     {
@@ -214,7 +214,7 @@ namespace JobPortal.AppDbContext
                         SkillId = Guid.Parse("010039fb-a687-4db5-8ada-3b586d3a4788"),
                     };
                     var secondJobSkilladded = context.JobSkills.Add(secondJobSkill).Entity;
-                    context.SaveChanges();
+                  /*  context.SaveChanges();*/
 
                     var firstJobClass = new AllJobsClasses
                     {
@@ -223,7 +223,7 @@ namespace JobPortal.AppDbContext
                         JobClassId = Guid.Parse("642a9e91-5c4a-4284-aa0f-69e39a93ea6d"),
                     };
                     var firstJobClassadded = context.AllJobsClasses.Add(firstJobClass).Entity;
-                    context.SaveChanges();
+                   /* context.SaveChanges();*/
 
                     var secondJobClass = new AllJobsClasses
                     {
@@ -277,8 +277,8 @@ namespace JobPortal.AppDbContext
                         Qualifications = Qualification.Master,
                         SalaryType = SalaryType.Monthly,
                         JobExperience = JobExperience.Threeyears,
-                        StartBudget = 190,
-                        EndBudget = 340,
+                        StartBudget = 15000,
+                        EndBudget = 35000,
                         JobShift = JobShift.Night,
                         JobStatus = JobStatus.Open,
                         Vacancy = 50,
@@ -286,7 +286,7 @@ namespace JobPortal.AppDbContext
                         EmployerId = addEmployer.Id
                     };
                     var addJob = context.Jobs.Add(job).Entity;
-                    context.SaveChanges();
+                   /* context.SaveChanges();*/
 
                     var secondJob = new Job
                     {
@@ -300,8 +300,8 @@ namespace JobPortal.AppDbContext
                         Qualifications = Qualification.Bachelor,
                         SalaryType = SalaryType.Hourly,
                         JobExperience = JobExperience.Fouryears,
-                        StartBudget = 190,
-                        EndBudget = 340,
+                        StartBudget = 25000,
+                        EndBudget = 40000,
                         JobShift = JobShift.Night,
                         JobStatus = JobStatus.Open,
                         Vacancy = 50,
@@ -309,7 +309,7 @@ namespace JobPortal.AppDbContext
                         EmployerId = addEmployer.Id
                     };
                     var addSecondJob = context.Jobs.Add(secondJob).Entity;
-                    context.SaveChanges();
+                   /* context.SaveChanges();*/
 
                     var firstJobSkill = new JobSkills
                     {
@@ -318,7 +318,7 @@ namespace JobPortal.AppDbContext
                         SkillId = Guid.Parse("010039fb-a687-4db5-8ada-3b586d3a4788"),
                     };
                     var firstJobSkilladded = context.JobSkills.Add(firstJobSkill).Entity;
-                    context.SaveChanges();
+                    /*context.SaveChanges();*/
 
                     var firstJobClass = new AllJobsClasses
                     {
@@ -371,7 +371,7 @@ namespace JobPortal.AppDbContext
                         SkillId = Guid.Parse("9a126650-2936-442e-92ba-7d7dc32ff6f9"),
                     };
                     var firstCandidateSkilladded = context.CandidateSkills.Add(firstCandidateSkill).Entity;
-                    context.SaveChanges();
+                   /* context.SaveChanges();*/
 
                     var secondCandidateSkill = new CandidateSkills
                     {
@@ -380,7 +380,7 @@ namespace JobPortal.AppDbContext
                         SkillId = Guid.Parse("010039fb-a687-4db5-8ada-3b586d3a4788"),
                     };
                     var secondCandidateSkilladded = context.CandidateSkills.Add(secondCandidateSkill).Entity;
-                    context.SaveChanges();
+                  /*  context.SaveChanges();*/
 
                     var thirdCandidateSkill = new CandidateSkills
                     {
@@ -389,7 +389,7 @@ namespace JobPortal.AppDbContext
                         SkillId = Guid.Parse("b749f4b8-3bc3-4a05-816b-56e0d12dfaaa"),
                     };
                     var thirdCandidateSkilladded = context.CandidateSkills.Add(thirdCandidateSkill).Entity;
-                    context.SaveChanges();
+                   /* context.SaveChanges();*/
 
 
                     var firstJobApplied = new AppliedJobs
@@ -399,7 +399,7 @@ namespace JobPortal.AppDbContext
                         CandidateId = Guid.Parse("1163535c-d87f-4a75-8e85-e0d69eb9f0ea"),
                     };
                     var firstJobAppliedadded = context.AppliedJobs.Add(firstJobApplied).Entity;
-                    context.SaveChanges();
+                   /* context.SaveChanges();*/
 
                     var seconJobApplied = new AppliedJobs
                     {
@@ -451,7 +451,7 @@ namespace JobPortal.AppDbContext
                         SkillId = Guid.Parse("aafbde46-32ee-45bd-b52a-a76a1ac12a78"),
                     };
                     var firstCandidateSkilladded = context.CandidateSkills.Add(firstCandidateSkill).Entity;
-                    context.SaveChanges();
+                   /* context.SaveChanges();*/
 
                     var firstJobApplied = new AppliedJobs
                     {
@@ -504,7 +504,7 @@ namespace JobPortal.AppDbContext
                         SkillId = Guid.Parse("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d"),
                     };
                     var firstCandidateSkilladded = context.CandidateSkills.Add(firstCandidateSkill).Entity;
-                    context.SaveChanges();
+                   /* context.SaveChanges();*/
 
                     var secondCandidateSkill = new CandidateSkills
                     {
@@ -513,7 +513,7 @@ namespace JobPortal.AppDbContext
                         SkillId = Guid.Parse("83c89321-daf9-4ade-b229-d57615a32f10"),
                     };
                     var secondCandidateSkilladded = context.CandidateSkills.Add(secondCandidateSkill).Entity;
-                    context.SaveChanges();
+                  /*  context.SaveChanges();*/
 
                     var thirdCandidateSkill = new CandidateSkills
                     {

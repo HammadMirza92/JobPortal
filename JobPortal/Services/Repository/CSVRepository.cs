@@ -52,9 +52,10 @@ namespace JobPortal.Services.Repository
 
             string csvData = stringWriter.ToString();
             Guid csvId = Guid.NewGuid();
-            string filePath = "D:\\JobPortal\\src\\assets\\Images\\admin\\" + csvId + "allCandidates.csv";
-
-            System.IO.File.WriteAllText(filePath, csvData);
+            var csvDate = DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
+         
+             string filePath = "D:\\JobPortal\\src\\assets\\Images\\admin\\AllCandidates\\" + csvDate + "-" + csvId +  "allCandidates.csv";
+             System.IO.File.WriteAllText(filePath, csvData);
 
             return filePath;
         }
@@ -93,10 +94,12 @@ namespace JobPortal.Services.Repository
                 csvWriter.NextRecord(); // Move to the next line
             }
 
-
             string csvData = stringWriter.ToString();
+
             Guid csvId = Guid.NewGuid();
-            string filePath = "D:\\JobPortal\\src\\assets\\Images\\admin" + csvId + ".csv";
+            var csvDate = DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
+
+            string filePath = "D:\\JobPortal\\src\\assets\\Images\\admin\\AllEmployer\\" + csvDate + "-" + csvId + "allEmployer.csv";
 
             System.IO.File.WriteAllText(filePath, csvData);
 
@@ -174,8 +177,11 @@ namespace JobPortal.Services.Repository
 
 
             string csvData = stringWriter.ToString();
+
             Guid csvId = Guid.NewGuid();
-            string filePath = "D:\\JobPortal\\src\\assets\\Images\\admin" + csvId + "allAppliedJobs.csv";
+            var csvDate = DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
+
+            string filePath = "D:\\JobPortal\\src\\assets\\Images\\admin\\AllAppliedJobs\\" + csvDate + "-" + csvId + "allAppliedJobs.csv";
 
             System.IO.File.WriteAllText(filePath, csvData);
 
@@ -230,13 +236,14 @@ namespace JobPortal.Services.Repository
                 csvWriter.WriteField(item.Vacancy);
                 csvWriter.WriteField(item.EndBudget);
 
-
                 csvWriter.NextRecord(); // Move to the next line
             }
             string csvData = stringWriter.ToString();
-            Guid csvId = Guid.NewGuid();
-            string filePath = "D:\\JobPortal\\src\\assets\\Images\\CSV\\" + csvId + ".csv";
 
+            Guid csvId = Guid.NewGuid();
+            var csvDate = DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
+
+            string filePath = "D:\\JobPortal\\src\\assets\\Images\\CSV\\companyJobs\\" + csvDate + "-" + csvId + "allAppliedJobs.csv";
             System.IO.File.WriteAllText(filePath, csvData);
 
             return filePath;

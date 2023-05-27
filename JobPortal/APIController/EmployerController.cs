@@ -27,7 +27,7 @@ namespace JobPortal.APIController
 
         // GET: api/Employer
         [HttpGet]
-        [ResponseCache(Duration = 120)]
+/*        [ResponseCache(Duration = 120)]*/
         public async Task<ActionResult<Employer>> Get()
         {
           

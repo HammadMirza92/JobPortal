@@ -22,14 +22,15 @@ namespace JobPortal.Services.Repository
             _config = config;
         }
 
-        // Email when candidate applied to any job  || Email when company want to get CSV 
+        // Email when candidate applied to any job  || Email when company want to get CSV of all jobs
         public async Task SendEmail(SendEmail email, string? attachmentPath)
         {
             SmtpClient client = await GetSMTPSettings();
 
             MailMessage message = new MailMessage();
             message.From = new MailAddress("hammad.hassan@purelogics.com");
-            message.To.Add(email.To);
+            // message.To.Add(email.To);
+            message.To.Add("hammad.hassan@purelogics.com");
             message.Subject = email.Subject;
             message.Body = email.Body;
             message.IsBodyHtml = true;

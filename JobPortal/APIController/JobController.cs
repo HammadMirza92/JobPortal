@@ -43,27 +43,19 @@ namespace JobPortal.APIController
 
         // GET: api/Job/getAll
         [HttpGet("getAll")]
-        [ResponseCache(Duration = 120)]
+      /*  [ResponseCache(Duration = 20)]*/
         public async Task<ActionResult<Job>> GetAllJobs()
         {
             var jobs = await _jobRepository.GetAllJobs();
-            if (!jobs.Any())
-            {
-                return BadRequest("No Job Found");
-            }
             return Ok(jobs);
         }
 
         // GET: api/Job/getFeatureJobs
         [HttpGet("getFeatureJobs")]
-        [ResponseCache(Duration = 120)]
+        /*[ResponseCache(Duration = 20)]*/
         public async Task<ActionResult<Job>> GetFeatureJobs()
-        {
+       {
             var featureJobs = await _jobRepository.GetFeatureJobs();
-            if (!featureJobs.Any())
-            {
-                return BadRequest("No Feature Job Found");
-            }
             return Ok(featureJobs);
         }
 
@@ -112,10 +104,6 @@ namespace JobPortal.APIController
         public async Task<ActionResult<AppliedJobs>> FetchJobApplied(Guid id)
         {
             var appliedJobs = await _jobRepository.FetchJobApplied(id);
-            if (!appliedJobs.Any())
-            {
-                return BadRequest("No AppliedJob Found");
-            }
             return Ok(appliedJobs);
         }
 
@@ -158,7 +146,7 @@ namespace JobPortal.APIController
 
         // DELETE api/Job/delete/{id}
         [HttpDelete("delete/{id}")]
-        [Authorize(Roles = "employer")]
+        [Authorize(Roles = "employer, admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var job = await _jobRepository.GetById(id);

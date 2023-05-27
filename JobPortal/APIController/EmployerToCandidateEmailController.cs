@@ -40,11 +40,15 @@ namespace JobPortal.APIController
             // add data into html template
             htmlTemplate = htmlTemplate.Replace("{candidateName}", candidate.Name);
             htmlTemplate = htmlTemplate.Replace("{jobTitle}", job.Title);
+            htmlTemplate = htmlTemplate.Replace("{companyId}", company.Id.ToString());
             htmlTemplate = htmlTemplate.Replace("{companyName}", company.CompanyName);
+            
+
 
             SendEmail email = new SendEmail()
             {
                 To = candidate.Email,
+               // To = "hammad.hassan@purelogics.com",
                 Subject = "Confirmation to Job",
                 Body = htmlTemplate
             };
