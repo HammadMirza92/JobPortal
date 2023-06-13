@@ -22,77 +22,278 @@ namespace JobPortal.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("JobPortal.Models.Category", b =>
+            modelBuilder.Entity("JobPortal.Models.AllJobsClasses", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("JobClassId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("JobId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobClassId");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("AllJobsClasses");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.AppliedJobs", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CandidateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("JobsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CandidateId");
+
+                    b.HasIndex("JobsId");
+
+                    b.ToTable("AppliedJobs");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.Candidate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AboutMe")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Description")
+                    b.Property<string>("CurrentCompany")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Icon")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ExpectedSalary")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Experience")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ExperienceTime")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Location")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("Phone")
+                        .HasColumnType("float");
+
+                    b.Property<string>("ProfileImg")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Qualification")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Candidate");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.CandidateSkills", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CandidateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("SkillId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CandidateId");
+
+                    b.HasIndex("SkillId");
+
+                    b.ToTable("CandidateSkills");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.Employer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CompanyAbout")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyLogo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CompanySize")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CompanyWebsite")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Founded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Headquarters")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Industry")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Employer");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.EmployerToCandidateEmail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CandidateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("EmployerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("JobAppliedId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("JobId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CandidateId");
+
+                    b.HasIndex("EmployerId");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("EmployerToCandidateEmail");
                 });
 
             modelBuilder.Entity("JobPortal.Models.Job", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CompanyDetail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DeadLine")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("EmployerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<double>("EndBudget")
                         .HasColumnType("float");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Icon")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("Qualifications")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("JobExperience")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("JobPosted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("JobShift")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JobStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Location")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Qualifications")
+                        .HasColumnType("int");
 
                     b.Property<string>("Responsibility")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SalaryType")
+                        .HasColumnType("int");
+
                     b.Property<double>("StartBudget")
                         .HasColumnType("float");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -106,62 +307,175 @@ namespace JobPortal.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EmployerId");
+
                     b.ToTable("Jobs");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.JobClass", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("name")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JobClass");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            CompanyDetail = "Ipsum dolor ipsum accusam stet et et diam dolores, sed rebum sadipscing elitr vero dolores. Lorem dolore elitr justo et no gubergren sadipscing, ipsum et takimata aliquyam et rebum est ipsum lorem diam. Et lorem magna eirmod est et et sanctus et, kasd clita labore.",
-                            Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
-                            EndBudget = 456.0,
-                            EndDate = new DateTime(2023, 4, 28, 14, 13, 29, 80, DateTimeKind.Local).AddTicks(5897),
-                            Icon = "https://img.freepik.com/premium-vector/gradient-business-investment-logo-design_269830-887.jpg?w=2000",
-                            Location = "New York, USA",
-                            Qualifications = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
-                            Responsibility = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
-                            StartBudget = 123.0,
-                            StartDate = new DateTime(2023, 3, 4, 14, 13, 29, 80, DateTimeKind.Local).AddTicks(5878),
-                            Status = 0,
-                            Title = "Marketing Manager",
-                            Type = 0,
-                            Vacancy = 20
+                            Id = new Guid("642a9e91-5c4a-4284-aa0f-69e39a93ea6d"),
+                            IsDeleted = false,
+                            name = 0
                         },
                         new
                         {
-                            Id = 2,
-                            CompanyDetail = "Ipsum dolor ipsum accusam stet et et diam dolores, sed rebum sadipscing elitr vero dolores. Lorem dolore elitr justo et no gubergren sadipscing, ipsum et takimata aliquyam et rebum est ipsum lorem diam. Et lorem magna eirmod est et et sanctus et, kasd clita labore.",
-                            Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
-                            EndBudget = 557.0,
-                            EndDate = new DateTime(2023, 5, 8, 14, 13, 29, 80, DateTimeKind.Local).AddTicks(5940),
-                            Icon = "https://media.istockphoto.com/id/1304359165/vector/motion-data-speed-g-letter-logo-design.jpg?s=612x612&w=0&k=20&c=2A0yYWv8zHhztdShuGoVW87yJZqseV6AKJX0QL2cVuQ=",
-                            Location = "New York, USA",
-                            Qualifications = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
-                            Responsibility = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
-                            StartBudget = 233.0,
-                            StartDate = new DateTime(2023, 3, 24, 14, 13, 29, 80, DateTimeKind.Local).AddTicks(5938),
-                            Status = 0,
-                            Title = "Software Engineer",
-                            Type = 0,
-                            Vacancy = 12
+                            Id = new Guid("63acd142-d323-42c5-a453-1b67f40fd073"),
+                            IsDeleted = false,
+                            name = 1
                         },
                         new
                         {
-                            Id = 3,
-                            CompanyDetail = "Ipsum dolor ipsum accusam stet et et diam dolores, sed rebum sadipscing elitr vero dolores. Lorem dolore elitr justo et no gubergren sadipscing, ipsum et takimata aliquyam et rebum est ipsum lorem diam. Et lorem magna eirmod est et et sanctus et, kasd clita labore.",
-                            Description = "Dolor justo tempor duo ipsum accusam rebum gubergren erat. Elitr stet dolor vero clita labore gubergren. Kasd sed ipsum elitr clita rebum ut sea diam tempor. Sadipscing nonumy vero labore invidunt dolor sed, eirmod dolore amet aliquyam consetetur lorem, amet elitr clita et sed consetetur dolore accusam. Vero kasd nonumy justo rebum stet. Ipsum amet sed lorem sea magna. Rebum vero dolores dolores elitr vero dolores magna, stet sea sadipscing stet et. Est voluptua et sanctus at sanctus erat vero sed sed, amet duo no diam clita rebum duo, accusam tempor takimata clita stet nonumy rebum est invidunt stet, dolor.",
-                            EndBudget = 557.0,
-                            EndDate = new DateTime(2023, 4, 13, 14, 13, 29, 80, DateTimeKind.Local).AddTicks(5957),
-                            Icon = "https://www.logodesign.net/images/abstract-logo.png",
-                            Location = "New York, USA",
-                            Qualifications = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
-                            Responsibility = "Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor",
-                            StartBudget = 233.0,
-                            StartDate = new DateTime(2023, 3, 14, 14, 13, 29, 80, DateTimeKind.Local).AddTicks(5956),
-                            Status = 0,
-                            Title = "Product Designer",
-                            Type = 1,
-                            Vacancy = 5
+                            Id = new Guid("930c379d-d9e6-4a48-82b0-4f586d6aafc8"),
+                            IsDeleted = false,
+                            name = 2
+                        });
+                });
+
+            modelBuilder.Entity("JobPortal.Models.JobSkills", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("JobId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SkillId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.HasIndex("SkillId");
+
+                    b.ToTable("JobSkills");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.SendEmail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("To")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SendEmail");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.Skills", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("JobSkill")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Skills");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("aafbde46-32ee-45bd-b52a-a76a1ac12a78"),
+                            IsDeleted = false,
+                            JobSkill = "Php"
+                        },
+                        new
+                        {
+                            Id = new Guid("bae33518-8dc8-4d53-80ca-e8f58a9fd808"),
+                            IsDeleted = false,
+                            JobSkill = "JS"
+                        },
+                        new
+                        {
+                            Id = new Guid("0b886a97-0b5a-44e0-b1a9-c1ddecb67f2d"),
+                            IsDeleted = false,
+                            JobSkill = "Designing"
+                        },
+                        new
+                        {
+                            Id = new Guid("9a126650-2936-442e-92ba-7d7dc32ff6f9"),
+                            IsDeleted = false,
+                            JobSkill = "React Native"
+                        },
+                        new
+                        {
+                            Id = new Guid("83c89321-daf9-4ade-b229-d57615a32f10"),
+                            IsDeleted = false,
+                            JobSkill = "Arts"
+                        },
+                        new
+                        {
+                            Id = new Guid("010039fb-a687-4db5-8ada-3b586d3a4788"),
+                            IsDeleted = false,
+                            JobSkill = ".Net"
+                        },
+                        new
+                        {
+                            Id = new Guid("2dd27837-b570-4c81-8bfc-bf8cad8323b6"),
+                            IsDeleted = false,
+                            JobSkill = "Java"
+                        },
+                        new
+                        {
+                            Id = new Guid("e4599076-fa12-4fe9-a8e4-35130d73729e"),
+                            IsDeleted = false,
+                            JobSkill = "MERN Stack"
+                        },
+                        new
+                        {
+                            Id = new Guid("b749f4b8-3bc3-4a05-816b-56e0d12dfaaa"),
+                            IsDeleted = false,
+                            JobSkill = "Architecture"
+                        },
+                        new
+                        {
+                            Id = new Guid("f235f414-fc41-4acb-a1ee-1fd79aea7eae"),
+                            IsDeleted = false,
+                            JobSkill = "Management"
                         });
                 });
 
@@ -190,6 +504,29 @@ namespace JobPortal.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1d8bbcb9-6d72-4776-b97a-54dd330775ca",
+                            ConcurrencyStamp = "4de92406-73ce-4c98-923d-88bdf8961cae",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "7023e28f-c1dc-42cd-ad76-858802f45979",
+                            ConcurrencyStamp = "41f9d8b5-06e4-4d53-a195-cd580504102c",
+                            Name = "candidate",
+                            NormalizedName = "CANDIDATE"
+                        },
+                        new
+                        {
+                            Id = "b189a208-8a38-42c5-9922-5dcb918e85c9",
+                            ConcurrencyStamp = "a8660423-58f7-490b-9d26-80c17fb3d924",
+                            Name = "employer",
+                            NormalizedName = "EMPLOYER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -377,6 +714,12 @@ namespace JobPortal.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<Guid?>("CandidateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("EmployerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -385,7 +728,121 @@ namespace JobPortal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.HasIndex("CandidateId");
+
+                    b.HasIndex("EmployerId");
+
                     b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.AllJobsClasses", b =>
+                {
+                    b.HasOne("JobPortal.Models.JobClass", "JobClass")
+                        .WithMany("AllJobsClasses")
+                        .HasForeignKey("JobClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JobPortal.Models.Job", "Job")
+                        .WithMany("AllJobsClasses")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Job");
+
+                    b.Navigation("JobClass");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.AppliedJobs", b =>
+                {
+                    b.HasOne("JobPortal.Models.Candidate", "Candidate")
+                        .WithMany("AppliedJobs")
+                        .HasForeignKey("CandidateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JobPortal.Models.Job", "Job")
+                        .WithMany("AppliedJobs")
+                        .HasForeignKey("JobsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Candidate");
+
+                    b.Navigation("Job");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.CandidateSkills", b =>
+                {
+                    b.HasOne("JobPortal.Models.Candidate", "Candidate")
+                        .WithMany("CandidateSkills")
+                        .HasForeignKey("CandidateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JobPortal.Models.Skills", "Skills")
+                        .WithMany("CandidateSkills")
+                        .HasForeignKey("SkillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Candidate");
+
+                    b.Navigation("Skills");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.EmployerToCandidateEmail", b =>
+                {
+                    b.HasOne("JobPortal.Models.Candidate", "Candidate")
+                        .WithMany()
+                        .HasForeignKey("CandidateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JobPortal.Models.Employer", "Employer")
+                        .WithMany()
+                        .HasForeignKey("EmployerId");
+
+                    b.HasOne("JobPortal.Models.Job", "Job")
+                        .WithMany()
+                        .HasForeignKey("JobId");
+
+                    b.Navigation("Candidate");
+
+                    b.Navigation("Employer");
+
+                    b.Navigation("Job");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.Job", b =>
+                {
+                    b.HasOne("JobPortal.Models.Employer", "Employer")
+                        .WithMany("JobOffered")
+                        .HasForeignKey("EmployerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employer");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.JobSkills", b =>
+                {
+                    b.HasOne("JobPortal.Models.Job", "Job")
+                        .WithMany("JobSkills")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JobPortal.Models.Skills", "Skill")
+                        .WithMany("JobSkills")
+                        .HasForeignKey("SkillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Job");
+
+                    b.Navigation("Skill");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -437,6 +894,54 @@ namespace JobPortal.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("JobPortal.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("JobPortal.Models.Candidate", "Candidate")
+                        .WithMany()
+                        .HasForeignKey("CandidateId");
+
+                    b.HasOne("JobPortal.Models.Employer", "Employer")
+                        .WithMany()
+                        .HasForeignKey("EmployerId");
+
+                    b.Navigation("Candidate");
+
+                    b.Navigation("Employer");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.Candidate", b =>
+                {
+                    b.Navigation("AppliedJobs");
+
+                    b.Navigation("CandidateSkills");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.Employer", b =>
+                {
+                    b.Navigation("JobOffered");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.Job", b =>
+                {
+                    b.Navigation("AllJobsClasses");
+
+                    b.Navigation("AppliedJobs");
+
+                    b.Navigation("JobSkills");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.JobClass", b =>
+                {
+                    b.Navigation("AllJobsClasses");
+                });
+
+            modelBuilder.Entity("JobPortal.Models.Skills", b =>
+                {
+                    b.Navigation("CandidateSkills");
+
+                    b.Navigation("JobSkills");
                 });
 #pragma warning restore 612, 618
         }

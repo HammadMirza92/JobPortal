@@ -13,7 +13,7 @@ namespace JobPortal.Services.Repository.Base
         }
         public async virtual Task<IEnumerable<T>> GetAll() => await _context.Set<T>().ToListAsync();
 
-        public async virtual Task<T> GetById(int id) => await _context.Set<T>().FindAsync(id);
+        public async virtual Task<T> GetById(Guid id) => await _context.Set<T>().FindAsync(id);
 
         public async Task<T> Add(T entity)
         {
@@ -22,11 +22,11 @@ namespace JobPortal.Services.Repository.Base
             return entity;
         }
 
-        public async Task Delete(int id)
+        public async Task Delete()
         {
-            var entity = await _context.Set<T>().FindAsync(id);
+           /* var entity = await _context.Set<T>().FindAsync(id)
+           _context.Set<T>().Remove(entity);*/
 
-            _context.Set<T>().Remove(entity);
             await _context.SaveChangesAsync();
         }
 
@@ -38,8 +38,6 @@ namespace JobPortal.Services.Repository.Base
                 _context.Entry(existingEntity).State = EntityState.Detached;
             }
             _context.Entry(entity).State = EntityState.Modified;
-            /*            _context.SaveChanges();*/
-
 
             _context.Set<T>().Update(entity);
             await _context.SaveChangesAsync();

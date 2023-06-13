@@ -1,13 +1,19 @@
 using JobPortal.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using JobPortal.Services.IRepository;
 using JobPortal.Services.Repository;
+using JobPortal.Services.IRepository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+   .AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -19,11 +25,53 @@ builder.Services.AddDefaultIdentity<IdentityUser>().AddDefaultTokenProviders()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddScoped<IJobRepository, JobRepository>();
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 4; 
 
+    options.User.RequireUniqueEmail = false;
+    options.SignIn.RequireConfirmedEmail = false;
+});
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["keyjwt"]))
+    };
+});
+
+
+builder.Services.AddScoped<IJobRepository, JobRepository>();
+builder.Services.AddScoped<IJobClassRepository, JobClassRepository>();
+builder.Services.AddScoped<IAllJobsClassesRepository, AllJobsClassesRepository>();
+builder.Services.AddScoped<ICandidateRepository, CandidateRepository>();
+builder.Services.AddScoped<ICandidateSkillsRepository, CandidateSkillsRepository>();
+builder.Services.AddScoped<IEmployerRepository, EmployerRepository>();
+builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+builder.Services.AddScoped<IAppliedJobsRepository, AppliedJobsRepository>();
+builder.Services.AddScoped<IEmailRepository, EmailRepository>();
+builder.Services.AddScoped<IEmployerToCandidateEmailRepository, EmployerToCandidateEmailRepository>();
+builder.Services.AddScoped<ICSVRepository, CSVRepository>();
+
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("CorsPolicy", policy => policy.AllowAnyHeader().WithOrigins("http://localhost:4200").AllowAnyMethod());
+
+});
 
 
 var app = builder.Build();
+
+DataSeeding.Initialize(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -37,8 +85,12 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication();;
 
+app.UseResponseCaching();
+
+app.UseCors("CorsPolicy");
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

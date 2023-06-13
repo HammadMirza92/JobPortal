@@ -1,45 +1,55 @@
 ﻿using JobPortal.Enums;
+using JobPortal.Models.ModelBase;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobPortal.Models
 {
-    public class Job
+    public class Job: BaseModel
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         public string Icon { get; set; } 
         [Required]
         public string Title { get; set; } 
         [Required]
-        public int Vacancy { get; set; } 
-        [Required]
         public string Description { get; set; } 
         [Required]
-        public string Responsibility { get; set; } 
+        public string Responsibility { get; set; }
         [Required]
-        public string Qualifications { get; set; } 
+        public Location Location { get; set; }
         [Required]
-        public JobStatus Status { get; set; } 
+        public JobType Type { get; set; }
         [Required]
-        public JobType Type { get; set; } 
+        public Qualification Qualifications { get; set; }
         [Required]
-        [DisplayName("Company Detail")]
-        public string CompanyDetail { get; set; } 
+        public SalaryType SalaryType { get; set; }
         [Required]
         [DisplayName("Start Budget")]
         public double StartBudget { get; set; }
         [Required]
         [DisplayName("End Budget")]
         public double EndBudget { get; set; }
+        
         [Required]
-        [DisplayName("Start Date")]
-        public DateTime StartDate { get; set; }
+        public JobExperience JobExperience { get; set; }
         [Required]
-        [DisplayName("End Date")]
-        public DateTime EndDate { get; set; } 
+        public JobShift JobShift { get; set; }
         [Required]
-        public string Location { get; set; } 
+        public JobStatus JobStatus { get; set; }
+
+        [Required]
+        public DateTime DeadLine { get; set; }
+        public DateTime JobPosted { get; set; } = DateTime.Now;
+
+        [Required]
+        public int Vacancy { get; set; }
+        public Guid EmployerId { get; set; }
+        [ForeignKey(nameof(EmployerId))]
+        public Employer? Employer { get; set; }
+
+        public ICollection<JobSkills>? JobSkills { get; set; }
+        public ICollection<AllJobsClasses>? AllJobsClasses { get; set; }
+        public ICollection<AppliedJobs>? AppliedJobs { get; set; }
     }
 }
